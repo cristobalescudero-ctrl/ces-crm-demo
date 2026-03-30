@@ -345,6 +345,7 @@ let lossTarget = null
 let annualTarget = 1000000
 let monthTargets = (function(){const t={};for(let i=1;i<=12;i++)t['2026-'+String(i).padStart(2,'0')]=Math.round(1000000/12);return t})()
 let donutChart = null
+let repTargets = {} // keyed by rep name, value = annual GP target
 
 const SEED = [
   {contact:'Carlos Mendoza',company:'Andean Fresh Foods',country:'Colombia',industry:'Reefer',title:'Andean Fresh — Reefer Export Lane',value:84000,stage:'Negotiation',duration:12,date:'2026-04-01'},
@@ -458,7 +459,7 @@ function resetPipeline() {
 
 function switchUser() {
   deals = []; closedDeals = []; nextId = 1000
-  annualTarget = 0; monthTargets = {}
+  annualTarget = 0; monthTargets = {}; repTargets = {}
   document.getElementById('app').style.display = 'none'
   document.getElementById('welcome').style.display = 'flex'
   document.getElementById('nameInput').value = ''
@@ -871,6 +872,7 @@ function onTargetBlur(val) {
   const el = document.getElementById('targetInput')
   if (el) el.value = n ? n.toLocaleString('en-US') : ''
   distributeAnnual(n)
+  distributeRepTargets()
   renderForecast()
 }
 function onTargetFocus(el) {
@@ -1094,8 +1096,6 @@ function savePanel() {
 }
 
 // ── TEAM ──────────────────────────────────────────────────────────
-const TEAM_TARGET = 1200000
-
 const TEAM_REPS = [
   {
     name: 'Diego Salazar', lane: 'Mexico & Central America',
@@ -1143,6 +1143,27 @@ const TEAM_REPS = [
   }
 ]
 
+function distributeRepTargets() {
+  const n = TEAM_REPS.length
+  const even = annualTarget > 0 ? Math.round(annualTarget / n) : 0
+  TEAM_REPS.forEach(r => { repTargets[r.name] = even })
+}
+
+function getRepTarget(name) {
+  if (repTargets[name] == null && annualTarget > 0) distributeRepTargets()
+  return repTargets[name] || 0
+}
+
+function saveRepTarget(name, val) {
+  repTargets[name] = parseComma(val) || 0
+  renderTeam()
+}
+
+function resetRepTargets() {
+  distributeRepTargets()
+  renderTeam()
+}
+
 function repGP2026(rep) {
   const stageW = {Lead:0.1,Qualified:0.3,Proposal:0.6,Negotiation:0.8}
   let total = 0
@@ -1168,35 +1189,57 @@ function repGP2026(rep) {
 
 function renderTeam() {
   const el = document.getElementById('view-team')
+  const teamTarget = annualTarget || 0
   const rankColors = ['gold','silver','bronze','']
   const rankLabels = ['🥇 #1 — Top performer','🥈 #2','🥉 #3','#4']
+  const medals = ['🥇','🥈','🥉','4️⃣']
 
-  // Compute GP per rep and sort for leaderboard
-  const repsWithGP = TEAM_REPS.map(r => ({...r, gp2026: repGP2026(r), pipeline: r.deals.reduce((s,d)=>s+d.value,0), dealCount: r.deals.length}))
+  const repsWithGP = TEAM_REPS.map(r => ({
+    ...r,
+    gp2026: repGP2026(r),
+    pipeline: r.deals.reduce((s,d)=>s+d.value,0),
+    dealCount: r.deals.length,
+    repTarget: getRepTarget(r.name)
+  }))
   const sorted = [...repsWithGP].sort((a,b) => b.gp2026 - a.gp2026)
   const totalGP = sorted.reduce((s,r) => s+r.gp2026, 0)
-  const maxGP = sorted[0].gp2026
-  const pctOfTarget = Math.min(1, totalGP / TEAM_TARGET)
+  const maxGP = sorted[0]?.gp2026 || 1
+  const allocatedTotal = sorted.reduce((s,r) => s+r.repTarget, 0)
+  const unallocated = teamTarget - allocatedTotal
+  const pctOfTarget = teamTarget > 0 ? Math.min(1, totalGP / teamTarget) : 0
 
-  // Rep cards (sorted by GP)
+  // Rep cards
   const cards = sorted.map((r, i) => {
     const repPct = maxGP > 0 ? (r.gp2026 / maxGP) : 0
-    const targetShare = TEAM_TARGET / 4
-    const vsTarget = r.gp2026 / targetShare
-    const barColor = vsTarget >= 0.8 ? 'var(--green)' : vsTarget >= 0.5 ? 'var(--amber)' : 'var(--red)'
+    const vsTarget = r.repTarget > 0 ? (r.gp2026 / r.repTarget) : 0
+    const barColor = r.repTarget === 0 ? '#d0d8e4' : vsTarget >= 0.8 ? 'var(--green)' : vsTarget >= 0.5 ? 'var(--amber)' : 'var(--red)'
+    const targetPct = r.repTarget > 0 ? Math.round(vsTarget * 100) : null
+    const repName = r.name.replace(/'/g, "\\'")
     return `
     <div class="rep-card">
       <div class="rep-rank ${rankColors[i]}">${rankLabels[i]}</div>
       <div class="rep-name">${r.name}</div>
       <div class="rep-lane">${r.lane}</div>
       <div class="rep-gp">${fmt(r.gp2026)}</div>
-      <div class="rep-gp-label">2026 GP forecast</div>
+      <div class="rep-gp-label">2026 GP forecast${r.repTarget>0?' · '+targetPct+'% of target':''}</div>
       <div class="rep-bar-track"><div class="rep-bar-fill" style="width:${Math.round(repPct*100)}%;background:${barColor}"></div></div>
       <div class="rep-stats">
         <div class="rep-stat"><div class="rep-stat-val">${r.dealCount}</div><div class="rep-stat-lbl">Active deals</div></div>
         <div class="rep-stat"><div class="rep-stat-val">${fmt(r.pipeline)}</div><div class="rep-stat-lbl">Pipeline GP</div></div>
         <div class="rep-stat"><div class="rep-stat-val">${r.won.length}</div><div class="rep-stat-lbl">Closed won</div></div>
         <div class="rep-stat"><div class="rep-stat-val">${totalGP>0?Math.round((r.gp2026/totalGP)*100):'0'}%</div><div class="rep-stat-lbl">Team share</div></div>
+      </div>
+      <div style="border-top:0.5px solid var(--border);padding-top:10px;margin-top:10px">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:5px">Individual target</div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <span style="color:var(--muted);font-size:13px">$</span>
+          <input type="text" value="${r.repTarget>0?r.repTarget.toLocaleString('en-US'):''}"
+            placeholder="${teamTarget>0?(Math.round(teamTarget/TEAM_REPS.length)).toLocaleString('en-US'):'set team target first'}"
+            style="flex:1;padding:5px 8px;border:0.5px solid var(--border);border-radius:6px;font-size:12px;font-family:inherit;color:var(--text);outline:none;"
+            onblur="saveRepTarget('${repName}', this.value)"
+            onkeydown="if(event.key==='Enter')this.blur()"
+          />
+        </div>
       </div>
     </div>`
   }).join('')
@@ -1205,7 +1248,8 @@ function renderTeam() {
   const lbRows = sorted.map((r, i) => {
     const pctOfMax = maxGP > 0 ? (r.gp2026 / maxGP) : 0
     const teamShare = totalGP > 0 ? Math.round((r.gp2026/totalGP)*100) : 0
-    const medals = ['🥇','🥈','🥉','4️⃣']
+    const vsTarget = r.repTarget > 0 ? Math.round((r.gp2026/r.repTarget)*100) : null
+    const barColor = vsTarget===null?'var(--green)':vsTarget>=80?'var(--green)':vsTarget>=50?'var(--amber)':'var(--red)'
     return `
     <div class="lb-row">
       <div class="lb-rank-num">${medals[i]}</div>
@@ -1213,30 +1257,44 @@ function renderTeam() {
         <div class="lb-name">${r.name}</div>
         <div class="lb-lane">${r.lane}</div>
       </div>
-      <div class="lb-bar-wrap"><div class="lb-bar-fill" style="width:${Math.round(pctOfMax*100)}%"></div></div>
-      <div class="lb-gp">${fmt(r.gp2026)}</div>
-      <div class="lb-pct">${teamShare}% of team</div>
+      <div class="lb-bar-wrap"><div class="lb-bar-fill" style="width:${Math.round(pctOfMax*100)}%;background:${barColor}"></div></div>
+      <div style="min-width:80px;text-align:right">
+        <div class="lb-gp">${fmt(r.gp2026)}</div>
+        ${r.repTarget>0?`<div style="font-size:10px;color:var(--muted)">of ${fmt(r.repTarget)}</div>`:''}
+      </div>
+      <div class="lb-pct">${vsTarget!==null?vsTarget+'% attain.':teamShare+'% of team'}</div>
     </div>`
   }).join('')
+
+  const noTargetNote = teamTarget === 0
+    ? `<div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:8px">Set the team target in the Forecast tab to enable target allocation.</div>` : ''
+
+  const allocationStatus = teamTarget > 0
+    ? `<div style="font-size:12px;color:${Math.abs(unallocated)<100?'var(--green)':'rgba(255,255,255,0.6)'};margin-top:4px">${Math.abs(unallocated)<100?'✓ Fully allocated':'Unallocated: '+fmt(Math.abs(unallocated))+(unallocated<0?' (over-allocated)':'')}</div>` : ''
 
   el.innerHTML = `
     <div class="team-target-bar">
       <div class="team-target-header">
         <div>
           <div class="team-target-title">Team GP target 2026</div>
-          <div style="font-size:20px;font-weight:700;color:white;margin-top:4px">${fmt(TEAM_TARGET)}</div>
+          <div style="font-size:20px;font-weight:700;color:white;margin-top:4px">${teamTarget>0?fmt(teamTarget):'Not set'}</div>
+          ${allocationStatus}
+          ${noTargetNote}
         </div>
-        <div style="text-align:right">
-          <div class="team-target-title">Team forecast vs target</div>
-          <div style="font-size:20px;font-weight:700;color:${pctOfTarget>=1?'var(--green)':'#FAEEDA'};margin-top:4px">${fmt(totalGP)} <span style="font-size:13px;font-weight:400;color:rgba(255,255,255,0.5)">${Math.round(pctOfTarget*100)}%</span></div>
+        <div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+          <div>
+            <div class="team-target-title">Team GP forecast</div>
+            <div style="font-size:20px;font-weight:700;color:${pctOfTarget>=1?'var(--green)':'#FAEEDA'};margin-top:4px">${fmt(totalGP)} <span style="font-size:13px;font-weight:400;color:rgba(255,255,255,0.5)">${teamTarget>0?Math.round(pctOfTarget*100)+'%':''}</span></div>
+          </div>
+          <button onclick="resetRepTargets()" style="font-size:11px;padding:5px 12px;border-radius:6px;border:0.5px solid rgba(255,255,255,0.3);background:transparent;color:rgba(255,255,255,0.7);cursor:pointer;font-family:inherit;" ${teamTarget?'':'disabled'}>↺ Reset to even split</button>
         </div>
       </div>
-      <div class="team-progress-track"><div class="team-progress-fill" style="width:${Math.round(pctOfTarget*100)}%"></div></div>
+      ${teamTarget>0?`<div class="team-progress-track" style="margin-top:10px"><div class="team-progress-fill" style="width:${Math.round(pctOfTarget*100)}%"></div></div>
       <div class="team-progress-labels">
         <div class="team-progress-label">$0</div>
-        <div class="team-progress-label">${fmt(TEAM_TARGET/2)}</div>
-        <div class="team-progress-label">${fmt(TEAM_TARGET)}</div>
-      </div>
+        <div class="team-progress-label">${fmt(teamTarget/2)}</div>
+        <div class="team-progress-label">${fmt(teamTarget)}</div>
+      </div>`:''}
     </div>
     <div class="team-grid">${cards}</div>
     <div class="team-leaderboard">
