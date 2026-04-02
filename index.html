@@ -174,13 +174,48 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .success-msg { background: #EAF3DE; color: #27500A; padding: 10px 12px; border-radius: 6px; font-size: 12px; margin-top: 8px; }
 .loading { text-align: center; padding: 60px; color: var(--muted); font-size: 14px; }
 
+
+/* TEAM */
+.team-target-bar { background: var(--primary); border-radius: 10px; padding: 14px 20px; margin-bottom: 16px; }
+.team-target-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+.team-target-title { font-size: 11px; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.06em; }
+.team-progress-track { background: rgba(255,255,255,0.12); border-radius: 4px; height: 6px; width: 100%; }
+.team-progress-fill { height: 6px; border-radius: 4px; background: var(--green); transition: width 0.5s; }
+.team-progress-labels { display: flex; justify-content: space-between; margin-top: 6px; }
+.team-progress-label { font-size: 11px; color: rgba(255,255,255,0.5); }
+.team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+.rep-card { background: white; border-radius: 10px; border: 0.5px solid var(--border); padding: 16px; }
+.rep-rank { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.rep-rank.gold { color: #BA7517; }
+.rep-rank.silver { color: #888780; }
+.rep-rank.bronze { color: #996644; }
+.rep-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+.rep-lane { font-size: 11px; color: var(--muted); margin-bottom: 12px; }
+.rep-gp { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+.rep-gp-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
+.rep-bar-track { background: #f0f4f8; border-radius: 4px; height: 5px; margin-bottom: 10px; }
+.rep-bar-fill { height: 5px; border-radius: 4px; background: var(--green); }
+.rep-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; border-top: 0.5px solid var(--border); padding-top: 10px; }
+.rep-stat-val { font-size: 13px; font-weight: 600; color: var(--text); }
+.rep-stat-lbl { font-size: 10px; color: var(--muted); }
+.team-leaderboard { background: white; border-radius: 10px; border: 0.5px solid var(--border); padding: 16px 20px; }
+.lb-header { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
+.lb-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 0.5px solid var(--border); }
+.lb-row:last-child { border-bottom: none; }
+.lb-rank-num { font-size: 16px; font-weight: 700; min-width: 28px; }
+.lb-name { font-size: 13px; font-weight: 600; color: var(--text); flex: 1; }
+.lb-lane { font-size: 11px; color: var(--muted); }
+.lb-gp { font-size: 14px; font-weight: 700; color: var(--text); min-width: 90px; text-align: right; }
+.lb-pct { font-size: 11px; color: var(--muted); min-width: 80px; text-align: right; }
+.lb-bar-wrap { flex: 2; background: #f0f4f8; border-radius: 4px; height: 5px; }
+.lb-bar-fill { height: 5px; border-radius: 4px; background: var(--green); }
 select.finput { cursor: pointer; }
-textarea.finput { resize: none; height: 64px; }
 .detail-panel { position: fixed; right: 0; top: 0; bottom: 0; width: 380px; background: white; z-index: 100; box-shadow: -4px 0 20px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
 .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
 .detail-field { background: #f4f6f8; border-radius: 8px; padding: 10px 12px; }
 .detail-field-lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
 .detail-field-val { font-size: 13px; font-weight: 600; color: var(--text); }
+textarea.finput { resize: none; height: 64px; }
 </style>
 </head>
 <body>
@@ -217,12 +252,22 @@ textarea.finput { resize: none; height: 64px; }
       <div class="topbar-sub"><em>by CES Org.</em> &nbsp;·&nbsp; <span id="userLabel"></span>'s pipeline</div>
     </div>
     <div class="nav">
-      <button onclick="setView('pipeline')" id="nav-pipeline" class="active">Pipeline</button>
+      <button onclick="setView('team')" id="nav-team" class="active">Team</button>
+      <button onclick="setView('pipeline')" id="nav-pipeline">Pipeline</button>
       <button onclick="setView('forecast')" id="nav-forecast">Forecast</button>
       <button onclick="setView('priority')" id="nav-priority">Priority</button>
       <button onclick="setView('closed')" id="nav-closed">Closed</button>
     </div>
     <div class="topbar-actions">
+      <div style="position:relative">
+        <button id="repDropBtn" onclick="toggleRepDrop()" style="background:transparent;color:rgba(255,255,255,0.7);border:0.5px solid rgba(255,255,255,0.3);padding:5px 10px;border-radius:6px;cursor:pointer;font-size:12px;font-family:inherit;white-space:nowrap" id="repDropBtn">All reps ▾</button>
+        <div id="repDropMenu" style="display:none;position:absolute;top:110%;right:0;background:white;border:0.5px solid var(--border);border-radius:8px;z-index:200;min-width:170px;box-shadow:0 4px 16px rgba(0,0,0,0.12);padding:6px 0">
+          <div onclick="clearRepFilter()" style="padding:7px 14px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:8px" id="repAll">
+            <span id="repAllCheck" style="width:14px;height:14px;border:1.5px solid #1D9E75;border-radius:3px;background:#1D9E75;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="color:white;font-size:9px;font-weight:700">✓</span></span>
+            <span style="font-weight:600;color:var(--text)">All reps</span>
+          </div>
+        </div>
+      </div>
       <button class="btn-add" onclick="openAdd()">+ Add deal</button>
       <button class="btn-ai" onclick="runAI()">Run AI</button>
       <button class="btn-reset" onclick="resetPipeline()">Reset pipeline</button>
@@ -235,7 +280,8 @@ textarea.finput { resize: none; height: 64px; }
     <!-- METRICS -->
     <div class="metrics" id="metricsBar"></div>
     <!-- VIEWS -->
-    <div id="view-pipeline"></div>
+    <div id="view-pipeline" style="display:none"></div>
+    <div id="view-team" style="display:none"></div>
     <div id="view-priority" style="display:none"></div>
 
     <div id="view-forecast" style="display:none"></div>
@@ -305,34 +351,37 @@ let demoUser = ''
 let deals = []
 let closedDeals = []
 let nextId = 1000
-let currentView = 'pipeline'
+let currentView = 'team'
 let editingDealId = null
 let lossTarget = null
 let annualTarget = 1000000
 let monthTargets = (function(){const t={};for(let i=1;i<=12;i++)t['2026-'+String(i).padStart(2,'0')]=Math.round(1000000/12);return t})()
 let donutChart = null
+let repTargets = {}
+let repFilter = new Set()
+let repDropOpen = false
 
 const SEED = [
-  {contact:'Carlos Mendoza',company:'Andean Fresh Foods',country:'Colombia',industry:'Reefer',title:'Andean Fresh — Reefer Export Lane',value:84000,stage:'Negotiation',duration:12,date:'2026-04-01'},
-  {contact:'Maria Gutierrez',company:'TechParts LATAM',country:'Mexico',industry:'Automotive',title:'TechParts — Auto Components Export',value:120000,stage:'Proposal',duration:24,date:'2026-05-01'},
-  {contact:'Rafael Silva',company:'BioFarm Brasil',country:'Brazil',industry:'FMCG',title:'BioFarm — FCL Export Lane',value:56000,stage:'Qualified',duration:12,date:'2026-06-01'},
-  {contact:'Ana Torres',company:'Lima Exports SA',country:'Peru',industry:'FMCG',title:'Lima Exports — LCL Consolidation',value:38000,stage:'Lead',duration:6,date:'2026-07-01'},
-  {contact:'Jorge Vargas',company:'Andina Retail Group',country:'Chile',industry:'Retail',title:'Andina Retail — Full Container Export',value:95000,stage:'Proposal',duration:12,date:'2026-05-15'},
-  {contact:'Sofia Reyes',company:'CosmeticaCR',country:'Costa Rica',industry:'Lifestyle',title:'CosmeticaCR — Express Export Lane',value:27000,stage:'Negotiation',duration:6,date:'2026-04-15'},
-  {contact:'Luis Herrera',company:'Quimex Industrial',country:'Mexico',industry:'Chemicals',title:'Quimex — Hazmat Export Lane',value:145000,stage:'Qualified',duration:18,date:'2026-08-01'},
-  {contact:'Patricia Rojas',company:'AgriPeru Export',country:'Peru',industry:'Reefer',title:'AgriPeru — Reefer Export Lane',value:62000,stage:'Proposal',duration:12,date:'2026-06-15'},
-  {contact:'Diego Morales',company:'ElectroArg',country:'Argentina',industry:'Retail',title:'ElectroArg — Electronics Export',value:78000,stage:'Lead',duration:12,date:'2026-09-01'},
-  {contact:'Valentina Cruz',company:'GuateFresh SA',country:'Guatemala',industry:'Reefer',title:'GuateFresh — Perishables Export Lane',value:44000,stage:'Negotiation',duration:6,date:'2026-04-01'},
-  {contact:'Andres Fuentes',company:'ColTex Apparel',country:'Colombia',industry:'Retail',title:'ColTex — Garments Export Lane',value:33000,stage:'Lead',duration:6,date:'2026-07-15'},
-  {contact:'Isabella Mora',company:'PharmaAndes',country:'Colombia',industry:'Chemicals',title:'PharmaAndes — Pharma Consolidation',value:91000,stage:'Qualified',duration:12,date:'2026-05-01'},
-  {contact:'Marco Delgado',company:'BrazilNuts Co',country:'Brazil',industry:'FMCG',title:'BrazilNuts — Bulk Commodity Export',value:48000,stage:'Lead',duration:6,date:'2026-08-15'},
-  {contact:'Lucia Fernandez',company:'Vino del Sur',country:'Argentina',industry:'FMCG',title:'Vino del Sur — Wine Export Lane',value:67000,stage:'Proposal',duration:12,date:'2026-06-01'},
-  {contact:'Rodrigo Campos',company:'AutoMex Parts',country:'Mexico',industry:'Automotive',title:'AutoMex — Spare Parts Distribution',value:110000,stage:'Negotiation',duration:18,date:'2026-04-15'},
-  {contact:'Camila Vargas',company:'TropicFresh CR',country:'Costa Rica',industry:'Reefer',title:'TropicFresh — Pineapple Export Lane',value:52000,stage:'Qualified',duration:6,date:'2026-05-15'},
-  {contact:'Fernando Castro',company:'Ecuaflor',country:'Ecuador',industry:'Reefer',title:'Ecuaflor — Fresh Flowers Export',value:39000,stage:'Proposal',duration:12,date:'2026-07-01'},
-  {contact:'Natalia Rios',company:'BoliTex Fabrics',country:'Peru',industry:'Retail',title:'BoliTex — Textile Export Consolidation',value:29000,stage:'Lead',duration:6,date:'2026-09-15'},
-  {contact:'Sebastian Lara',company:'ChileFrut SA',country:'Chile',industry:'Reefer',title:'ChileFrut — Stone Fruit Export Lane',value:74000,stage:'Negotiation',duration:12,date:'2026-04-01'},
-  {contact:'Gabriela Mendez',company:'GuateCafe Export',country:'Guatemala',industry:'FMCG',title:'GuateCafe — Green Coffee Export',value:58000,stage:'Qualified',duration:12,date:'2026-06-01'},
+  {contact:'Carlos Mendoza',company:'Andean Fresh Foods',country:'Colombia',industry:'Reefer',title:'Andean Fresh — Reefer Export Lane',value:84000,stage:'Negotiation',duration:12,date:'2026-04-01',brought_by:'Valentina Mora'},
+  {contact:'Maria Gutierrez',company:'TechParts LATAM',country:'Mexico',industry:'Automotive',title:'TechParts — Auto Components Export',value:120000,stage:'Proposal',duration:24,date:'2026-05-01',brought_by:'Diego Salazar'},
+  {contact:'Rafael Silva',company:'BioFarm Brasil',country:'Brazil',industry:'FMCG',title:'BioFarm — FCL Export Lane',value:56000,stage:'Qualified',duration:12,date:'2026-06-01',brought_by:'Rafael Campos'},
+  {contact:'Ana Torres',company:'Lima Exports SA',country:'Peru',industry:'FMCG',title:'Lima Exports — LCL Consolidation',value:38000,stage:'Lead',duration:6,date:'2026-07-01',brought_by:'Camila Ortega'},
+  {contact:'Jorge Vargas',company:'Andina Retail Group',country:'Chile',industry:'Retail',title:'Andina Retail — Full Container Export',value:95000,stage:'Proposal',duration:12,date:'2026-05-15',brought_by:'Rafael Campos'},
+  {contact:'Sofia Reyes',company:'CosmeticaCR',country:'Costa Rica',industry:'Lifestyle',title:'CosmeticaCR — Express Export Lane',value:27000,stage:'Negotiation',duration:6,date:'2026-04-15',brought_by:'Diego Salazar'},
+  {contact:'Luis Herrera',company:'Quimex Industrial',country:'Mexico',industry:'Chemicals',title:'Quimex — Hazmat Export Lane',value:145000,stage:'Qualified',duration:18,date:'2026-08-01',brought_by:'Diego Salazar'},
+  {contact:'Patricia Rojas',company:'AgriPeru Export',country:'Peru',industry:'Reefer',title:'AgriPeru — Reefer Export Lane',value:62000,stage:'Proposal',duration:12,date:'2026-06-15',brought_by:'Camila Ortega'},
+  {contact:'Diego Morales',company:'ElectroArg',country:'Argentina',industry:'Retail',title:'ElectroArg — Electronics Export',value:78000,stage:'Lead',duration:12,date:'2026-09-01',brought_by:'Rafael Campos'},
+  {contact:'Valentina Cruz',company:'GuateFresh SA',country:'Guatemala',industry:'Reefer',title:'GuateFresh — Perishables Export Lane',value:44000,stage:'Negotiation',duration:6,date:'2026-04-01',brought_by:'Camila Ortega'},
+  {contact:'Andres Fuentes',company:'ColTex Apparel',country:'Colombia',industry:'Retail',title:'ColTex — Garments Export Lane',value:33000,stage:'Lead',duration:6,date:'2026-07-15',brought_by:'Valentina Mora'},
+  {contact:'Isabella Mora',company:'PharmaAndes',country:'Colombia',industry:'Chemicals',title:'PharmaAndes — Pharma Consolidation',value:91000,stage:'Qualified',duration:12,date:'2026-05-01',brought_by:'Valentina Mora'},
+  {contact:'Marco Delgado',company:'BrazilNuts Co',country:'Brazil',industry:'FMCG',title:'BrazilNuts — Bulk Commodity Export',value:48000,stage:'Lead',duration:6,date:'2026-08-15',brought_by:'Rafael Campos'},
+  {contact:'Lucia Fernandez',company:'Vino del Sur',country:'Argentina',industry:'FMCG',title:'Vino del Sur — Wine Export Lane',value:67000,stage:'Proposal',duration:12,date:'2026-06-01',brought_by:'Rafael Campos'},
+  {contact:'Rodrigo Campos',company:'AutoMex Parts',country:'Mexico',industry:'Automotive',title:'AutoMex — Spare Parts Distribution',value:110000,stage:'Negotiation',duration:18,date:'2026-04-15',brought_by:'Diego Salazar'},
+  {contact:'Camila Vargas',company:'TropicFresh CR',country:'Costa Rica',industry:'Reefer',title:'TropicFresh — Pineapple Export Lane',value:52000,stage:'Qualified',duration:6,date:'2026-05-15',brought_by:'Diego Salazar'},
+  {contact:'Fernando Castro',company:'Ecuaflor',country:'Ecuador',industry:'Reefer',title:'Ecuaflor — Fresh Flowers Export',value:39000,stage:'Proposal',duration:12,date:'2026-07-01',brought_by:'Camila Ortega'},
+  {contact:'Natalia Rios',company:'BoliTex Fabrics',country:'Peru',industry:'Retail',title:'BoliTex — Textile Export Consolidation',value:29000,stage:'Lead',duration:6,date:'2026-09-15',brought_by:'Camila Ortega'},
+  {contact:'Sebastian Lara',company:'ChileFrut SA',country:'Chile',industry:'Reefer',title:'ChileFrut — Stone Fruit Export Lane',value:74000,stage:'Negotiation',duration:12,date:'2026-04-01',brought_by:'Rafael Campos'},
+  {contact:'Gabriela Mendez',company:'GuateCafe Export',country:'Guatemala',industry:'FMCG',title:'GuateCafe — Green Coffee Export',value:58000,stage:'Qualified',duration:12,date:'2026-06-01',brought_by:'Camila Ortega'},
 ]
 
 // ── HELPERS ───────────────────────────────────────────────────────
@@ -377,7 +426,7 @@ function startDemo() {
       contact: s.contact, company: s.company, country: s.country,
       industry: s.industry, title: s.title, value: s.value,
       stage: s.stage, duration: s.duration, date: s.date,
-      currency: 'USD', email: '', brought_by: name,
+      currency: 'USD', email: '', brought_by: s.brought_by || name,
       calls:0, emails:0, meetings:0, proposal:false,
       loss_reason:null, loss_notes:null
     }
@@ -389,11 +438,11 @@ function startDemo() {
 
   // Seed closed deals
   const CLOSED_SEED = [
-    {contact:'Mauricio Paz',company:'PacificCargo SA',country:'Peru',industry:'Logistics',title:'PacificCargo — FCL Export Program',value:72000,stage:'Closed Won',duration:12,date:'2026-02-01',closed_outcome:'won',loss_reason:null,loss_notes:null,calls:3,emails:5,meetings:2,proposal:true},
-    {contact:'Elena Varga',company:'NordRetail Chile',country:'Chile',industry:'Retail',title:'NordRetail — Full Container Lane',value:88000,stage:'Closed Won',duration:12,date:'2026-03-01',closed_outcome:'won',loss_reason:null,loss_notes:null,calls:4,emails:6,meetings:3,proposal:true},
-    {contact:'Roberto Salas',company:'MexChem Export',country:'Mexico',industry:'Chemicals',title:'MexChem — Hazmat Consolidation',value:105000,stage:'Closed Lost',duration:18,date:'2026-03-15',closed_outcome:'lost',loss_reason:'Price',loss_notes:'Client went with a carrier offering 12% lower all-in rate. Could not match on volume discount.',calls:2,emails:4,meetings:1,proposal:true},
-    {contact:'Daniela Rios',company:'AgroBrasil Foods',country:'Brazil',industry:'FMCG',title:'AgroBrasil — Reefer Lane Proposal',value:61000,stage:'Closed Lost',duration:12,date:'2026-02-15',closed_outcome:'lost',loss_reason:'Competitor',loss_notes:'Lost to incumbent forwarder — long-standing relationship made it difficult to displace despite better rates.',calls:3,emails:3,meetings:2,proposal:true},
-    {contact:'Tomás Guerrero',company:'ColFlower Export',country:'Colombia',industry:'Reefer',title:'ColFlower — Perishables Export Lane',value:47000,stage:'Closed Lost',duration:6,date:'2026-01-15',closed_outcome:'lost',loss_reason:'No decision',loss_notes:'Budget freeze for Q1. Prospect indicated they may revisit in Q3 2026.',calls:1,emails:2,meetings:1,proposal:false},
+    {contact:'Mauricio Paz',company:'PacificCargo SA',country:'Peru',industry:'Logistics',title:'PacificCargo — FCL Export Program',value:72000,stage:'Closed Won',duration:12,date:'2026-02-01',closed_outcome:'won',loss_reason:null,loss_notes:null,calls:3,emails:5,meetings:2,proposal:true,brought_by:'Camila Ortega'},
+    {contact:'Elena Varga',company:'NordRetail Chile',country:'Chile',industry:'Retail',title:'NordRetail — Full Container Lane',value:88000,stage:'Closed Won',duration:12,date:'2026-03-01',closed_outcome:'won',loss_reason:null,loss_notes:null,calls:4,emails:6,meetings:3,proposal:true,brought_by:'Rafael Campos'},
+    {contact:'Roberto Salas',company:'MexChem Export',country:'Mexico',industry:'Chemicals',title:'MexChem — Hazmat Consolidation',value:105000,stage:'Closed Lost',duration:18,date:'2026-03-15',closed_outcome:'lost',loss_reason:'Price',loss_notes:'Client went with a carrier offering 12% lower all-in rate. Could not match on volume discount.',calls:2,emails:4,meetings:1,proposal:true,brought_by:'Diego Salazar'},
+    {contact:'Daniela Rios',company:'AgroBrasil Foods',country:'Brazil',industry:'FMCG',title:'AgroBrasil — Reefer Lane Proposal',value:61000,stage:'Closed Lost',duration:12,date:'2026-02-15',closed_outcome:'lost',loss_reason:'Competitor',loss_notes:'Lost to incumbent forwarder — long-standing relationship made it difficult to displace despite better rates.',calls:3,emails:3,meetings:2,proposal:true,brought_by:'Valentina Mora'},
+    {contact:'Tomás Guerrero',company:'ColFlower Export',country:'Colombia',industry:'Reefer',title:'ColFlower — Perishables Export Lane',value:47000,stage:'Closed Lost',duration:6,date:'2026-01-15',closed_outcome:'lost',loss_reason:'No decision',loss_notes:'Budget freeze for Q1. Prospect indicated they may revisit in Q3 2026.',calls:1,emails:2,meetings:1,proposal:false,brought_by:'Valentina Mora'},
   ]
   CLOSED_SEED.forEach(s => {
     closedDeals.push({
@@ -401,7 +450,7 @@ function startDemo() {
       contact: s.contact, company: s.company, country: s.country,
       industry: s.industry, title: s.title, value: s.value,
       stage: s.stage, duration: s.duration, date: s.date,
-      currency: 'USD', email: '', brought_by: name,
+      currency: 'USD', email: '', brought_by: s.brought_by || name,
       calls: s.calls||0, emails: s.emails||0, meetings: s.meetings||0, proposal: s.proposal||false,
       closed_outcome: s.closed_outcome,
       loss_reason: s.loss_reason, loss_notes: s.loss_notes,
@@ -411,7 +460,7 @@ function startDemo() {
   })
 
   rankDeals()
-  renderAll()
+  setView(currentView)
 }
 
 function resetPipeline() {
@@ -419,7 +468,7 @@ function resetPipeline() {
   deals = []
   closedDeals = []
   nextId = 1000
-  renderAll()
+  setView(currentView)
 }
 
 function switchUser() {
@@ -443,11 +492,19 @@ function rankDeals() {
 
 // ── VIEWS ─────────────────────────────────────────────────────────
 function setView(v) {
+  // Close detail panel when leaving pipeline
+  if (currentView === 'pipeline' && v !== 'pipeline' && pipelineDetailId) {
+    pipelineDetailId = null
+  }
   currentView = v
   document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'))
   document.getElementById('nav-'+v)?.classList.add('active')
-  ;['pipeline','priority','forecast','closed'].forEach(name => {
+  ;['pipeline','priority','forecast','closed','team'].forEach(name => {
     document.getElementById('view-'+name).style.display = name===v ? '' : 'none'
+  })
+  // Clear any stray overlays from pipeline detail panel
+  document.querySelectorAll('.overlay').forEach(o => {
+    if (!document.getElementById('dealPanel').contains(o) && !document.getElementById('lossModal').contains(o)) o.remove()
   })
   renderView(v)
 }
@@ -463,19 +520,23 @@ function renderView(v) {
   else if (v==='forecast') renderForecast()
   else if (v==='priority') renderPriority()
   else if (v==='closed') renderClosed()
+  else if (v==='team') renderTeam()
 }
 
 // ── METRICS ───────────────────────────────────────────────────────
 function renderMetrics() {
-  const totalGP = deals.reduce((s,d)=>s+d.value,0)
-  const avgWin = deals.length ? deals.reduce((s,d)=>s+d.ai_probability,0)/deals.length : 0
-  const exp2026 = calcExpected2026()
-  const gap = annualTarget > 0 ? annualTarget - exp2026 : null
+  const fd = getFilteredDeals()
+  const fc = getFilteredClosed()
+  const totalGP = fd.reduce((s,d)=>s+d.value,0)
+  const avgWin = fd.length ? fd.reduce((s,d)=>s+d.ai_probability,0)/fd.length : 0
+  const exp2026 = calcExpected2026(fd, fc)
+  const effTarget = repFilter.size > 0 && getReps().length > 0 ? Math.round(annualTarget * repFilter.size / getReps().length) : annualTarget
+  const gap = effTarget > 0 ? effTarget - exp2026 : null
   const gapVal = gap===null ? '—' : gap<=0 ? '✓ On target' : '('+fmt(gap)+')'
   const gapColor = gap===null ? 'var(--muted)' : gap<=0 ? 'var(--green)' : 'var(--red)'
   const gapSub = gap!==null ? 'vs annual target' : 'set target in Forecast'
   document.getElementById('metricsBar').innerHTML = [
-    {label:'Active deals',value:deals.length,sub:'across 4 stages',color:null},
+    {label:'Active deals',value:fd.length,sub:'across 4 stages',color:null},
     {label:'Pipeline GP',value:fmt(totalGP),sub:'total open GP',color:null},
     {label:'2026 GP Forecast',value:fmt(exp2026),sub:'won + pipeline weighted',color:null},
     {label:'2026 GP Gap',value:gapVal,sub:gapSub,color:gapColor},
@@ -489,23 +550,25 @@ function renderMetrics() {
   `).join('')
 }
 
-function calcExpected2026() {
+function calcExpected2026(fdDeals, fdClosed) {
+  const d = fdDeals || deals
+  const c = fdClosed || closedDeals
   let total = 0
-  deals.forEach(d => {
-    if (!d.date) return
-    const gp = d.value, dur = d.duration||12, prob = d.ai_probability||0
+  d.forEach(deal => {
+    if (!deal.date) return
+    const gp = deal.value, dur = deal.duration||12, prob = deal.ai_probability||0
     const monthly = (gp*prob)/dur
-    const start = new Date(d.date)
+    const start = new Date(deal.date)
     for (let i=0;i<dur;i++) {
       const dt = new Date(start.getFullYear(),start.getMonth()+i,1)
       if (dt.getFullYear()===2026) total+=monthly
     }
   })
-  closedDeals.filter(d=>d.closed_outcome==='won').forEach(d => {
-    if (!d.date) return
-    const gp = d.value, dur = d.duration||12
+  c.filter(x=>x.closed_outcome==='won').forEach(deal => {
+    if (!deal.date) return
+    const gp = deal.value, dur = deal.duration||12
     const monthly = gp/dur
-    const start = new Date(d.date)
+    const start = new Date(deal.date)
     for (let i=0;i<dur;i++) {
       const dt = new Date(start.getFullYear(),start.getMonth()+i,1)
       if (dt.getFullYear()===2026) total+=monthly
@@ -530,7 +593,7 @@ function getQuarter(dateStr) {
 
 function renderPipeline() {
   const el = document.getElementById('view-pipeline')
-  const allSorted = [...deals].sort((a,b)=>b.value-a.value).slice(0,20)
+  const allSorted = [...getFilteredDeals()].sort((a,b)=>b.value-a.value).slice(0,20)
   const maxV = Math.max(...allSorted.map(d=>d.value),1)
   const fmtGP = n => n>=1000000?(n/1000000).toFixed(1)+'M':n>=1000?Math.round(n/1000)+'K':String(n)
   const quarters = [
@@ -539,8 +602,8 @@ function renderPipeline() {
     {key:'q3',label:'Q3',range:'Jul–Sep'},
     {key:'q4',label:'Q4',range:'Oct–Dec'},
   ]
-  const qGP = q => deals.filter(d=>getQuarter(d.date)===q).reduce((s,d)=>s+d.value,0)
-  const qCount = q => deals.filter(d=>getQuarter(d.date)===q).length
+  const qGP = q => getFilteredDeals().filter(d=>getQuarter(d.date)===q).reduce((s,d)=>s+d.value,0)
+  const qCount = q => getFilteredDeals().filter(d=>getQuarter(d.date)===q).length
 
   const pills = quarters.map(q => {
     const active = pipelineQFilter === q.key
@@ -578,7 +641,7 @@ function renderPipeline() {
     : pipelineQFilter!=='all'
       ? `<span style="margin-left:auto;font-size:10px;color:var(--muted);font-style:italic">Showing ${pipelineQFilter.toUpperCase()} — click again to clear</span>` : ''
 
-  const kanbanDeals = deals.filter(d => {
+  const kanbanDeals = getFilteredDeals().filter(d => {
     const inQ = pipelineQFilter==='all' || getQuarter(d.date)===pipelineQFilter
     const inSel = !pipelineSelectedId || pipelineSelectedId===d.id
     return inQ && inSel
@@ -615,8 +678,8 @@ function renderPipeline() {
       <div style="display:flex;align-items:center;gap:14px;margin-top:8px">${legend}${hint}</div>
     </div>
     <div class="pipeline" style="max-width:1200px;margin:0 auto">${kanban}</div>
-    ${renderDetailPanel()}
   `
+  renderDetailPanel()
 }
 
 function toggleQFilter(key) {
@@ -641,10 +704,15 @@ function openDetailPanel(id) {
 
 function closeDetailPanel() {
   pipelineDetailId = null
+  const existing = document.getElementById('pipelineDetailOverlay')
+  if (existing) existing.remove()
   renderPipeline()
 }
 
 function renderDetailPanel() {
+  // Remove any existing detail panel
+  const existing = document.getElementById('pipelineDetailOverlay')
+  if (existing) existing.remove()
   if (!pipelineDetailId) return ''
   const d = deals.find(d=>d.id===pipelineDetailId)
   if (!d) return ''
@@ -662,7 +730,9 @@ function renderDetailPanel() {
   const acts = [['📞','Calls',d.calls||0],['✉','Emails',d.emails||0],['🤝','Meetings',d.meetings||0],['📄','Proposal',d.proposal?1:0]]
     .map(([icon,label,count])=>`<div style="flex:1;background:#f4f6f8;border-radius:8px;padding:10px 8px;text-align:center"><div style="font-size:16px">${icon}</div><div style="font-size:14px;font-weight:600;color:var(--text);margin-top:2px">${count}</div><div style="font-size:9px;color:var(--muted)">${label}</div></div>`).join('')
 
-  return `
+  const wrap = document.createElement('div')
+  wrap.id = 'pipelineDetailOverlay'
+  wrap.innerHTML = `
     <div class="overlay" onclick="closeDetailPanel()"></div>
     <div class="detail-panel">
       <div class="panel-header">
@@ -684,6 +754,8 @@ function renderDetailPanel() {
         <button class="btn-save" onclick="closeDetailPanel();openEdit(${d.id})">Edit deal</button>
       </div>
     </div>`
+  document.body.appendChild(wrap)
+  return ''
 }
 
 function dealCardHTML(d) {
@@ -781,7 +853,7 @@ function deleteDeal(id) {
 
 // ── PRIORITY ──────────────────────────────────────────────────────
 function renderPriority() {
-  const sorted = [...deals].sort((a,b)=>(a.priority_rank||99)-(b.priority_rank||99))
+  const sorted = [...getFilteredDeals()].sort((a,b)=>(a.priority_rank||99)-(b.priority_rank||99))
   document.getElementById('view-priority').innerHTML = `<div class="priority-list">${sorted.map((d,i)=>`
     <div class="priority-row">
       <div class="rank${i<3?' top':''}">  #${d.priority_rank}</div>
@@ -841,13 +913,13 @@ function renderForecast() {
 
   const gpByMonth = {}; const wonByMonth = {}
   months.forEach(m=>{ gpByMonth[m.key]=0; wonByMonth[m.key]=0 })
-  deals.forEach(d=>{
+  getFilteredDeals().forEach(d=>{
     if(!d.date) return
     const mp=(d.value*(d.ai_probability||0))/(d.duration||12)
     const s=new Date(d.date)
     for(let i=0;i<(d.duration||12);i++){const dt=new Date(s.getFullYear(),s.getMonth()+i,1);const k=`${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}`;if(gpByMonth[k]!==undefined)gpByMonth[k]+=mp}
   })
-  closedDeals.filter(d=>d.closed_outcome==='won').forEach(d=>{
+  getFilteredClosed().filter(d=>d.closed_outcome==='won').forEach(d=>{
     if(!d.date) return
     const mp=d.value/(d.duration||12)
     const s=new Date(d.date)
@@ -980,31 +1052,20 @@ function editMonthTarget(key) {
 
 // ── CLOSED ────────────────────────────────────────────────────────
 let closedFilter = 'all'
-function renderClosed() {
-  const won = closedDeals.filter(d=>d.closed_outcome==='won')
-  const lost = closedDeals.filter(d=>d.closed_outcome==='lost')
-  const wonVal = won.reduce((s,d)=>s+d.value,0)
-  const filtered = closedDeals.filter(d=>closedFilter==='all'?true:d.closed_outcome===closedFilter)
+let lossReasonFilter = null
 
-  // Loss reason breakdown
+function renderClosed() {
+  const fc = getFilteredClosed()
+  const won = fc.filter(d=>d.closed_outcome==='won')
+  const lost = fc.filter(d=>d.closed_outcome==='lost')
+  const wonVal = won.reduce((s,d)=>s+d.value,0)
+
+  // Apply won/lost filter first, then reason filter
+  let filtered = fc.filter(d=>closedFilter==='all'?true:d.closed_outcome===closedFilter)
+  if (lossReasonFilter) filtered = filtered.filter(d=>d.loss_reason===lossReasonFilter)
+
   const rc = {}; lost.forEach(d=>{ if(d.loss_reason) rc[d.loss_reason]=(rc[d.loss_reason]||0)+1 })
   const re = Object.entries(rc).sort((a,b)=>b[1]-a[1])
-
-  let donutHTML = ''
-  if (re.length>0) {
-    const legend = re.map(([r,c])=>{
-      const p = Math.round(c/lost.length*100)
-      const col = REASON_COLORS[r]||'#b4b2a9'
-      return `<div class="legend-item"><div class="legend-dot" style="background:${col}"></div>${r} <strong style="color:${col}">${p}%</strong> (${c})</div>`
-    }).join('')
-    donutHTML = `<div style="background:white;border-radius:10px;border:0.5px solid var(--border);padding:16px 20px;margin-bottom:20px">
-      <div style="font-size:11px;font-weight:600;color:#5a6a7a;text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px">Loss reason breakdown</div>
-      <div class="donut-wrap">
-        <div style="width:160px;height:160px"><canvas id="donutCanvas"></canvas></div>
-        <div class="donut-legend">${legend}</div>
-      </div>
-    </div>`
-  }
 
   const rows = filtered.length===0
     ? '<div style="text-align:center;padding:40px;color:var(--muted);font-size:14px">No closed deals yet.</div>'
@@ -1013,7 +1074,6 @@ function renderClosed() {
         <div style="flex:1;min-width:0;overflow:hidden">
           <span style="font-size:12px;font-weight:600;color:var(--text)">${d.company}</span>
           <span style="font-size:10px;color:var(--muted);margin-left:8px">${d.title}</span>
-          ${d.loss_notes?`<span style="font-size:10px;color:var(--muted);font-style:italic;margin-left:6px">— ${d.loss_notes}</span>`:''}
         </div>
         <div style="font-size:11px;color:var(--muted)">${d.country||''}</div>
         <div style="font-size:13px;font-weight:600;color:var(--text)">${fmt(d.value)}</div>
@@ -1022,20 +1082,39 @@ function renderClosed() {
         <button onclick="openEditClosed(${d.id})" style="background:none;border:0.5px solid var(--border);border-radius:4px;padding:3px 8px;cursor:pointer;font-size:11px;color:var(--muted)">Edit</button>
       </div>`).join('')
 
+  const filterLabel = lossReasonFilter
+    ? `<span style="font-size:12px;color:var(--muted)">Filtered by: <strong style="color:var(--text)">${lossReasonFilter}</strong></span>
+       <button onclick="clearReasonFilter()" style="font-size:11px;color:var(--blue);background:none;border:none;cursor:pointer;font-family:inherit;padding:0 4px">× Clear</button>`
+    : ''
+
   document.getElementById('view-closed').innerHTML = `
     <div style="display:flex;gap:12px;margin-bottom:20px">
       <div class="metric-card" style="flex:1"><div class="metric-label">Closed won</div><div class="metric-value" style="color:var(--green)">${won.length}</div><div class="metric-sub">${fmt(wonVal)} GP</div></div>
-      <div class="metric-card" style="flex:1"><div class="metric-label">Closed lost</div><div class="metric-value" style="color:var(--red)">${lost.length}</div><div class="metric-sub">${closedDeals.length>0?Math.round(lost.length/closedDeals.length*100)+'% loss rate':'—'}</div></div>
-      <div class="metric-card" style="flex:1"><div class="metric-label">Win rate</div><div class="metric-value">${closedDeals.length>0?Math.round(won.length/closedDeals.length*100)+'%':'—'}</div><div class="metric-sub">of all closed deals</div></div>
+      <div class="metric-card" style="flex:1"><div class="metric-label">Closed lost</div><div class="metric-value" style="color:var(--red)">${lost.length}</div><div class="metric-sub">${fc.length>0?Math.round(lost.length/fc.length*100)+'% loss rate':'—'}</div></div>
+      <div class="metric-card" style="flex:1"><div class="metric-label">Win rate</div><div class="metric-value">${fc.length>0?Math.round(won.length/fc.length*100)+'%':'—'}</div><div class="metric-sub">of all closed deals</div></div>
     </div>
-    ${donutHTML}
-    <div style="display:flex;gap:8px;margin-bottom:16px">
-      ${['all','won','lost'].map(f=>`<button class="filter-btn${closedFilter===f?' active':''}" onclick="setClosedFilter('${f}')">${f==='all'?'All':f==='won'?'Won':'Lost'}</button>`).join('')}
+    ${re.length>0?`<div style="background:white;border-radius:10px;border:0.5px solid var(--border);padding:16px 20px;margin-bottom:20px">
+      <div style="font-size:11px;font-weight:600;color:#5a6a7a;text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px">Loss reason breakdown</div>
+      <div style="display:flex;gap:24px;align-items:center;max-width:480px;margin:0 auto">
+        <div style="position:relative;width:140px;height:140px;flex-shrink:0">
+          <canvas id="donutCanvas" width="140" height="140"></canvas>
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none">
+            <div style="font-size:18px;font-weight:700;color:var(--text)" id="donutCenter">${lost.length}</div>
+            <div style="font-size:10px;color:var(--muted)">lost</div>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px;" id="donutLegend"></div>
+      </div>
+    </div>`:''}
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+      <div style="display:flex;gap:8px">
+        ${['all','won','lost'].map(f=>`<button class="filter-btn${closedFilter===f?' active':''}" onclick="setClosedFilter('${f}')">${f==='all'?'All':f==='won'?'Won':'Lost'}</button>`).join('')}
+      </div>
+      <div style="display:flex;align-items:center;gap:6px;margin-left:8px">${filterLabel}</div>
     </div>
     <div class="closed-list">${rows}</div>
   `
 
-  // Render donut
   if (re.length>0) {
     setTimeout(()=>{
       const canvas = document.getElementById('donutCanvas')
@@ -1043,11 +1122,59 @@ function renderClosed() {
       if (donutChart) donutChart.destroy()
       donutChart = new Chart(canvas, {
         type:'doughnut',
-        data:{labels:re.map(([r])=>r),datasets:[{data:re.map(([,c])=>c),backgroundColor:re.map(([r])=>REASON_COLORS[r]||'#b4b2a9'),borderWidth:0}]},
-        options:{responsive:true,maintainAspectRatio:true,cutout:'68%',plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.label}: ${ctx.parsed} (${Math.round(ctx.parsed/lost.length*100)}%)`}}}}
+        data:{
+          labels:re.map(([r])=>r),
+          datasets:[{
+            data:re.map(([,c])=>c),
+            backgroundColor:re.map(([r])=>lossReasonFilter&&lossReasonFilter!==r?'#e0e8f0':REASON_COLORS[r]||'#b4b2a9'),
+            borderWidth:0,
+            hoverOffset:4
+          }]
+        },
+        options:{
+          responsive:false,
+          cutout:'65%',
+          plugins:{
+            legend:{display:false},
+            tooltip:{enabled:false}
+          },
+          onClick:(e,els)=>{
+            if (!els.length) { clearReasonFilter(); return }
+            const reason = re[els[0].index][0]
+            toggleReasonFilter(reason)
+          }
+        }
+      })
+
+      // Build legend
+      const leg = document.getElementById('donutLegend')
+      if (!leg) return
+      re.forEach(([r,c])=>{
+        const pct = Math.round(c/lost.length*100)
+        const col = REASON_COLORS[r]||'#b4b2a9'
+        const active = lossReasonFilter===r
+        const item = document.createElement('div')
+        item.style.cssText = `display:flex;align-items:center;gap:8px;cursor:pointer;padding:5px 8px;border-radius:6px;border:1.5px solid ${active?col:'transparent'};background:${active?col+'18':'transparent'};transition:all .15s`
+        item.innerHTML = `
+          <div style="width:9px;height:9px;border-radius:2px;background:${lossReasonFilter&&!active?'#e0e8f0':col};flex-shrink:0"></div>
+          <span style="font-size:12px;font-weight:${active?600:400};color:${active?col:'var(--text)'};flex:1">${r}</span>
+          <span style="font-size:11px;font-weight:600;color:${lossReasonFilter&&!active?'#b4b2a9':col}">${c}</span>
+          <span style="font-size:11px;color:var(--muted)">${pct}%</span>`
+        item.onclick = () => toggleReasonFilter(r)
+        leg.appendChild(item)
       })
     },50)
   }
+}
+
+function toggleReasonFilter(reason) {
+  lossReasonFilter = lossReasonFilter===reason ? null : reason
+  renderClosed()
+}
+
+function clearReasonFilter() {
+  lossReasonFilter = null
+  renderClosed()
 }
 
 function setClosedFilter(f) { closedFilter=f; renderClosed() }
@@ -1180,6 +1307,291 @@ function savePanel() {
 
   closePanel()
   runAI()
+}
+
+
+// ── TEAM ──────────────────────────────────────────────────────────
+const TEAM_REPS = [
+  {
+    name: 'Diego Salazar', lane: 'Mexico & Central America',
+    deals: [
+      {company:'TechParts LATAM',title:'Auto Components Export',value:120000,stage:'Proposal',date:'2026-05-01',duration:24},
+      {company:'Quimex Industrial',title:'Hazmat Export Lane',value:145000,stage:'Qualified',date:'2026-08-01',duration:18},
+      {company:'AutoMex Parts',title:'Spare Parts Distribution',value:110000,stage:'Negotiation',date:'2026-04-15',duration:18},
+      {company:'TropicFresh CR',title:'Pineapple Export Lane',value:52000,stage:'Qualified',date:'2026-05-15',duration:6},
+      {company:'CosmeticaCR',title:'Express Export Lane',value:27000,stage:'Negotiation',date:'2026-04-15',duration:6},
+    ],
+    won: [{value:105000,date:'2026-03-15',duration:18},{value:88000,date:'2026-03-01',duration:12}]
+  },
+  {
+    name: 'Valentina Mora', lane: 'Colombia & Andean Region',
+    deals: [
+      {company:'Andean Fresh Foods',title:'Reefer Export Lane',value:84000,stage:'Negotiation',date:'2026-04-01',duration:12},
+      {company:'PharmaAndes',title:'Pharma Consolidation',value:91000,stage:'Qualified',date:'2026-05-01',duration:12},
+      {company:'ColTex Apparel',title:'Garments Export Lane',value:33000,stage:'Lead',date:'2026-07-15',duration:6},
+      {company:'ColFlower Export',title:'Perishables Export Lane',value:47000,stage:'Proposal',date:'2026-06-01',duration:6},
+    ],
+    won: [{value:72000,date:'2026-02-01',duration:12}]
+  },
+  {
+    name: 'Rafael Campos', lane: 'Brazil & Southern Cone',
+    deals: [
+      {company:'BioFarm Brasil',title:'FCL Export Lane',value:56000,stage:'Qualified',date:'2026-06-01',duration:12},
+      {company:'BrazilNuts Co',title:'Bulk Commodity Export',value:48000,stage:'Lead',date:'2026-08-15',duration:6},
+      {company:'Vino del Sur',title:'Wine Export Lane',value:67000,stage:'Proposal',date:'2026-06-01',duration:12},
+      {company:'ElectroArg',title:'Electronics Export',value:78000,stage:'Lead',date:'2026-09-01',duration:12},
+      {company:'ChileFrut SA',title:'Stone Fruit Export Lane',value:74000,stage:'Negotiation',date:'2026-04-01',duration:12},
+    ],
+    won: [{value:61000,date:'2026-02-15',duration:12}]
+  },
+  {
+    name: 'Camila Ortega', lane: 'Peru, Ecuador & Guatemala',
+    deals: [
+      {company:'Lima Exports SA',title:'LCL Consolidation',value:38000,stage:'Lead',date:'2026-07-01',duration:6},
+      {company:'AgriPeru Export',title:'Reefer Export Lane',value:62000,stage:'Proposal',date:'2026-06-15',duration:12},
+      {company:'Ecuaflor',title:'Fresh Flowers Export',value:39000,stage:'Proposal',date:'2026-07-01',duration:12},
+      {company:'GuateFresh SA',title:'Perishables Export Lane',value:44000,stage:'Negotiation',date:'2026-04-01',duration:6},
+      {company:'GuateCafe Export',title:'Green Coffee Export',value:58000,stage:'Qualified',date:'2026-06-01',duration:12},
+      {company:'BoliTex Fabrics',title:'Textile Export Consolidation',value:29000,stage:'Lead',date:'2026-09-15',duration:6},
+    ],
+    won: []
+  }
+]
+
+function distributeRepTargets() {
+  const n = TEAM_REPS.length
+  const even = annualTarget > 0 ? Math.round(annualTarget / n) : 0
+  TEAM_REPS.forEach(r => { repTargets[r.name] = even })
+}
+
+function getRepTarget(name) {
+  if (repTargets[name] == null && annualTarget > 0) distributeRepTargets()
+  return repTargets[name] || 0
+}
+
+function saveRepTarget(name, val) {
+  repTargets[name] = parseComma(val) || 0
+  renderTeam()
+}
+
+function resetRepTargets() {
+  distributeRepTargets()
+  renderTeam()
+}
+
+function repGP2026(rep) {
+  const stageW = {Lead:0.1,Qualified:0.3,Proposal:0.6,Negotiation:0.8}
+  let total = 0
+  rep.deals.forEach(d => {
+    const prob = stageW[d.stage]||0.1
+    const monthly = (d.value * prob) / d.duration
+    const start = new Date(d.date)
+    for (let i=0;i<d.duration;i++) {
+      const dt = new Date(start.getFullYear(), start.getMonth()+i, 1)
+      if (dt.getFullYear()===2026) total += monthly
+    }
+  })
+  rep.won.forEach(d => {
+    const monthly = d.value / d.duration
+    const start = new Date(d.date)
+    for (let i=0;i<d.duration;i++) {
+      const dt = new Date(start.getFullYear(), start.getMonth()+i, 1)
+      if (dt.getFullYear()===2026) total += monthly
+    }
+  })
+  return Math.round(total)
+}
+
+function renderTeam() {
+  const el = document.getElementById('view-team')
+  const teamTarget = annualTarget || 0
+  const rankColors = ['gold','silver','bronze','']
+  const rankLabels = ['🥇 #1 — Top performer','🥈 #2','🥉 #3','#4']
+  const medals = ['🥇','🥈','🥉','4️⃣']
+
+  const repsWithGP = TEAM_REPS.map(r => ({
+    ...r,
+    gp2026: repGP2026(r),
+    pipeline: r.deals.reduce((s,d)=>s+d.value,0),
+    dealCount: r.deals.length,
+    repTarget: getRepTarget(r.name)
+  }))
+  const sorted = [...repsWithGP].sort((a,b) => b.gp2026 - a.gp2026)
+  const totalGP = sorted.reduce((s,r) => s+r.gp2026, 0)
+  const maxGP = sorted[0]?.gp2026 || 1
+  const allocatedTotal = sorted.reduce((s,r) => s+r.repTarget, 0)
+  const unallocated = teamTarget - allocatedTotal
+  const pctOfTarget = teamTarget > 0 ? Math.min(1, totalGP / teamTarget) : 0
+
+  const cards = sorted.map((r, i) => {
+    const repPct = maxGP > 0 ? (r.gp2026 / maxGP) : 0
+    const vsTarget = r.repTarget > 0 ? (r.gp2026 / r.repTarget) : 0
+    const barColor = r.repTarget === 0 ? '#d0d8e4' : vsTarget >= 0.8 ? 'var(--green)' : vsTarget >= 0.5 ? 'var(--amber)' : 'var(--red)'
+    const targetPct = r.repTarget > 0 ? Math.round(vsTarget * 100) : null
+    const repName = r.name.replace(/'/g, "\'")
+    return `
+    <div class="rep-card">
+      <div class="rep-rank ${rankColors[i]}">${rankLabels[i]}</div>
+      <div class="rep-name">${r.name}</div>
+      <div class="rep-lane">${r.lane}</div>
+      <div class="rep-gp">${fmt(r.gp2026)}</div>
+      <div class="rep-gp-label">2026 GP forecast${r.repTarget>0?' · '+targetPct+'% of target':''}</div>
+      <div class="rep-bar-track"><div class="rep-bar-fill" style="width:${Math.round(repPct*100)}%;background:${barColor}"></div></div>
+      <div class="rep-stats">
+        <div class="rep-stat"><div class="rep-stat-val">${r.dealCount}</div><div class="rep-stat-lbl">Active deals</div></div>
+        <div class="rep-stat"><div class="rep-stat-val">${fmt(r.pipeline)}</div><div class="rep-stat-lbl">Pipeline GP</div></div>
+        <div class="rep-stat"><div class="rep-stat-val">${r.won.length}</div><div class="rep-stat-lbl">Closed won</div></div>
+        <div class="rep-stat"><div class="rep-stat-val">${totalGP>0?Math.round((r.gp2026/totalGP)*100):'0'}%</div><div class="rep-stat-lbl">Team share</div></div>
+      </div>
+      <div style="border-top:0.5px solid var(--border);padding-top:10px;margin-top:10px">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:5px">Individual target</div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <span style="color:var(--muted);font-size:13px">$</span>
+          <input type="text" value="${r.repTarget>0?r.repTarget.toLocaleString('en-US'):''}"
+            placeholder="${teamTarget>0?(Math.round(teamTarget/TEAM_REPS.length)).toLocaleString('en-US'):'set team target first'}"
+            style="flex:1;padding:5px 8px;border:0.5px solid var(--border);border-radius:6px;font-size:12px;font-family:inherit;color:var(--text);outline:none;"
+            onblur="saveRepTarget('${repName}', this.value)"
+            onkeydown="if(event.key==='Enter')this.blur()"
+          />
+        </div>
+      </div>
+    </div>`
+  }).join('')
+
+  const lbRows = sorted.map((r, i) => {
+    const pctOfMax = maxGP > 0 ? (r.gp2026 / maxGP) : 0
+    const teamShare = totalGP > 0 ? Math.round((r.gp2026/totalGP)*100) : 0
+    const vsTarget = r.repTarget > 0 ? Math.round((r.gp2026/r.repTarget)*100) : null
+    const barColor = vsTarget===null?'var(--green)':vsTarget>=80?'var(--green)':vsTarget>=50?'var(--amber)':'var(--red)'
+    return `
+    <div class="lb-row">
+      <div class="lb-rank-num">${medals[i]}</div>
+      <div style="flex:2">
+        <div class="lb-name">${r.name}</div>
+        <div class="lb-lane">${r.lane}</div>
+      </div>
+      <div class="lb-bar-wrap"><div class="lb-bar-fill" style="width:${Math.round(pctOfMax*100)}%;background:${barColor}"></div></div>
+      <div style="min-width:80px;text-align:right">
+        <div class="lb-gp">${fmt(r.gp2026)}</div>
+        ${r.repTarget>0?`<div style="font-size:10px;color:var(--muted)">of ${fmt(r.repTarget)}</div>`:''}
+      </div>
+      <div class="lb-pct">${vsTarget!==null?vsTarget+'% attain.':teamShare+'% of team'}</div>
+    </div>`
+  }).join('')
+
+  const allocationStatus = teamTarget > 0
+    ? `<div style="font-size:12px;color:${Math.abs(unallocated)<100?'var(--green)':'rgba(255,255,255,0.6)'};margin-top:4px">${Math.abs(unallocated)<100?'✓ Fully allocated':'Unallocated: '+fmt(Math.abs(unallocated))+(unallocated<0?' (over-allocated)':'')}</div>` : ''
+  const noTargetNote = teamTarget === 0
+    ? `<div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:8px">Set the team target in the Forecast tab to enable allocation.</div>` : ''
+
+  el.innerHTML = `
+    <div class="team-target-bar">
+      <div class="team-target-header">
+        <div>
+          <div class="team-target-title">Team GP target 2026</div>
+          <div style="font-size:20px;font-weight:700;color:white;margin-top:4px">${teamTarget>0?fmt(teamTarget):'Not set'}</div>
+          ${allocationStatus}${noTargetNote}
+        </div>
+        <div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+          <div>
+            <div class="team-target-title">Team GP forecast</div>
+            <div style="font-size:20px;font-weight:700;color:${pctOfTarget>=1?'var(--green)':'#FAEEDA'};margin-top:4px">${fmt(totalGP)} <span style="font-size:13px;font-weight:400;color:rgba(255,255,255,0.5)">${teamTarget>0?Math.round(pctOfTarget*100)+'%':''}</span></div>
+          </div>
+          <button onclick="resetRepTargets()" style="font-size:11px;padding:5px 12px;border-radius:6px;border:0.5px solid rgba(255,255,255,0.3);background:transparent;color:rgba(255,255,255,0.7);cursor:pointer;font-family:inherit;" ${teamTarget?'':'disabled'}>↺ Reset to even split</button>
+        </div>
+      </div>
+      ${teamTarget>0?`<div class="team-progress-track" style="margin-top:10px"><div class="team-progress-fill" style="width:${Math.round(pctOfTarget*100)}%"></div></div>
+      <div class="team-progress-labels">
+        <div class="team-progress-label">$0</div>
+        <div class="team-progress-label">${fmt(teamTarget/2)}</div>
+        <div class="team-progress-label">${fmt(teamTarget)}</div>
+      </div>`:''}
+    </div>
+    <div class="team-grid">${cards}</div>
+    <div class="team-leaderboard">
+      <div class="lb-header">Leaderboard — ranked by 2026 GP forecast</div>
+      ${lbRows}
+    </div>
+  `
+}
+
+// ── REP FILTER ────────────────────────────────────────────────────
+function getReps() {
+  const all = [...deals, ...closedDeals]
+  return [...new Set(all.filter(d=>d.brought_by).map(d=>d.brought_by))].sort()
+}
+
+function buildRepDropdown() {
+  const reps = getReps()
+  const menu = document.getElementById('repDropMenu')
+  if (!menu) return
+  // Remove existing rep items (keep "All reps")
+  menu.querySelectorAll('.rep-item').forEach(el => el.remove())
+  reps.forEach(rep => {
+    const checked = repFilter.has(rep)
+    const item = document.createElement('div')
+    item.className = 'rep-item'
+    item.style.cssText = 'padding:7px 14px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:8px'
+    item.innerHTML = `
+      <span class="rep-check" style="width:14px;height:14px;border:1.5px solid ${checked?'#1D9E75':'#d0d8e4'};border-radius:3px;background:${checked?'#1D9E75':'white'};display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        ${checked?'<span style="color:white;font-size:9px;font-weight:700">✓</span>':''}
+      </span>
+      <span style="color:var(--text);font-weight:${checked?600:400}">${rep}</span>`
+    item.onclick = () => toggleRep(rep)
+    menu.appendChild(item)
+  })
+  updateRepBtn()
+}
+
+function updateRepBtn() {
+  const btn = document.getElementById('repDropBtn')
+  if (!btn) return
+  btn.textContent = repFilter.size === 0 ? 'All reps ▾' : `${repFilter.size} rep${repFilter.size>1?'s':''} ▾`
+  btn.style.color = repFilter.size > 0 ? 'white' : 'rgba(255,255,255,0.7)'
+  btn.style.borderColor = repFilter.size > 0 ? 'white' : 'rgba(255,255,255,0.3)'
+  const allCheck = document.getElementById('repAllCheck')
+  if (allCheck) {
+    allCheck.style.background = repFilter.size===0 ? '#1D9E75' : 'white'
+    allCheck.style.borderColor = repFilter.size===0 ? '#1D9E75' : '#d0d8e4'
+    allCheck.innerHTML = repFilter.size===0 ? '<span style="color:white;font-size:9px;font-weight:700">✓</span>' : ''
+  }
+}
+
+function toggleRepDrop() {
+  repDropOpen = !repDropOpen
+  const menu = document.getElementById('repDropMenu')
+  if (menu) {
+    if (repDropOpen) buildRepDropdown()
+    menu.style.display = repDropOpen ? 'block' : 'none'
+  }
+}
+
+function toggleRep(rep) {
+  if (repFilter.has(rep)) repFilter.delete(rep)
+  else repFilter.add(rep)
+  buildRepDropdown()
+  renderAll()
+}
+
+function clearRepFilter() {
+  repFilter = new Set()
+  buildRepDropdown()
+  renderAll()
+}
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('#repDropBtn') && !e.target.closest('#repDropMenu')) {
+    repDropOpen = false
+    const menu = document.getElementById('repDropMenu')
+    if (menu) menu.style.display = 'none'
+  }
+})
+
+function getFilteredDeals() {
+  return repFilter.size === 0 ? deals : deals.filter(d => repFilter.has(d.brought_by))
+}
+function getFilteredClosed() {
+  return repFilter.size === 0 ? closedDeals : closedDeals.filter(d => repFilter.has(d.brought_by))
 }
 
 // ── BOOT ──────────────────────────────────────────────────────────
