@@ -52,6 +52,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .btn-ai { background: var(--green); color: white; border: none; padding: 5px 12px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; font-family: inherit; white-space: nowrap; }
 .btn-switch { background: transparent; color: rgba(255,255,255,0.4); border: 0.5px solid rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 11px; font-family: inherit; }
 .btn-reset { background: transparent; color: rgba(229,115,115,0.8); border: 0.5px solid rgba(229,115,115,0.4); padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 11px; font-family: inherit; }
+.drop-menu { position: absolute; top: 110%; right: 0; background: white; border: 0.5px solid var(--border); border-radius: 8px; z-index: 200; min-width: 170px; box-shadow: 0 4px 16px rgba(0,0,0,0.12); padding: 6px 0; max-height: 280px; overflow-y: auto; }
+.drop-item { padding: 7px 14px; font-size: 12px; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+.drop-check { width: 14px; height: 14px; border-radius: 3px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
 .main { padding: 20px 24px; flex: 1; }
 .metrics { display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 12px; margin-bottom: 20px; }
@@ -61,13 +64,12 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .metric-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
 /* PIPELINE */
-.pipeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; justify-items: stretch; }
+.pipeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
 .stage-col { background: #f8fafc; border-radius: 10px; padding: 12px; display: flex; flex-direction: column; }
 .stage-header { margin-bottom: 10px; }
 .stage-name { font-size: 12px; font-weight: 600; color: var(--text); text-transform: uppercase; letter-spacing: 0.04em; }
 .stage-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
-.stage-cards { display: flex; flex-direction: column; gap: 8px; align-items: stretch; }
-
+.stage-cards { display: flex; flex-direction: column; gap: 8px; }
 .deal-card { background: white; border-radius: 8px; border: 0.5px solid var(--border); padding: 12px; border-left: 3px solid var(--border); }
 .deal-card.hot { border-left-color: var(--green); }
 .deal-card.warm { border-left-color: var(--amber); }
@@ -90,8 +92,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .act-btn { flex: 1; background: #fafbfc; border: 0.5px solid var(--border); border-radius: 6px; padding: 5px 0; cursor: pointer; font-size: 12px; display: flex; flex-direction: column; align-items: center; gap: 1px; font-family: inherit; }
 .act-btn.locked { background: #EAF3DE; border-color: var(--green); cursor: default; }
 .act-count { font-size: 9px; color: var(--muted); font-weight: 600; }
-
-/* STAGE DROPDOWN */
 .stage-drop-wrap { position: relative; display: inline-block; }
 .stage-drop-trigger { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; cursor: pointer; display: flex; align-items: center; gap: 4px; }
 .stage-drop-menu { position: absolute; top: 100%; left: 0; background: white; border: 0.5px solid var(--border); border-radius: 6px; z-index: 50; min-width: 130px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
@@ -108,27 +108,25 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .rank { font-size: 13px; font-weight: 700; color: var(--muted); min-width: 28px; }
 .rank.top { color: var(--primary); }
 
-/* FUNNEL */
-.funnel-wrap { max-width: 680px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-.funnel-bar { border-radius: 6px; padding: 14px 20px; display: flex; justify-content: space-between; align-items: center; transition: width 0.5s; }
-.funnel-arrow { width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent; }
-
 /* FORECAST */
 .forecast-target-bar { background: var(--primary); border-radius: 10px; padding: 10px 16px; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; gap: 16px; min-height: 56px; }
-.target-label { font-size: 10px; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
 .target-input { background: rgba(255,255,255,0.15); border: 0.5px solid rgba(255,255,255,0.35); border-radius: 6px; padding: 6px 12px 6px 22px; font-size: 14px; font-weight: 500; color: white; outline: none; width: 180px; font-family: inherit; }
 .target-input::placeholder { color: rgba(255,255,255,0.4); }
-.target-divider { width: 1px; align-self: stretch; background: rgba(255,255,255,0.2); margin: 0 4px; }
-.target-monthly { font-size: 15px; font-weight: 500; color: white; }
-.target-reset { font-size: 12px; padding: 6px 12px; border-radius: 6px; border: 0.5px solid rgba(255,255,255,0.3); background: transparent; color: rgba(255,255,255,0.7); cursor: pointer; font-family: inherit; }
-.forecast-metrics { display: flex; gap: 12px; margin-bottom: 20px; }
-.forecast-chart { background: white; border-radius: 10px; border: 0.5px solid var(--border); padding: 20px 24px; }
+.chart-bars { display: flex; align-items: flex-end; gap: 6px; height: 200px; position: relative; }
+.chart-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; position: relative; height: 100%; justify-content: flex-end; }
+.chart-bar { width: 80%; border-radius: 3px 3px 0 0; opacity: 0.85; z-index: 1; }
+.chart-label { font-size: 9px; color: var(--muted); text-align: center; cursor: pointer; line-height: 1.3; }
+.dashed-line { position: absolute; left: 0; right: 0; border-top: 2px dashed var(--red); z-index: 2; }
 .month-rows { margin-top: 16px; display: flex; flex-direction: column; gap: 6px; }
 .month-row { background: white; border-radius: 8px; border: 0.5px solid var(--border); padding: 10px 16px; display: flex; align-items: center; gap: 12px; }
+.progress-bar { flex: 1; background: #f0f4f8; border-radius: 4px; height: 6px; }
+.progress-fill { height: 6px; border-radius: 4px; transition: width 0.5s; }
 
 /* CLOSED */
 .closed-list { display: flex; flex-direction: column; gap: 4px; }
 .closed-row { background: white; border-radius: 8px; border: 0.5px solid var(--border); padding: 8px 14px; display: flex; align-items: center; gap: 10px; border-left: 3px solid; border-top-left-radius: 0; border-bottom-left-radius: 0; }
+.filter-btn { padding: 6px 16px; border-radius: 20px; border: 0.5px solid var(--border); background: white; color: #5a6a7a; font-size: 12px; cursor: pointer; font-weight: 400; font-family: inherit; }
+.filter-btn.active { background: var(--primary); color: white; font-weight: 600; border-color: var(--primary); }
 
 /* MODAL / PANEL */
 .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 99; }
@@ -143,79 +141,35 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .btn-save { width: 100%; background: var(--primary); color: white; border: none; padding: 12px; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; font-family: inherit; }
 .btn-cancel { flex: 1; padding: 10px; border: 0.5px solid var(--border); border-radius: 6px; background: white; cursor: pointer; font-size: 13px; font-family: inherit; }
 .btn-confirm { flex: 1; padding: 10px; border: none; border-radius: 6px; background: var(--primary); color: white; cursor: pointer; font-size: 13px; font-weight: 600; font-family: inherit; }
-.filter-btn { padding: 6px 16px; border-radius: 20px; border: 0.5px solid var(--border); background: white; color: #5a6a7a; font-size: 12px; cursor: pointer; font-weight: 400; font-family: inherit; }
-.filter-btn.active { background: var(--primary); color: white; font-weight: 600; border-color: var(--primary); }
-
-/* LOSS MODAL */
 .loss-modal-wrap { position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 200; display: flex; align-items: center; justify-content: center; }
 .loss-modal { background: white; border-radius: 12px; width: 380px; overflow: hidden; }
 .loss-modal-header { background: var(--red); padding: 14px 20px; }
-
-/* CHART BAR */
-.chart-bars { display: flex; align-items: flex-end; gap: 6px; height: 200px; position: relative; }
-.chart-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; position: relative; height: 100%; justify-content: flex-end; }
-.chart-bar { width: 80%; border-radius: 3px 3px 0 0; opacity: 0.85; z-index: 1; }
-.chart-label { font-size: 9px; color: var(--muted); text-align: center; cursor: pointer; line-height: 1.3; }
-.dashed-line { position: absolute; left: 0; right: 0; border-top: 2px dashed var(--red); z-index: 2; }
-
-/* DONUT */
-.donut-wrap { display: flex; flex-direction: column; align-items: center; gap: 16px; }
-.donut-legend { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 20px; }
-.legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; }
-.legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
-
-.pipeline-chart-wrap { background: white; border-radius: 10px; border: 0.5px solid var(--border); padding: 20px 24px; margin-bottom: 20px; }
-.pipeline-bars { display: flex; align-items: flex-end; gap: 8px; height: 160px; overflow-x: auto; padding-bottom: 8px; justify-content: center; }
-.pipeline-bar-col { display: flex; flex-direction: column; align-items: center; gap: 4px; min-width: 52px; flex: 0 0 52px; }
-.progress-bar { flex: 1; background: #f0f4f8; border-radius: 4px; height: 6px; }
-.progress-fill { height: 6px; border-radius: 4px; transition: width 0.5s; }
-
-.error-msg { background: #FCEBEB; color: #A32D2D; padding: 10px 12px; border-radius: 6px; font-size: 12px; margin-top: 8px; }
-.success-msg { background: #EAF3DE; color: #27500A; padding: 10px 12px; border-radius: 6px; font-size: 12px; margin-top: 8px; }
-.loading { text-align: center; padding: 60px; color: var(--muted); font-size: 14px; }
-
-
-/* TEAM */
-.team-target-bar { background: var(--primary); border-radius: 10px; padding: 14px 20px; margin-bottom: 16px; }
-.team-target-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-.team-target-title { font-size: 11px; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 0.06em; }
-.team-progress-track { background: rgba(255,255,255,0.12); border-radius: 4px; height: 6px; width: 100%; }
-.team-progress-fill { height: 6px; border-radius: 4px; background: var(--green); transition: width 0.5s; }
-.team-progress-labels { display: flex; justify-content: space-between; margin-top: 6px; }
-.team-progress-label { font-size: 11px; color: rgba(255,255,255,0.5); }
-.team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
-.rep-card { background: white; border-radius: 10px; border: 0.5px solid var(--border); padding: 16px; }
-.rep-rank { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
-.rep-rank.gold { color: #BA7517; }
-.rep-rank.silver { color: #888780; }
-.rep-rank.bronze { color: #996644; }
-.rep-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
-.rep-lane { font-size: 11px; color: var(--muted); margin-bottom: 12px; }
-.rep-gp { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 2px; }
-.rep-gp-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 10px; }
-.rep-bar-track { background: #f0f4f8; border-radius: 4px; height: 5px; margin-bottom: 10px; }
-.rep-bar-fill { height: 5px; border-radius: 4px; background: var(--green); }
-.rep-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; border-top: 0.5px solid var(--border); padding-top: 10px; }
-.rep-stat-val { font-size: 13px; font-weight: 600; color: var(--text); }
-.rep-stat-lbl { font-size: 10px; color: var(--muted); }
-.team-leaderboard { background: white; border-radius: 10px; border: 0.5px solid var(--border); padding: 16px 20px; }
-.lb-header { font-size: 11px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }
-.lb-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 0.5px solid var(--border); }
-.lb-row:last-child { border-bottom: none; }
-.lb-rank-num { font-size: 16px; font-weight: 700; min-width: 28px; }
-.lb-name { font-size: 13px; font-weight: 600; color: var(--text); flex: 1; }
-.lb-lane { font-size: 11px; color: var(--muted); }
-.lb-gp { font-size: 14px; font-weight: 700; color: var(--text); min-width: 90px; text-align: right; }
-.lb-pct { font-size: 11px; color: var(--muted); min-width: 80px; text-align: right; }
-.lb-bar-wrap { flex: 2; background: #f0f4f8; border-radius: 4px; height: 5px; }
-.lb-bar-fill { height: 5px; border-radius: 4px; background: var(--green); }
+textarea.finput { resize: none; height: 64px; }
 select.finput { cursor: pointer; }
 .detail-panel { position: fixed; right: 0; top: 0; bottom: 0; width: 380px; background: white; z-index: 100; box-shadow: -4px 0 20px rgba(0,0,0,0.1); display: flex; flex-direction: column; }
 .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
 .detail-field { background: #f4f6f8; border-radius: 8px; padding: 10px 12px; }
 .detail-field-lbl { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 3px; }
 .detail-field-val { font-size: 13px; font-weight: 600; color: var(--text); }
-textarea.finput { resize: none; height: 64px; }
+.error-msg { background: #FCEBEB; color: #A32D2D; padding: 10px 12px; border-radius: 6px; font-size: 12px; margin-top: 8px; }
+
+/* PIPELINE CHART */
+.pipeline-chart-wrap { background: white; border-radius: 10px; border: 0.5px solid var(--border); padding: 14px 18px; margin-bottom: 20px; }
+.pipeline-bars { display: flex; align-items: flex-end; gap: 6px; height: 180px; overflow-x: auto; padding-bottom: 20px; padding-top: 20px; }
+.pipeline-bar-col { display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 52px; flex: 0 0 52px; cursor: pointer; transition: opacity 0.2s; }
+
+/* TEAM */
+.team-target-bar { background: var(--primary); border-radius: 10px; padding: 14px 20px; margin-bottom: 16px; }
+.team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+.rep-card { background: white; border-radius: 10px; border: 0.5px solid var(--border); padding: 16px; }
+.rep-rank { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+.rep-rank.gold { color: #BA7517; }
+.rep-rank.silver { color: #888780; }
+.rep-rank.bronze { color: #996644; }
+.rep-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; border-top: 0.5px solid var(--border); padding-top: 10px; margin-bottom: 12px; }
+.team-leaderboard { background: white; border-radius: 10px; border: 0.5px solid var(--border); padding: 16px 20px; }
+.lb-row { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 0.5px solid var(--border); }
+.lb-row:last-child { border-bottom: none; }
 </style>
 </head>
 <body>
@@ -242,7 +196,6 @@ textarea.finput { resize: none; height: 64px; }
 
 <!-- APP -->
 <div id="app">
-  <!-- TOPBAR -->
   <div class="topbar">
     <div class="topbar-brand">
       <div class="topbar-title">
@@ -259,14 +212,15 @@ textarea.finput { resize: none; height: 64px; }
       <button onclick="setView('closed')" id="nav-closed">Closed</button>
     </div>
     <div class="topbar-actions">
-      <div style="position:relative">
-        <button id="repDropBtn" onclick="toggleRepDrop()" style="background:transparent;color:rgba(255,255,255,0.7);border:0.5px solid rgba(255,255,255,0.3);padding:5px 10px;border-radius:6px;cursor:pointer;font-size:12px;font-family:inherit;white-space:nowrap" id="repDropBtn">All reps ▾</button>
-        <div id="repDropMenu" style="display:none;position:absolute;top:110%;right:0;background:white;border:0.5px solid var(--border);border-radius:8px;z-index:200;min-width:170px;box-shadow:0 4px 16px rgba(0,0,0,0.12);padding:6px 0">
-          <div onclick="clearRepFilter()" style="padding:7px 14px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:8px" id="repAll">
-            <span id="repAllCheck" style="width:14px;height:14px;border:1.5px solid #1D9E75;border-radius:3px;background:#1D9E75;display:flex;align-items:center;justify-content:center;flex-shrink:0"><span style="color:white;font-size:9px;font-weight:700">✓</span></span>
-            <span style="font-weight:600;color:var(--text)">All reps</span>
-          </div>
-        </div>
+      <!-- Rep filter -->
+      <div style="position:relative" id="repDropWrap">
+        <button id="repDropBtn" onclick="toggleRepDrop()" style="background:transparent;color:rgba(255,255,255,0.7);border:0.5px solid rgba(255,255,255,0.3);padding:5px 10px;border-radius:6px;cursor:pointer;font-size:12px;font-family:inherit;white-space:nowrap">All reps ▾</button>
+        <div id="repDropMenu" class="drop-menu" style="display:none"></div>
+      </div>
+      <!-- Country filter -->
+      <div style="position:relative" id="countryDropWrap">
+        <button id="countryDropBtn" onclick="toggleCountryDrop()" style="background:transparent;color:rgba(255,255,255,0.7);border:0.5px solid rgba(255,255,255,0.3);padding:5px 10px;border-radius:6px;cursor:pointer;font-size:12px;font-family:inherit;white-space:nowrap">All countries ▾</button>
+        <div id="countryDropMenu" class="drop-menu" style="display:none"></div>
       </div>
       <button class="btn-add" onclick="openAdd()">+ Add deal</button>
       <button class="btn-ai" onclick="runAI()">Run AI</button>
@@ -275,21 +229,17 @@ textarea.finput { resize: none; height: 64px; }
     </div>
   </div>
 
-  <!-- MAIN -->
   <div class="main">
-    <!-- METRICS -->
     <div class="metrics" id="metricsBar"></div>
-    <!-- VIEWS -->
     <div id="view-pipeline" style="display:none"></div>
     <div id="view-team" style="display:none"></div>
     <div id="view-priority" style="display:none"></div>
-
     <div id="view-forecast" style="display:none"></div>
     <div id="view-closed" style="display:none"></div>
   </div>
 </div>
 
-<!-- MODALS -->
+<!-- DEAL PANEL -->
 <div id="dealPanel" style="display:none">
   <div class="overlay" onclick="closePanel()"></div>
   <div class="side-panel">
@@ -307,6 +257,7 @@ textarea.finput { resize: none; height: 64px; }
   </div>
 </div>
 
+<!-- LOSS MODAL -->
 <div id="lossModal" style="display:none">
   <div class="loss-modal-wrap">
     <div class="loss-modal">
@@ -337,7 +288,7 @@ textarea.finput { resize: none; height: 64px; }
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <script>
-// ── DATA ──────────────────────────────────────────────────────────
+// ── CONSTANTS ────────────────────────────────────────────────────
 const STAGES = ['Lead','Qualified','Proposal','Negotiation']
 const ALL_STAGES = [...STAGES,'Closed Won','Closed Lost']
 const LOSS_REASONS = ['Price','Competitor','No decision','Timing','Relationship','Out of scope','Other']
@@ -347,6 +298,7 @@ const COUNTRIES = ['Mexico','Colombia','Brazil','Peru','Argentina','Chile','Cost
 const INDUSTRIES = ['FMCG','Reefer','Retail','Automotive','Chemicals','Logistics','Lifestyle','Other']
 const CURRENCIES = ['USD','EUR','GBP','BRL','MXN']
 
+// ── STATE ────────────────────────────────────────────────────────
 let demoUser = ''
 let deals = []
 let closedDeals = []
@@ -355,12 +307,20 @@ let currentView = 'team'
 let editingDealId = null
 let lossTarget = null
 let annualTarget = 1000000
-let monthTargets = (function(){const t={};for(let i=1;i<=12;i++)t['2026-'+String(i).padStart(2,'0')]=Math.round(1000000/12);return t})()
-let donutChart = null
+let monthTargets = {}
 let repTargets = {}
 let repFilter = new Set()
+let countryFilter = new Set()
 let repDropOpen = false
+let countryDropOpen = false
+let donutChart = null
+let pipelineQFilter = 'all'
+let pipelineSelectedId = null
+let pipelineDetailId = null
+let closedFilter = 'all'
+let lossReasonFilter = null
 
+// ── SEED DATA ────────────────────────────────────────────────────
 const SEED = [
   {contact:'Carlos Mendoza',company:'Andean Fresh Foods',country:'Colombia',industry:'Reefer',title:'Andean Fresh — Reefer Export Lane',value:84000,stage:'Negotiation',duration:12,date:'2026-04-01',brought_by:'Valentina Mora'},
   {contact:'Maria Gutierrez',company:'TechParts LATAM',country:'Mexico',industry:'Automotive',title:'TechParts — Auto Components Export',value:120000,stage:'Proposal',duration:24,date:'2026-05-01',brought_by:'Diego Salazar'},
@@ -384,7 +344,32 @@ const SEED = [
   {contact:'Gabriela Mendez',company:'GuateCafe Export',country:'Guatemala',industry:'FMCG',title:'GuateCafe — Green Coffee Export',value:58000,stage:'Qualified',duration:12,date:'2026-06-01',brought_by:'Camila Ortega'},
 ]
 
-// ── HELPERS ───────────────────────────────────────────────────────
+const CLOSED_SEED = [
+  {contact:'Mauricio Paz',company:'PacificCargo SA',country:'Peru',industry:'Logistics',title:'PacificCargo — FCL Export Program',value:72000,stage:'Closed Won',duration:12,date:'2026-02-01',closed_outcome:'won',loss_reason:null,loss_notes:null,calls:3,emails:5,meetings:2,proposal:true,brought_by:'Camila Ortega'},
+  {contact:'Elena Varga',company:'NordRetail Chile',country:'Chile',industry:'Retail',title:'NordRetail — Full Container Lane',value:88000,stage:'Closed Won',duration:12,date:'2026-03-01',closed_outcome:'won',loss_reason:null,loss_notes:null,calls:4,emails:6,meetings:3,proposal:true,brought_by:'Rafael Campos'},
+  {contact:'Roberto Salas',company:'MexChem Export',country:'Mexico',industry:'Chemicals',title:'MexChem — Hazmat Consolidation',value:105000,stage:'Closed Lost',duration:18,date:'2026-03-15',closed_outcome:'lost',loss_reason:'Price',loss_notes:'Client went with a carrier offering 12% lower all-in rate.',calls:2,emails:4,meetings:1,proposal:true,brought_by:'Diego Salazar'},
+  {contact:'Daniela Rios',company:'AgroBrasil Foods',country:'Brazil',industry:'FMCG',title:'AgroBrasil — Reefer Lane Proposal',value:61000,stage:'Closed Lost',duration:12,date:'2026-02-15',closed_outcome:'lost',loss_reason:'Competitor',loss_notes:'Lost to incumbent forwarder — long-standing relationship.',calls:3,emails:3,meetings:2,proposal:true,brought_by:'Valentina Mora'},
+  {contact:'Tomás Guerrero',company:'ColFlower Export',country:'Colombia',industry:'Reefer',title:'ColFlower — Perishables Export Lane',value:47000,stage:'Closed Lost',duration:6,date:'2026-01-15',closed_outcome:'lost',loss_reason:'No decision',loss_notes:'Budget freeze for Q1. May revisit Q3 2026.',calls:1,emails:2,meetings:1,proposal:false,brought_by:'Valentina Mora'},
+  {contact:'PR Textile Corp',company:'PR Textile Export Co',country:'Peru',industry:'Retail',title:'PR Textile — Export Lane',value:96000,stage:'Closed Won',duration:12,date:'2025-08-01',closed_outcome:'won',loss_reason:null,loss_notes:null,calls:3,emails:4,meetings:2,proposal:true,brought_by:'Camila Ortega'},
+]
+
+// ── DATE HELPERS (timezone-safe) ─────────────────────────────────
+const gY = s => s ? parseInt(s.slice(0,4)) : null
+const gM = s => s ? parseInt(s.slice(5,7)) - 1 : null // 0-indexed
+
+function gp2026Slice(gp, dur, dateStr, prob=1) {
+  if (!dateStr) return 0
+  const startY = gY(dateStr), startM = gM(dateStr)
+  const monthly = (gp * prob) / dur
+  let total = 0
+  for (let i=0; i<dur; i++) {
+    const yr = startY + Math.floor((startM + i) / 12)
+    if (yr === 2026) total += monthly
+  }
+  return total
+}
+
+// ── HELPERS ──────────────────────────────────────────────────────
 const fmt = n => n ? '$'+Number(n).toLocaleString('en-US',{maximumFractionDigits:0}) : '$0'
 const pct = n => n ? Math.round(n*100)+'%' : '0%'
 const fmtComma = n => n ? Number(n).toLocaleString('en-US') : ''
@@ -392,26 +377,61 @@ const parseComma = s => Number(String(s).replace(/,/g,''))||0
 
 function scoreDeal(deal) {
   const stageW = {Lead:0.1,Qualified:0.3,Proposal:0.6,Negotiation:0.8,'Closed Won':1,'Closed Lost':0}
-  const actBonus = Math.min(0.2, ((deal.calls||0)*0.03+(deal.emails||0)*0.02+(deal.meetings||0)*0.05+(deal.proposal?0.08:0)))
+  const actBonus = Math.min(0.2,((deal.calls||0)*0.03+(deal.emails||0)*0.02+(deal.meetings||0)*0.05+(deal.proposal?0.08:0)))
   const base = (stageW[deal.stage]||0.1) + actBonus
   const prob = Math.min(0.95, base)
   const score = Math.round(prob*100*0.7 + (deal.value/200000)*30)
   return {ai_probability: prob, lead_score: Math.min(100,score)}
 }
 
-function badgeClass(score) {
-  if (score >= 60) return 'green'
-  if (score >= 30) return 'amber'
-  return 'gray'
+function badgeClass(score) { return score>=60?'green':score>=30?'amber':'gray' }
+function priorityClass(score) { return score>=60?'hot':score>=30?'warm':'cold' }
+
+function rankDeals() {
+  const sorted = [...deals].sort((a,b)=>b.lead_score-a.lead_score)
+  sorted.forEach((d,i)=>d.priority_rank=i+1)
 }
 
-function priorityClass(score) {
-  if (score >= 60) return 'hot'
-  if (score >= 30) return 'warm'
-  return 'cold'
+// ── FILTERS ──────────────────────────────────────────────────────
+function getFilteredDeals() {
+  return deals
+    .filter(d => repFilter.size===0 || repFilter.has(d.brought_by||'Unassigned'))
+    .filter(d => countryFilter.size===0 || countryFilter.has(d.country||'Unknown'))
+}
+function getFilteredClosed() {
+  return closedDeals
+    .filter(d => repFilter.size===0 || repFilter.has(d.brought_by||'Unassigned'))
+    .filter(d => countryFilter.size===0 || countryFilter.has(d.country||'Unknown'))
+}
+function getReps() {
+  const all = [...deals,...closedDeals]
+  const named = [...new Set(all.filter(d=>d.brought_by).map(d=>d.brought_by))].sort()
+  const hasUnassigned = all.some(d=>!d.brought_by)
+  return hasUnassigned ? [...named,'Unassigned'] : named
+}
+function getCountries() {
+  const all = [...deals,...closedDeals]
+  return [...new Set(all.filter(d=>d.country).map(d=>d.country))].sort()
 }
 
-// ── INIT ──────────────────────────────────────────────────────────
+// ── GP CALCULATIONS ──────────────────────────────────────────────
+function calcPipeline2026(fd, fc) {
+  const wonGP = (fc||getFilteredClosed()).filter(d=>d.closed_outcome==='won')
+    .reduce((s,d)=>s+gp2026Slice(d.value,d.duration||12,d.date),0)
+  const activeGP = (fd||getFilteredDeals())
+    .reduce((s,d)=>s+gp2026Slice(d.value,d.duration||12,d.date),0)
+  return {total: wonGP+activeGP, won: wonGP}
+}
+
+function calcExpected2026(fd, fc) {
+  const d = fd||getFilteredDeals(), c = fc||getFilteredClosed()
+  const wonPart = c.filter(x=>x.closed_outcome==='won')
+    .reduce((s,x)=>s+gp2026Slice(x.value,x.duration||12,x.date),0)
+  const pipePart = d.reduce((s,x)=>s+gp2026Slice(x.value,x.duration||12,x.date,x.ai_probability||0),0)
+  return wonPart + pipePart
+}
+
+// ── INIT ─────────────────────────────────────────────────────────
 function startDemo() {
   const name = document.getElementById('nameInput').value.trim()
   if (!name) return
@@ -419,327 +439,185 @@ function startDemo() {
   document.getElementById('userLabel').textContent = name
   document.getElementById('welcome').style.display = 'none'
   document.getElementById('app').style.display = 'flex'
-  // Seed deals
-  SEED.forEach((s,i) => {
-    const d = {
-      id: nextId++,
-      contact: s.contact, company: s.company, country: s.country,
-      industry: s.industry, title: s.title, value: s.value,
-      stage: s.stage, duration: s.duration, date: s.date,
-      currency: 'USD', email: '', brought_by: s.brought_by || name,
-      calls:0, emails:0, meetings:0, proposal:false,
-      loss_reason:null, loss_notes:null
-    }
-    const sc = scoreDeal(d)
-    d.ai_probability = sc.ai_probability
-    d.lead_score = sc.lead_score
+
+  SEED.forEach(s => {
+    const d = {id:nextId++,contact:s.contact,company:s.company,country:s.country,industry:s.industry,title:s.title,value:s.value,stage:s.stage,duration:s.duration,date:s.date,currency:'USD',email:'',brought_by:s.brought_by||name,calls:0,emails:0,meetings:0,proposal:false,loss_reason:null,loss_notes:null}
+    const sc = scoreDeal(d); d.ai_probability=sc.ai_probability; d.lead_score=sc.lead_score
     deals.push(d)
   })
-
-  // Seed closed deals
-  const CLOSED_SEED = [
-    {contact:'Mauricio Paz',company:'PacificCargo SA',country:'Peru',industry:'Logistics',title:'PacificCargo — FCL Export Program',value:72000,stage:'Closed Won',duration:12,date:'2026-02-01',closed_outcome:'won',loss_reason:null,loss_notes:null,calls:3,emails:5,meetings:2,proposal:true,brought_by:'Camila Ortega'},
-    {contact:'Elena Varga',company:'NordRetail Chile',country:'Chile',industry:'Retail',title:'NordRetail — Full Container Lane',value:88000,stage:'Closed Won',duration:12,date:'2026-03-01',closed_outcome:'won',loss_reason:null,loss_notes:null,calls:4,emails:6,meetings:3,proposal:true,brought_by:'Rafael Campos'},
-    {contact:'Roberto Salas',company:'MexChem Export',country:'Mexico',industry:'Chemicals',title:'MexChem — Hazmat Consolidation',value:105000,stage:'Closed Lost',duration:18,date:'2026-03-15',closed_outcome:'lost',loss_reason:'Price',loss_notes:'Client went with a carrier offering 12% lower all-in rate. Could not match on volume discount.',calls:2,emails:4,meetings:1,proposal:true,brought_by:'Diego Salazar'},
-    {contact:'Daniela Rios',company:'AgroBrasil Foods',country:'Brazil',industry:'FMCG',title:'AgroBrasil — Reefer Lane Proposal',value:61000,stage:'Closed Lost',duration:12,date:'2026-02-15',closed_outcome:'lost',loss_reason:'Competitor',loss_notes:'Lost to incumbent forwarder — long-standing relationship made it difficult to displace despite better rates.',calls:3,emails:3,meetings:2,proposal:true,brought_by:'Valentina Mora'},
-    {contact:'Tomás Guerrero',company:'ColFlower Export',country:'Colombia',industry:'Reefer',title:'ColFlower — Perishables Export Lane',value:47000,stage:'Closed Lost',duration:6,date:'2026-01-15',closed_outcome:'lost',loss_reason:'No decision',loss_notes:'Budget freeze for Q1. Prospect indicated they may revisit in Q3 2026.',calls:1,emails:2,meetings:1,proposal:false,brought_by:'Valentina Mora'},
-  ]
   CLOSED_SEED.forEach(s => {
-    closedDeals.push({
-      id: nextId++,
-      contact: s.contact, company: s.company, country: s.country,
-      industry: s.industry, title: s.title, value: s.value,
-      stage: s.stage, duration: s.duration, date: s.date,
-      currency: 'USD', email: '', brought_by: s.brought_by || name,
-      calls: s.calls||0, emails: s.emails||0, meetings: s.meetings||0, proposal: s.proposal||false,
-      closed_outcome: s.closed_outcome,
-      loss_reason: s.loss_reason, loss_notes: s.loss_notes,
-      ai_probability: s.closed_outcome==='won'?0.95:0.1,
-      lead_score: s.closed_outcome==='won'?85:15
-    })
+    closedDeals.push({id:nextId++,contact:s.contact,company:s.company,country:s.country,industry:s.industry,title:s.title,value:s.value,stage:s.stage,duration:s.duration,date:s.date,currency:'USD',email:'',brought_by:s.brought_by||name,calls:s.calls||0,emails:s.emails||0,meetings:s.meetings||0,proposal:s.proposal||false,closed_outcome:s.closed_outcome,loss_reason:s.loss_reason,loss_notes:s.loss_notes,ai_probability:s.closed_outcome==='won'?0.95:0.1,lead_score:s.closed_outcome==='won'?85:15})
   })
 
+  distributeAnnual(annualTarget)
   rankDeals()
-  setView(currentView)
+  setView('team')
 }
 
 function resetPipeline() {
-  if (!confirm('This will remove all deals from your pipeline. Your session will remain active. Continue?')) return
-  deals = []
-  closedDeals = []
-  nextId = 1000
-  setView(currentView)
+  if (!confirm('Remove all deals from your pipeline?')) return
+  deals=[]; closedDeals=[]; nextId=1000; renderAll()
 }
 
 function switchUser() {
-  deals = []; closedDeals = []; nextId = 1000
-  annualTarget = 0; monthTargets = {}
-  document.getElementById('app').style.display = 'none'
-  document.getElementById('welcome').style.display = 'flex'
-  document.getElementById('nameInput').value = ''
+  deals=[]; closedDeals=[]; nextId=1000; annualTarget=0; monthTargets={}; repTargets={}
+  document.getElementById('app').style.display='none'
+  document.getElementById('welcome').style.display='flex'
+  document.getElementById('nameInput').value=''
 }
 
 function runAI() {
-  deals.forEach(d => { const sc = scoreDeal(d); d.ai_probability = sc.ai_probability; d.lead_score = sc.lead_score })
-  rankDeals()
-  renderAll()
+  deals.forEach(d=>{const sc=scoreDeal(d);d.ai_probability=sc.ai_probability;d.lead_score=sc.lead_score})
+  rankDeals(); renderAll()
 }
 
-function rankDeals() {
-  const sorted = [...deals].sort((a,b) => b.lead_score - a.lead_score)
-  sorted.forEach((d,i) => d.priority_rank = i+1)
-}
-
-// ── VIEWS ─────────────────────────────────────────────────────────
+// ── VIEWS ────────────────────────────────────────────────────────
 function setView(v) {
-  // Close detail panel when leaving pipeline
-  if (currentView === 'pipeline' && v !== 'pipeline' && pipelineDetailId) {
-    pipelineDetailId = null
-  }
-  currentView = v
-  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'))
+  if (currentView==='pipeline' && v!=='pipeline' && pipelineDetailId) pipelineDetailId=null
+  currentView=v
+  document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'))
   document.getElementById('nav-'+v)?.classList.add('active')
-  ;['pipeline','priority','forecast','closed','team'].forEach(name => {
-    document.getElementById('view-'+name).style.display = name===v ? '' : 'none'
+  ;['pipeline','priority','forecast','closed','team'].forEach(n=>{
+    document.getElementById('view-'+n).style.display=n===v?'':'none'
   })
-  // Clear any stray overlays from pipeline detail panel
-  document.querySelectorAll('.overlay').forEach(o => {
-    if (!document.getElementById('dealPanel').contains(o) && !document.getElementById('lossModal').contains(o)) o.remove()
+  document.querySelectorAll('.overlay').forEach(o=>{
+    if(!document.getElementById('dealPanel').contains(o)&&!document.getElementById('lossModal').contains(o)) o.remove()
   })
   renderView(v)
 }
 
-function renderAll() {
-  renderMetrics()
-  renderView(currentView)
-}
-
+function renderAll() { renderMetrics(); renderView(currentView) }
 function renderView(v) {
   renderMetrics()
-  if (v==='pipeline') renderPipeline()
-  else if (v==='forecast') renderForecast()
-  else if (v==='priority') renderPriority()
-  else if (v==='closed') renderClosed()
-  else if (v==='team') renderTeam()
+  buildRepDropdown(); buildCountryDropdown()
+  if(v==='pipeline') renderPipeline()
+  else if(v==='forecast') renderForecast()
+  else if(v==='priority') renderPriority()
+  else if(v==='closed') renderClosed()
+  else if(v==='team') renderTeam()
 }
 
-// ── METRICS ───────────────────────────────────────────────────────
+// ── METRICS ──────────────────────────────────────────────────────
 function renderMetrics() {
-  const fd = getFilteredDeals()
-  const fc = getFilteredClosed()
-  const totalGP = fd.reduce((s,d)=>s+d.value,0)
-  const avgWin = fd.length ? fd.reduce((s,d)=>s+d.ai_probability,0)/fd.length : 0
-  const exp2026 = calcExpected2026(fd, fc)
-  const effTarget = repFilter.size > 0 && getReps().length > 0 ? Math.round(annualTarget * repFilter.size / getReps().length) : annualTarget
-  const gap = effTarget > 0 ? effTarget - exp2026 : null
-  const gapVal = gap===null ? '—' : gap<=0 ? '✓ On target' : '('+fmt(gap)+')'
-  const gapColor = gap===null ? 'var(--muted)' : gap<=0 ? 'var(--green)' : 'var(--red)'
-  const gapSub = gap!==null ? 'vs annual target' : 'set target in Forecast'
-  document.getElementById('metricsBar').innerHTML = [
+  const fd=getFilteredDeals(), fc=getFilteredClosed()
+  const pip=calcPipeline2026(fd,fc)
+  const exp2026=calcExpected2026(fd,fc)
+  const effTarget=repFilter.size>0&&getReps().filter(r=>r!=='Unassigned').length>0
+    ? Math.round(annualTarget*repFilter.size/getReps().filter(r=>r!=='Unassigned').length)
+    : annualTarget
+  const gap=effTarget>0?effTarget-exp2026:null
+  const gapVal=gap===null?'—':gap<=0?'✓ On target':'('+fmt(gap)+')'
+  const gapColor=gap===null?'var(--muted)':gap<=0?'var(--green)':'var(--red)'
+  const attainment=pip.total>0?Math.round(exp2026/pip.total*100)+'%':'—'
+
+  document.getElementById('metricsBar').innerHTML=[
     {label:'Active deals',value:fd.length,sub:'across 4 stages',color:null},
-    {label:'Pipeline GP',value:fmt(totalGP),sub:'total open GP',color:null},
+    {label:'Pipeline GP 2026',value:fmt(pip.total),sub:fmt(pip.won)+' confirmed won',color:null},
     {label:'2026 GP Forecast',value:fmt(exp2026),sub:'won + pipeline weighted',color:null},
-    {label:'2026 GP Gap',value:gapVal,sub:gapSub,color:gapColor},
-    {label:'Avg win probability',value:Math.round(avgWin*100)+'%',sub:'AI model v1.0',color:null},
-  ].map(m=>`
-    <div class="metric-card">
-      <div class="metric-label">${m.label}</div>
-      <div class="metric-value" style="${m.color?'color:'+m.color:''}">${m.value}</div>
-      <div class="metric-sub">${m.sub}</div>
-    </div>
-  `).join('')
+    {label:'2026 GP Gap',value:gapVal,sub:gap!==null?'vs annual target':'set target in Forecast',color:gapColor},
+    {label:'Attainment rate',value:attainment,sub:'weighted forecast / pipeline GP 2026',color:null},
+  ].map(m=>`<div class="metric-card"><div class="metric-label">${m.label}</div><div class="metric-value" style="${m.color?'color:'+m.color:''}">${m.value}</div><div class="metric-sub">${m.sub}</div></div>`).join('')
 }
 
-function calcExpected2026(fdDeals, fdClosed) {
-  const d = fdDeals || deals
-  const c = fdClosed || closedDeals
-  let total = 0
-  d.forEach(deal => {
-    if (!deal.date) return
-    const gp = deal.value, dur = deal.duration||12, prob = deal.ai_probability||0
-    const monthly = (gp*prob)/dur
-    const start = new Date(deal.date)
-    for (let i=0;i<dur;i++) {
-      const dt = new Date(start.getFullYear(),start.getMonth()+i,1)
-      if (dt.getFullYear()===2026) total+=monthly
-    }
-  })
-  c.filter(x=>x.closed_outcome==='won').forEach(deal => {
-    if (!deal.date) return
-    const gp = deal.value, dur = deal.duration||12
-    const monthly = gp/dur
-    const start = new Date(deal.date)
-    for (let i=0;i<dur;i++) {
-      const dt = new Date(start.getFullYear(),start.getMonth()+i,1)
-      if (dt.getFullYear()===2026) total+=monthly
-    }
-  })
-  return total
-}
-
-// ── PIPELINE ──────────────────────────────────────────────────────
-let pipelineQFilter = 'all'
-let pipelineSelectedId = null
-let pipelineDetailId = null
-
+// ── PIPELINE ─────────────────────────────────────────────────────
 function getQuarter(dateStr) {
   if (!dateStr) return null
-  const m = new Date(dateStr).getMonth() + 1
-  if (m <= 3) return 'q1'
-  if (m <= 6) return 'q2'
-  if (m <= 9) return 'q3'
-  return 'q4'
+  const m = parseInt(dateStr.slice(5,7))
+  return m<=3?'q1':m<=6?'q2':m<=9?'q3':'q4'
 }
 
 function renderPipeline() {
-  const el = document.getElementById('view-pipeline')
-  const allSorted = [...getFilteredDeals()].sort((a,b)=>b.value-a.value).slice(0,20)
-  const maxV = Math.max(...allSorted.map(d=>d.value),1)
-  const fmtGP = n => n>=1000000?(n/1000000).toFixed(1)+'M':n>=1000?Math.round(n/1000)+'K':String(n)
-  const quarters = [
-    {key:'q1',label:'Q1',range:'Jan–Mar'},
-    {key:'q2',label:'Q2',range:'Apr–Jun'},
-    {key:'q3',label:'Q3',range:'Jul–Sep'},
-    {key:'q4',label:'Q4',range:'Oct–Dec'},
-  ]
-  const qGP = q => getFilteredDeals().filter(d=>getQuarter(d.date)===q).reduce((s,d)=>s+d.value,0)
-  const qCount = q => getFilteredDeals().filter(d=>getQuarter(d.date)===q).length
+  const el=document.getElementById('view-pipeline')
+  const fd=getFilteredDeals()
+  const allSorted=[...fd].sort((a,b)=>b.value-a.value).slice(0,20)
+  const maxV=Math.max(...allSorted.map(d=>d.value),1)
+  const fmtGP=n=>n>=1000000?(n/1000000).toFixed(1)+'M':n>=1000?Math.round(n/1000)+'K':String(n)
+  const quarters=[{key:'q1',label:'Q1'},{key:'q2',label:'Q2'},{key:'q3',label:'Q3'},{key:'q4',label:'Q4'}]
+  const qGP=q=>fd.filter(d=>getQuarter(d.date)===q).reduce((s,d)=>s+d.value,0)
+  const qCount=q=>fd.filter(d=>getQuarter(d.date)===q).length
 
-  const pills = quarters.map(q => {
-    const active = pipelineQFilter === q.key
+  const pills=quarters.map(q=>{
+    const active=pipelineQFilter===q.key
     return `<div onclick="toggleQFilter('${q.key}')" style="padding:3px 8px;border-radius:20px;cursor:pointer;background:${active?'var(--primary)':'#f0f4f8'};border:0.5px solid ${active?'var(--primary)':'var(--border)'};display:flex;flex-direction:column;align-items:center;min-width:42px">
       <span style="font-size:10px;font-weight:600;color:${active?'white':'#5a6a7a'};line-height:1.4">${q.label}</span>
       <span style="font-size:8px;color:${active?'rgba(255,255,255,0.6)':'var(--muted)'};line-height:1.2">$${fmtGP(qGP(q.key))} · ${qCount(q.key)}</span>
     </div>`
   }).join('')
 
-  const clearBtn = pipelineSelectedId
-    ? `<button onclick="clearBarFilter()" style="font-size:10px;color:var(--blue);background:none;border:none;cursor:pointer;padding:0;font-family:inherit">✕ Clear</button>` : ''
-
-  const bars = allSorted.map(d => {
-    const inQ = pipelineQFilter==='all' || getQuarter(d.date)===pipelineQFilter
-    const inSel = !pipelineSelectedId || pipelineSelectedId===d.id
-    const opacity = (inQ && inSel) ? 1 : 0.12
-    const isSelected = pipelineSelectedId===d.id
-    const h = Math.max(8,(d.value/maxV)*140)
-    const col = STAGE_COLORS[d.stage]||'#b4b2a9'
-    return `<div class="pipeline-bar-col" onclick="selectBar(${d.id})" style="cursor:pointer;opacity:${opacity};transition:opacity .2s">
-      <div style="font-size:10px;color:var(--text);font-weight:600">${d.value>=1000?Math.round(d.value/1000)+'K':d.value}</div>
+  const bars=allSorted.map(d=>{
+    const inQ=pipelineQFilter==='all'||getQuarter(d.date)===pipelineQFilter
+    const inSel=!pipelineSelectedId||pipelineSelectedId===d.id
+    const opacity=(inQ&&inSel)?1:0.12
+    const isSelected=pipelineSelectedId===d.id
+    const h=Math.max(8,(d.value/maxV)*110)
+    const col=STAGE_COLORS[d.stage]||'#b4b2a9'
+    const valLabel=d.value>=1000000?(d.value/1000000).toFixed(1)+'M':d.value>=1000?Math.round(d.value/1000)+'K':String(d.value)
+    return `<div class="pipeline-bar-col" onclick="selectBar(${d.id})" style="opacity:${opacity}">
+      <div style="font-size:10px;color:var(--text);font-weight:600;height:16px;display:flex;align-items:center;justify-content:center">${valLabel}</div>
       <div style="width:100%;height:${h}px;background:${col};border-radius:4px 4px 0 0;opacity:0.85;${isSelected?'outline:2px solid var(--primary);outline-offset:1px':''}" title="${d.title}"></div>
       <div style="font-size:9px;color:var(--muted);text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:52px">${d.company.split(' ')[0]}</div>
     </div>`
   }).join('')
 
-  const legend = Object.entries(STAGE_COLORS).map(([s,c])=>`
-    <div style="display:flex;align-items:center;gap:4px">
-      <div style="width:8px;height:8px;border-radius:2px;background:${c}"></div>
-      <span style="font-size:11px;color:var(--muted)">${s}</span>
-    </div>`).join('')
+  const legend=Object.entries(STAGE_COLORS).map(([s,c])=>`<div style="display:flex;align-items:center;gap:4px"><div style="width:8px;height:8px;border-radius:2px;background:${c}"></div><span style="font-size:11px;color:var(--muted)">${s}</span></div>`).join('')
+  const clearBtn=pipelineSelectedId?`<button onclick="clearBarFilter()" style="font-size:10px;color:var(--blue);background:none;border:none;cursor:pointer;padding:0;font-family:inherit">✕ Clear</button>`:''
 
-  const hint = pipelineSelectedId
-    ? `<span style="margin-left:auto;font-size:10px;color:var(--muted);font-style:italic">1 deal selected — click bar or × to clear</span>`
-    : pipelineQFilter!=='all'
-      ? `<span style="margin-left:auto;font-size:10px;color:var(--muted);font-style:italic">Showing ${pipelineQFilter.toUpperCase()} — click again to clear</span>` : ''
-
-  const kanbanDeals = getFilteredDeals().filter(d => {
-    const inQ = pipelineQFilter==='all' || getQuarter(d.date)===pipelineQFilter
-    const inSel = !pipelineSelectedId || pipelineSelectedId===d.id
-    return inQ && inSel
+  const kanbanDeals=fd.filter(d=>{
+    const inQ=pipelineQFilter==='all'||getQuarter(d.date)===pipelineQFilter
+    const inSel=!pipelineSelectedId||pipelineSelectedId===d.id
+    return inQ&&inSel
   })
 
-  const kanban = STAGES.map(stage=>{
-    const sd = kanbanDeals.filter(d=>d.stage===stage)
-    const total = sd.reduce((s,d)=>s+d.value,0)
-    const cards = sd.length===0
-      ? `<div style="font-size:11px;color:#b4b2a9;padding:8px 0;text-align:center">No deals</div>`
-      : sd.map(d=>dealCardHTML(d)).join('')
-    return `<div class="stage-col">
-      <div class="stage-header">
-        <div class="stage-name">${stage}</div>
-        <div class="stage-meta">${sd.length} deals · ${fmt(total)}</div>
-      </div>
-      <div class="stage-cards">${cards}</div>
-    </div>`
+  const kanban=STAGES.map(stage=>{
+    const sd=kanbanDeals.filter(d=>d.stage===stage)
+    const total=sd.reduce((s,d)=>s+d.value,0)
+    const cards=sd.length===0
+      ?`<div style="font-size:11px;color:#b4b2a9;padding:8px 0;text-align:center">No deals</div>`
+      :sd.map(d=>dealCardHTML(d)).join('')
+    return `<div class="stage-col"><div class="stage-header"><div class="stage-name">${stage}</div><div class="stage-meta">${sd.length} deals · ${fmt(total)}</div></div><div class="stage-cards">${cards}</div></div>`
   }).join('')
 
-  el.innerHTML = `
-    <div class="pipeline-chart-wrap" style="padding:14px 18px">
+  el.innerHTML=`
+    <div class="pipeline-chart-wrap">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
         <div style="display:flex;align-items:center;gap:10px">
           <span style="font-size:12px;font-weight:600;color:#5a6a7a;text-transform:uppercase;letter-spacing:.05em">Pipeline by GP</span>
           ${clearBtn}
         </div>
-        <div style="display:flex;align-items:center;gap:4px">
-          <span style="font-size:10px;color:var(--muted);margin-right:3px">Starting Q:</span>
-          ${pills}
-        </div>
+        <div style="display:flex;align-items:center;gap:4px"><span style="font-size:10px;color:var(--muted);margin-right:3px">Starting Q:</span>${pills}</div>
       </div>
       <div class="pipeline-bars">${bars}</div>
-      <div style="display:flex;align-items:center;gap:14px;margin-top:8px">${legend}${hint}</div>
+      <div style="display:flex;align-items:center;gap:14px;margin-top:4px">${legend}</div>
     </div>
-    <div class="pipeline" style="max-width:1200px;margin:0 auto">${kanban}</div>
-  `
+    <div class="pipeline">${kanban}</div>`
   renderDetailPanel()
 }
 
-function toggleQFilter(key) {
-  pipelineQFilter = pipelineQFilter===key ? 'all' : key
-  renderPipeline()
-}
+function toggleQFilter(key) { pipelineQFilter=pipelineQFilter===key?'all':key; renderPipeline() }
+function selectBar(id) { pipelineSelectedId=pipelineSelectedId===id?null:id; renderPipeline() }
+function clearBarFilter() { pipelineSelectedId=null; renderPipeline() }
 
-function selectBar(id) {
-  pipelineSelectedId = pipelineSelectedId===id ? null : id
-  renderPipeline()
-}
-
-function clearBarFilter() {
-  pipelineSelectedId = null
-  renderPipeline()
-}
-
-function openDetailPanel(id) {
-  pipelineDetailId = id
-  renderPipeline()
-}
-
+function openDetailPanel(id) { pipelineDetailId=id; renderPipeline() }
 function closeDetailPanel() {
-  pipelineDetailId = null
-  const existing = document.getElementById('pipelineDetailOverlay')
-  if (existing) existing.remove()
+  pipelineDetailId=null
+  document.getElementById('pipelineDetailOverlay')?.remove()
   renderPipeline()
 }
 
 function renderDetailPanel() {
-  // Remove any existing detail panel
-  const existing = document.getElementById('pipelineDetailOverlay')
-  if (existing) existing.remove()
-  if (!pipelineDetailId) return ''
-  const d = deals.find(d=>d.id===pipelineDetailId)
-  if (!d) return ''
-  const fields = [
-    ['GP Value', fmt(d.value)],
-    ['Stage', d.stage],
-    ['Country', d.country||'—'],
-    ['Industry', d.industry||'—'],
-    ['Win probability', pct(d.ai_probability)],
-    ['Lead score', (d.lead_score||0).toFixed(1)],
-    ['Start date', d.date ? new Date(d.date).toLocaleDateString('en-US',{month:'short',year:'numeric'}) : '—'],
-    ['Duration', (d.duration||12)+' months'],
-  ].map(([label,val])=>`<div class="detail-field"><div class="detail-field-lbl">${label}</div><div class="detail-field-val">${val}</div></div>`).join('')
-
-  const acts = [['📞','Calls',d.calls||0],['✉','Emails',d.emails||0],['🤝','Meetings',d.meetings||0],['📄','Proposal',d.proposal?1:0]]
+  document.getElementById('pipelineDetailOverlay')?.remove()
+  if (!pipelineDetailId) return
+  const d=deals.find(d=>d.id===pipelineDetailId); if (!d) return
+  const fields=[['GP Value',fmt(d.value)],['Stage',d.stage],['Country',d.country||'—'],['Industry',d.industry||'—'],['Win probability',pct(d.ai_probability)],['Lead score',(d.lead_score||0).toFixed(1)],['Start date',d.date?new Date(gY(d.date),gM(d.date),1).toLocaleDateString('en-US',{month:'short',year:'numeric'}):'—'],['Duration',(d.duration||12)+' months']]
+    .map(([l,v])=>`<div class="detail-field"><div class="detail-field-lbl">${l}</div><div class="detail-field-val">${v}</div></div>`).join('')
+  const acts=[['📞','Calls',d.calls||0],['✉','Emails',d.emails||0],['🤝','Meetings',d.meetings||0],['📄','Proposal',d.proposal?1:0]]
     .map(([icon,label,count])=>`<div style="flex:1;background:#f4f6f8;border-radius:8px;padding:10px 8px;text-align:center"><div style="font-size:16px">${icon}</div><div style="font-size:14px;font-weight:600;color:var(--text);margin-top:2px">${count}</div><div style="font-size:9px;color:var(--muted)">${label}</div></div>`).join('')
-
-  const wrap = document.createElement('div')
-  wrap.id = 'pipelineDetailOverlay'
-  wrap.innerHTML = `
+  const wrap=document.createElement('div'); wrap.id='pipelineDetailOverlay'
+  wrap.innerHTML=`
     <div class="overlay" onclick="closeDetailPanel()"></div>
     <div class="detail-panel">
       <div class="panel-header">
-        <div>
-          <div style="font-size:16px;font-weight:600;color:var(--text)">${d.company}</div>
-          <div style="font-size:12px;color:var(--muted);margin-top:2px">${d.title}</div>
-        </div>
+        <div><div style="font-size:16px;font-weight:600;color:var(--text)">${d.company}</div><div style="font-size:12px;color:var(--muted);margin-top:2px">${d.title}</div></div>
         <button onclick="closeDetailPanel()" style="background:none;border:none;cursor:pointer;font-size:20px;color:var(--muted)">×</button>
       </div>
       <div class="panel-body">
@@ -748,201 +626,142 @@ function renderDetailPanel() {
           <div style="font-size:11px;font-weight:600;color:#5a6a7a;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px">Activity</div>
           <div style="display:flex;gap:8px">${acts}</div>
         </div>
-        ${d.brought_by?`<div style="font-size:12px;color:var(--muted)">Brought by <strong>${d.brought_by}</strong></div>`:''}
+        ${d.brought_by?`<div style="font-size:12px;color:var(--muted)">Brought by <strong>${d.brought_by}</strong></div>`:`<div style="font-size:12px;color:var(--red)">⚠ No owner assigned</div>`}
       </div>
-      <div class="panel-footer">
-        <button class="btn-save" onclick="closeDetailPanel();openEdit(${d.id})">Edit deal</button>
-      </div>
+      <div class="panel-footer"><button class="btn-save" onclick="closeDetailPanel();openEdit(${d.id})">Edit deal</button></div>
     </div>`
   document.body.appendChild(wrap)
-  return ''
 }
 
 function dealCardHTML(d) {
-  const b = badgeClass(d.lead_score||0)
-  const p = priorityClass(d.lead_score||0)
-  const sw = Math.min(100,d.lead_score||0)+'%'
-  const isHighlighted = pipelineSelectedId===d.id
-  const actBtns = [
-    {type:'call',label:'📞',count:d.calls||0},
-    {type:'email',label:'✉',count:d.emails||0},
-    {type:'meeting',label:'🤝',count:d.meetings||0},
-    {type:'proposal',label:'📄',count:d.proposal?1:0},
-  ].map(btn=>{
-    const locked = btn.type==='proposal' && btn.count>0
-    const clickHandler = locked ? 'event.stopPropagation()' : `event.stopPropagation();logAct(${d.id},'${btn.type}')`
-    return `<button class="act-btn${locked?' locked':''}" onclick="${clickHandler}" style="opacity:1">
-      <span style="font-size:13px">${locked?'✓':btn.label}</span>
-      ${btn.count>0?`<span class="act-count">${btn.count}</span>`:''}
-    </button>`
-  }).join('')
-
-  return `<div class="deal-card ${p}" onclick="openDetailPanel(${d.id})" style="cursor:pointer;${isHighlighted?'outline:2px solid var(--green);outline-offset:1px':''}">
-    <div style="display:flex;justify-content:space-between;align-items:flex-start">
-      ${stageDropHTML(d)}
-      <button onclick="event.stopPropagation();deleteDeal(${d.id})" style="background:none;border:none;cursor:pointer;color:#b4b2a9;font-size:14px;padding:0 2px">×</button>
-    </div>
+  const b=badgeClass(d.lead_score||0), p=priorityClass(d.lead_score||0)
+  const sw=Math.min(100,d.lead_score||0)+'%'
+  const actBtns=[{type:'call',label:'📞',count:d.calls||0},{type:'email',label:'✉',count:d.emails||0},{type:'meeting',label:'🤝',count:d.meetings||0},{type:'proposal',label:'📄',count:d.proposal?1:0}]
+    .map(btn=>{
+      const locked=btn.type==='proposal'&&btn.count>0
+      const click=locked?'event.stopPropagation()':`event.stopPropagation();logAct(${d.id},'${btn.type}')`
+      return `<button class="act-btn${locked?' locked':''}" onclick="${click}"><span style="font-size:13px">${locked?'✓':btn.label}</span>${btn.count>0?`<span class="act-count">${btn.count}</span>`:''}</button>`
+    }).join('')
+  return `<div class="deal-card ${p}" onclick="openDetailPanel(${d.id})" style="cursor:pointer">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start">${stageDropHTML(d)}<button onclick="event.stopPropagation();deleteDeal(${d.id})" style="background:none;border:none;cursor:pointer;color:#b4b2a9;font-size:14px;padding:0 2px">×</button></div>
     <div class="deal-company">${d.company}</div>
     <div class="deal-title-text">${d.title}</div>
-    <div class="deal-row">
-      <span class="deal-value">${fmt(d.value)}</span>
-      <span class="badge ${b}">${pct(d.ai_probability)} win</span>
-    </div>
+    <div class="deal-row"><span class="deal-value">${fmt(d.value)}</span><span class="badge ${b}">${pct(d.ai_probability)} win</span></div>
     <div class="score-bar"><div class="score-fill ${b}" style="width:${sw}"></div></div>
-    <div class="deal-meta-row">
-      <span>Score ${(d.lead_score||0).toFixed(1)} · #${d.priority_rank}</span>
-      <span>${d.brought_by?'by '+d.brought_by:''}</span>
-    </div>
+    <div class="deal-meta-row"><span>Score ${(d.lead_score||0).toFixed(1)} · #${d.priority_rank}</span><span>${d.brought_by?'by '+d.brought_by:'⚠ Unassigned'}</span></div>
     <div class="act-btns">${actBtns}</div>
   </div>`
 }
 
 function stageDropHTML(d) {
-  const items = STAGES.map(s=>`<div class="stage-drop-item${s===d.stage?' active':''}" onclick="event.stopPropagation();changeStage(${d.id},'${s}')">${s}</div>`).join('')
-  return `<div class="stage-drop-wrap">
-    <div class="stage-drop-trigger" onclick="event.stopPropagation();toggleDrop(this)">${d.stage} <span style="font-size:8px">▼</span></div>
-    <div class="stage-drop-menu" style="display:none">
-      ${items}
-      <div class="stage-drop-divider"></div>
-      <div class="stage-drop-item won" onclick="event.stopPropagation();changeStage(${d.id},'Closed Won')">Closed Won</div>
-      <div class="stage-drop-item lost" onclick="event.stopPropagation();openLossModal(${d.id})">Closed Lost</div>
-    </div>
-  </div>`
+  const items=STAGES.map(s=>`<div class="stage-drop-item${s===d.stage?' active':''}" onclick="event.stopPropagation();changeStage(${d.id},'${s}')">${s}</div>`).join('')
+  return `<div class="stage-drop-wrap"><div class="stage-drop-trigger" onclick="event.stopPropagation();toggleDrop(this)">${d.stage} <span style="font-size:8px">▼</span></div>
+    <div class="stage-drop-menu" style="display:none">${items}<div class="stage-drop-divider"></div>
+    <div class="stage-drop-item won" onclick="event.stopPropagation();changeStage(${d.id},'Closed Won')">Closed Won</div>
+    <div class="stage-drop-item lost" onclick="event.stopPropagation();openLossModal(${d.id})">Closed Lost</div></div></div>`
 }
 
 function toggleDrop(el) {
-  const menu = el.nextElementSibling
-  const isOpen = menu.style.display === 'block'
-  document.querySelectorAll('.stage-drop-menu').forEach(m => m.style.display='none')
-  if (!isOpen) menu.style.display = 'block'
+  const menu=el.nextElementSibling, isOpen=menu.style.display==='block'
+  document.querySelectorAll('.stage-drop-menu').forEach(m=>m.style.display='none')
+  if (!isOpen) menu.style.display='block'
 }
-document.addEventListener('click', e => {
-  if (!e.target.closest('.stage-drop-wrap')) document.querySelectorAll('.stage-drop-menu').forEach(m=>m.style.display='none')
+document.addEventListener('click',e=>{
+  if(!e.target.closest('.stage-drop-wrap')) document.querySelectorAll('.stage-drop-menu').forEach(m=>m.style.display='none')
+  if(!e.target.closest('#repDropWrap')) { repDropOpen=false; const m=document.getElementById('repDropMenu'); if(m) m.style.display='none' }
+  if(!e.target.closest('#countryDropWrap')) { countryDropOpen=false; const m=document.getElementById('countryDropMenu'); if(m) m.style.display='none' }
 })
 
-function changeStage(id, stage) {
-  const d = deals.find(d=>d.id===id)
-  if (!d) return
-  if (stage==='Closed Won') {
-    d.stage = 'Closed Won'
-    d.closed_outcome = 'won'
-    closedDeals.push({...d})
-    deals = deals.filter(x=>x.id!==id)
-  } else {
-    d.stage = stage
-  }
+function changeStage(id,stage) {
+  const d=deals.find(d=>d.id===id); if(!d) return
+  if(stage==='Closed Won'){d.stage='Closed Won';d.closed_outcome='won';closedDeals.push({...d});deals=deals.filter(x=>x.id!==id)}
+  else d.stage=stage
   runAI()
 }
 
-function logAct(id, type) {
-  const d = deals.find(d=>d.id===id)
-  if (!d) return
-  if (type==='call') d.calls=(d.calls||0)+1
-  else if (type==='email') d.emails=(d.emails||0)+1
-  else if (type==='meeting') d.meetings=(d.meetings||0)+1
-  else if (type==='proposal') d.proposal=true
-  const sc = scoreDeal(d); d.ai_probability=sc.ai_probability; d.lead_score=sc.lead_score
+function logAct(id,type) {
+  const d=deals.find(d=>d.id===id); if(!d) return
+  if(type==='call') d.calls=(d.calls||0)+1
+  else if(type==='email') d.emails=(d.emails||0)+1
+  else if(type==='meeting') d.meetings=(d.meetings||0)+1
+  else if(type==='proposal') d.proposal=true
+  const sc=scoreDeal(d); d.ai_probability=sc.ai_probability; d.lead_score=sc.lead_score
   rankDeals(); renderAll()
 }
 
 function deleteDeal(id) {
-  if (!confirm('Delete this deal?')) return
-  deals = deals.filter(d=>d.id!==id)
-  renderAll()
+  if(!confirm('Delete this deal?')) return
+  deals=deals.filter(d=>d.id!==id); renderAll()
 }
 
-// ── PRIORITY ──────────────────────────────────────────────────────
+// ── PRIORITY ─────────────────────────────────────────────────────
 function renderPriority() {
-  const sorted = [...getFilteredDeals()].sort((a,b)=>(a.priority_rank||99)-(b.priority_rank||99))
-  document.getElementById('view-priority').innerHTML = `<div class="priority-list">${sorted.map((d,i)=>`
+  const sorted=[...getFilteredDeals()].sort((a,b)=>(a.priority_rank||99)-(b.priority_rank||99))
+  document.getElementById('view-priority').innerHTML=`<div class="priority-list">${sorted.map((d,i)=>`
     <div class="priority-row">
-      <div class="rank${i<3?' top':''}">  #${d.priority_rank}</div>
-      <div style="flex:1;min-width:0">
-        <div style="font-size:13px;font-weight:600;color:var(--text)">${d.company}</div>
-        <div style="font-size:11px;color:var(--muted)">${d.title}</div>
-      </div>
+      <div class="rank${i<3?' top':''}"> #${d.priority_rank}</div>
+      <div style="flex:1;min-width:0"><div style="font-size:13px;font-weight:600;color:var(--text)">${d.company}</div><div style="font-size:11px;color:var(--muted)">${d.title}</div>${d.brought_by?`<div style="font-size:10px;color:var(--muted)">by ${d.brought_by}</div>`:`<div style="font-size:10px;color:var(--red)">⚠ Unassigned</div>`}</div>
       ${stageDropHTML(d)}
-      <div style="text-align:right">
-        <div style="font-size:13px;font-weight:600;color:var(--text)">${fmt(d.value)}</div>
-        <div style="font-size:10px;color:var(--muted)">GP</div>
-      </div>
+      <div style="text-align:right"><div style="font-size:13px;font-weight:600;color:var(--text)">${fmt(d.value)}</div><div style="font-size:10px;color:var(--muted)">GP</div></div>
       <span class="badge ${badgeClass(d.lead_score||0)}">${pct(d.ai_probability)}</span>
-      <div style="text-align:right;min-width:70px">
-        <div style="font-size:11px;color:var(--muted)">Score ${(d.lead_score||0).toFixed(1)}</div>
-      </div>
+      <div style="text-align:right;min-width:70px"><div style="font-size:11px;color:var(--muted)">Score ${(d.lead_score||0).toFixed(1)}</div></div>
       <button onclick="openEdit(${d.id})" style="background:none;border:none;cursor:pointer;color:var(--muted);font-size:13px;padding:0 3px">✎</button>
       <button onclick="deleteDeal(${d.id})" style="background:none;border:none;cursor:pointer;color:#b4b2a9;font-size:15px;padding:0 3px">×</button>
     </div>`).join('')}</div>`
 }
 
-// ── FUNNEL ────────────────────────────────────────────────────────
-function renderFunnel() {
-  const fdata = STAGES.map(s=>({stage:s,count:deals.filter(d=>d.stage===s).length,value:deals.filter(d=>d.stage===s).reduce((a,d)=>a+d.value,0)}))
-  const maxV = Math.max(...fdata.map(f=>f.value),1)
-  const colors = ['#2C2C2A','#185FA5','#1D9E75','#BA7517']
-  const light = ['#D3D1C7','#B5D4F4','#D6F0E0','#FAEEDA']
-  const bars = fdata.map((f,i)=>{
-    const w = 30+(f.value/maxV)*70
-    return `<div style="display:flex;flex-direction:column;align-items:center;margin-bottom:6px">
-      <div class="funnel-bar" style="width:${w}%;background:${colors[i]}">
-        <span style="color:white;font-weight:600;font-size:14px">${f.stage}</span>
-        <div style="text-align:right">
-          <div style="color:white;font-weight:600;font-size:14px">${fmt(f.value)}</div>
-          <div style="color:${light[i]};font-size:11px;margin-top:2px">${f.count} deals</div>
-        </div>
-      </div>
-      ${i<fdata.length-1?`<div class="funnel-arrow" style="border-top:10px solid ${colors[i]}"></div>`:''}
-    </div>`
-  }).join('')
-  const total = fdata.reduce((s,f)=>s+f.value,0)
-  const totalDeals = fdata.reduce((s,f)=>s+f.count,0)
-  document.getElementById('view-funnel').innerHTML = `
-    <div class="funnel-wrap">${bars}</div>
-    <div style="max-width:680px;margin:20px auto 0;background:white;border-radius:10px;border:0.5px solid var(--border);padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
-      <div><div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em">Total pipeline GP</div><div style="font-size:22px;font-weight:600;color:var(--text);margin-top:4px">${fmt(total)}</div></div>
-      <div style="text-align:right"><div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em">Total deals</div><div style="font-size:22px;font-weight:600;color:var(--text);margin-top:4px">${totalDeals}</div></div>
-    </div>`
-}
-
-// ── FORECAST ──────────────────────────────────────────────────────
+// ── FORECAST ─────────────────────────────────────────────────────
 function renderForecast() {
-  const months = Array.from({length:12},(_,i)=>{
-    const d = new Date(2026,i,1)
-    return {key:`2026-${String(i+1).padStart(2,'0')}`,label:d.toLocaleDateString('en-US',{month:'short',year:'2-digit'})}
+  const months=Array.from({length:12},(_,i)=>{
+    const yr=2026, mo=i+1
+    return {key:`${yr}-${String(mo).padStart(2,'0')}`,label:new Date(yr,i,1).toLocaleDateString('en-US',{month:'short',year:'2-digit'})}
   })
+  const gpByMonth={}, wonByMonth={}
+  months.forEach(m=>{gpByMonth[m.key]=0;wonByMonth[m.key]=0})
 
-  const gpByMonth = {}; const wonByMonth = {}
-  months.forEach(m=>{ gpByMonth[m.key]=0; wonByMonth[m.key]=0 })
   getFilteredDeals().forEach(d=>{
     if(!d.date) return
-    const mp=(d.value*(d.ai_probability||0))/(d.duration||12)
-    const s=new Date(d.date)
-    for(let i=0;i<(d.duration||12);i++){const dt=new Date(s.getFullYear(),s.getMonth()+i,1);const k=`${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}`;if(gpByMonth[k]!==undefined)gpByMonth[k]+=mp}
+    const startY=gY(d.date), startM=gM(d.date), dur=d.duration||12
+    const mp=(d.value*(d.ai_probability||0))/dur
+    for(let i=0;i<dur;i++){
+      const yr=startY+Math.floor((startM+i)/12), mo=((startM+i)%12)+1
+      const k=`${yr}-${String(mo).padStart(2,'0')}`
+      if(gpByMonth[k]!==undefined) gpByMonth[k]+=mp
+    }
   })
   getFilteredClosed().filter(d=>d.closed_outcome==='won').forEach(d=>{
     if(!d.date) return
-    const mp=d.value/(d.duration||12)
-    const s=new Date(d.date)
-    for(let i=0;i<(d.duration||12);i++){const dt=new Date(s.getFullYear(),s.getMonth()+i,1);const k=`${dt.getFullYear()}-${String(dt.getMonth()+1).padStart(2,'0')}`;if(gpByMonth[k]!==undefined){gpByMonth[k]+=mp;wonByMonth[k]+=mp}}
+    const startY=gY(d.date), startM=gM(d.date), dur=d.duration||12
+    const mp=d.value/dur
+    for(let i=0;i<dur;i++){
+      const yr=startY+Math.floor((startM+i)/12), mo=((startM+i)%12)+1
+      const k=`${yr}-${String(mo).padStart(2,'0')}`
+      if(gpByMonth[k]!==undefined){gpByMonth[k]+=mp;wonByMonth[k]+=mp}
+    }
   })
 
-  const maxV = Math.max(...months.map(m=>Math.max(gpByMonth[m.key]||0,monthTargets[m.key]||0)),1)
-  const totalExp = months.reduce((s,m)=>s+(gpByMonth[m.key]||0),0)
-  const onTrack = months.filter(m=>(gpByMonth[m.key]||0)>=(monthTargets[m.key]||0)).length
-  const gap = annualTarget>0?annualTarget-calcExpected2026():null
+  const maxV=Math.max(...months.map(m=>Math.max(gpByMonth[m.key]||0,monthTargets[m.key]||0)),1)
+  const totalExp=months.reduce((s,m)=>s+(gpByMonth[m.key]||0),0)
+  const onTrack=months.filter(m=>(gpByMonth[m.key]||0)>=(monthTargets[m.key]||0)).length
+  const tInputVal=annualTarget>0?annualTarget.toLocaleString('en-US'):''
+  const mVal=annualTarget>0?fmt(Math.round(annualTarget/12)):'—'
 
-  const tInputVal = annualTarget>0?annualTarget.toLocaleString('en-US'):''
-  const mVal = annualTarget>0?fmt(Math.round(annualTarget/12)):'—'
+  // Scale targets by rep filter
+  const effTarget=repFilter.size>0&&getReps().filter(r=>r!=='Unassigned').length>0
+    ? Math.round(annualTarget*repFilter.size/getReps().filter(r=>r!=='Unassigned').length)
+    : annualTarget
+  const scaledTargets={}
+  months.forEach(m=>{scaledTargets[m.key]=repFilter.size>0&&annualTarget>0?Math.round((monthTargets[m.key]||0)*effTarget/annualTarget):(monthTargets[m.key]||0)})
 
-  const fcMetrics = [
+  const fcMetrics=[
     {label:'12-month expected GP',value:fmt(totalExp),sub:'won + pipeline weighted'},
-    {label:'Annual GP target',value:annualTarget>0?fmt(annualTarget):'—',sub:annualTarget>0?fmt(Math.round(annualTarget/12))+'/month':'not set'},
+    {label:'Annual GP target',value:annualTarget>0?fmt(effTarget):'—',sub:annualTarget>0?fmt(Math.round(effTarget/12))+'/month avg':'not set'},
     {label:'Months on track',value:annualTarget>0?onTrack+' / 12':'—',sub:'meeting or exceeding target',color:annualTarget===0?'var(--muted)':onTrack>=9?'var(--green)':onTrack>=6?'var(--amber)':'var(--red)'},
-    {label:'Coverage ratio',value:annualTarget>0?Math.round(totalExp/annualTarget*100)+'%':'—',sub:'expected GP vs target',color:annualTarget>0&&totalExp/annualTarget>=1?'var(--green)':'var(--red)'},
+    {label:'Coverage ratio',value:annualTarget>0?Math.round(totalExp/effTarget*100)+'%':'—',sub:'expected GP vs target',color:annualTarget>0&&totalExp/effTarget>=1?'var(--green)':'var(--red)'},
   ].map(m=>`<div class="metric-card" style="flex:1"><div class="metric-label">${m.label}</div><div class="metric-value" style="${m.color?'color:'+m.color:''}">${m.value}</div><div class="metric-sub">${m.sub}</div></div>`).join('')
 
-  const chartBars = months.map(m=>{
-    const gp=gpByMonth[m.key]||0, tgt=monthTargets[m.key]||0
+  const chartBars=months.map(m=>{
+    const gp=gpByMonth[m.key]||0, tgt=scaledTargets[m.key]||0
     const bH=maxV>0?Math.max(2,(gp/maxV)*170):2
     const tH=maxV>0?(tgt/maxV)*170:0
     const col=gp>=(tgt||0)&&tgt>0?'var(--green)':tgt>0&&gp>=tgt*0.7?'var(--amber)':'var(--blue)'
@@ -953,128 +772,98 @@ function renderForecast() {
     </div>`
   }).join('')
 
-  const monthRows = months.map(m=>{
-    const gp=gpByMonth[m.key]||0, tgt=monthTargets[m.key]||0
+  const monthRows=months.map(m=>{
+    const gp=gpByMonth[m.key]||0, tgt=scaledTargets[m.key]||0
     const p=tgt>0?Math.min(100,Math.round(gp/tgt*100)):0
     const col=tgt>0?(gp>=tgt?'var(--green)':gp>=tgt*0.7?'var(--amber)':'var(--red)'):'#5a6a7a'
     return `<div class="month-row">
       <div style="min-width:52px;font-size:12px;font-weight:600;color:var(--text)">${m.label}</div>
       <div class="progress-bar"><div class="progress-fill" style="width:${p}%;background:${col}"></div></div>
-      <div style="min-width:90px;font-size:12px;font-weight:600;color:var(--text);text-align:right">
-        ${fmt(gp)}
-        ${wonByMonth[m.key]>0?`<div style="font-size:10px;color:var(--green);font-weight:500">✓ ${fmt(wonByMonth[m.key])} won</div>`:''}
-      </div>
+      <div style="min-width:90px;font-size:12px;font-weight:600;color:var(--text);text-align:right">${fmt(gp)}${wonByMonth[m.key]>0?`<div style="font-size:10px;color:var(--green);font-weight:500">✓ ${fmt(wonByMonth[m.key])} won</div>`:''}</div>
       <div style="min-width:90px;font-size:11px;color:var(--muted);text-align:right">${tgt>0?'/ '+fmt(tgt):'—'}</div>
       <div style="min-width:44px;font-size:11px;font-weight:600;color:${col};text-align:right">${tgt>0?p+'%':''}</div>
       <button onclick="editMonthTarget('${m.key}')" style="background:none;border:0.5px solid var(--border);border-radius:4px;padding:3px 8px;cursor:pointer;font-size:10px;color:var(--muted)">Edit</button>
     </div>`
   }).join('')
 
-  document.getElementById('view-forecast').innerHTML = `
+  document.getElementById('view-forecast').innerHTML=`
     <div class="forecast-target-bar">
       <div style="display:flex;align-items:center;gap:16px">
         <div>
-          <div class="target-label">Annual GP target</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Annual GP target</div>
           <div style="position:relative;display:inline-block">
             <span style="position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:13px;color:rgba(255,255,255,0.5)">$</span>
             <input class="target-input" id="targetInput" type="text" placeholder="e.g. 1,000,000" value="${tInputVal}"
-              oninput="onTargetInput(this.value)"
-              onblur="onTargetBlur(this.value)"
-              onkeydown="if(event.key==='Enter')this.blur()" />
+              oninput="onTargetInput(this.value)" onblur="onTargetBlur(this.value)" onkeydown="if(event.key==='Enter')this.blur()" />
           </div>
         </div>
-        <div class="target-divider"></div>
+        <div style="width:1px;align-self:stretch;background:rgba(255,255,255,0.2);margin:0 4px"></div>
         <div>
-          <div class="target-label">Monthly</div>
-          <div class="target-monthly">${mVal}</div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">${repFilter.size>0?'Filtered target':'Monthly'}</div>
+          <div style="font-size:15px;font-weight:500;color:white">${repFilter.size>0?(effTarget>0?fmt(effTarget):'—'):mVal}</div>
         </div>
-        <div class="target-divider"></div>
-        <button class="target-reset" onclick="resetDistribution()" ${annualTarget?'':'disabled'}>Reset distribution</button>
+        <div style="width:1px;align-self:stretch;background:rgba(255,255,255,0.2);margin:0 4px"></div>
+        <button onclick="resetDistribution()" style="font-size:12px;padding:6px 12px;border-radius:6px;border:0.5px solid rgba(255,255,255,0.3);background:transparent;color:rgba(255,255,255,0.7);cursor:pointer;font-family:inherit" ${annualTarget?'':'disabled'}>Reset distribution</button>
       </div>
     </div>
-    <div class="forecast-metrics" style="display:flex;gap:12px;margin-bottom:24px">${fcMetrics}</div>
-    <div class="forecast-chart">
+    <div style="display:flex;gap:12px;margin-bottom:24px">${fcMetrics}</div>
+    <div style="background:white;border-radius:10px;border:0.5px solid var(--border);padding:24px">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
         <div style="font-size:12px;font-weight:600;color:#5a6a7a;text-transform:uppercase;letter-spacing:.05em">Monthly GP forecast vs target</div>
         <div style="display:flex;gap:16px">
-          <div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:12px;border-radius:2px;background:var(--green);opacity:0.7"></div><span style="font-size:11px;color:var(--muted)">Expected GP</span></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:12px;border-radius:2px;background:var(--green);opacity:.7"></div><span style="font-size:11px;color:var(--muted)">Expected GP</span></div>
           <div style="display:flex;align-items:center;gap:6px"><div style="width:20px;border-top:2px dashed var(--red)"></div><span style="font-size:11px;color:var(--muted)">Target</span></div>
         </div>
       </div>
       <div class="chart-bars">${chartBars}</div>
       <div style="margin-top:12px;font-size:11px;color:var(--muted);text-align:center">Click any month label to override its target</div>
     </div>
-    <div class="month-rows">${monthRows}</div>
-  `
+    <div class="month-rows">${monthRows}</div>`
 }
 
 function onTargetInput(val) {
-  const n = parseComma(val)
-  annualTarget = n
-  distributeAnnual(n)
-  // Format with commas live
-  const el = document.getElementById('targetInput')
-  if (el) {
-    const pos = el.selectionStart
-    const raw = val.replace(/,/g,'')
-    if (/^\d*$/.test(raw) && raw !== '') {
-      const formatted = Number(raw).toLocaleString('en-US')
-      el.value = formatted
-      // Restore cursor approximately
-      const diff = formatted.length - val.length
-      el.setSelectionRange(pos + diff, pos + diff)
-    }
-  }
+  const n=parseComma(val); annualTarget=n; distributeAnnual(n)
+  const el=document.getElementById('targetInput')
+  if(el){const raw=val.replace(/,/g,'');if(/^\d*$/.test(raw)&&raw!==''){const f=Number(raw).toLocaleString('en-US');const pos=el.selectionStart;const diff=f.length-val.length;el.value=f;try{el.setSelectionRange(pos+diff,pos+diff)}catch(e){}}}
 }
 function onTargetBlur(val) {
-  const n = parseComma(val)
-  annualTarget = n
-  const el = document.getElementById('targetInput')
-  if (el) el.value = n ? n.toLocaleString('en-US') : ''
-  distributeAnnual(n)
-  renderForecast()
-}
-function onTargetFocus(el) {
-  el.value = el.value.replace(/,/g,'')
+  const n=parseComma(val); annualTarget=n
+  const el=document.getElementById('targetInput'); if(el) el.value=n?n.toLocaleString('en-US'):''
+  distributeAnnual(n); renderForecast()
 }
 function distributeAnnual(n) {
-  if (n>0) { for(let i=1;i<=12;i++) monthTargets[`2026-${String(i).padStart(2,'0')}`]=Math.round(n/12) }
+  if(n>0){for(let i=1;i<=12;i++) monthTargets[`2026-${String(i).padStart(2,'0')}`]=Math.round(n/12)}
   else monthTargets={}
 }
 function resetDistribution() { distributeAnnual(annualTarget); renderForecast() }
 function editMonthTarget(key) {
-  const cur = monthTargets[key]||0
-  const val = prompt(`Set GP target for ${key}:`, cur ? fmtComma(cur) : '')
-  if (val===null) return
-  monthTargets[key] = parseComma(val)
-  renderForecast()
+  const cur=monthTargets[key]||0
+  const val=prompt(`Set GP target for ${key}:`,cur?fmtComma(cur):'')
+  if(val===null) return
+  monthTargets[key]=parseComma(val); renderForecast()
 }
 
-// ── CLOSED ────────────────────────────────────────────────────────
-let closedFilter = 'all'
-let lossReasonFilter = null
-
+// ── CLOSED ───────────────────────────────────────────────────────
 function renderClosed() {
-  const fc = getFilteredClosed()
-  const won = fc.filter(d=>d.closed_outcome==='won')
-  const lost = fc.filter(d=>d.closed_outcome==='lost')
-  const wonVal = won.reduce((s,d)=>s+d.value,0)
+  const fc=getFilteredClosed()
+  const won=fc.filter(d=>d.closed_outcome==='won')
+  const lost=fc.filter(d=>d.closed_outcome==='lost')
+  const wonVal=won.reduce((s,d)=>s+d.value,0)
 
-  // Apply won/lost filter first, then reason filter
-  let filtered = fc.filter(d=>closedFilter==='all'?true:d.closed_outcome===closedFilter)
-  if (lossReasonFilter) filtered = filtered.filter(d=>d.loss_reason===lossReasonFilter)
+  // Lost GP 2026 — month-distributed
+  const lostGP2026=lost.reduce((s,d)=>s+gp2026Slice(d.value,d.duration||12,d.date),0)
 
-  const rc = {}; lost.forEach(d=>{ if(d.loss_reason) rc[d.loss_reason]=(rc[d.loss_reason]||0)+1 })
-  const re = Object.entries(rc).sort((a,b)=>b[1]-a[1])
+  let filtered=fc.filter(d=>closedFilter==='all'?true:d.closed_outcome===closedFilter)
+  if(lossReasonFilter) filtered=filtered.filter(d=>d.loss_reason===lossReasonFilter)
 
-  const rows = filtered.length===0
-    ? '<div style="text-align:center;padding:40px;color:var(--muted);font-size:14px">No closed deals yet.</div>'
-    : filtered.map(d=>`
+  const rc={}; lost.forEach(d=>{if(d.loss_reason) rc[d.loss_reason]=(rc[d.loss_reason]||0)+1})
+  const re=Object.entries(rc).sort((a,b)=>b[1]-a[1])
+
+  const rows=filtered.length===0
+    ?'<div style="text-align:center;padding:40px;color:var(--muted);font-size:14px">No closed deals yet.</div>'
+    :filtered.map(d=>`
       <div class="closed-row" style="border-left-color:${d.closed_outcome==='won'?'var(--green)':'var(--red)'}">
-        <div style="flex:1;min-width:0;overflow:hidden">
-          <span style="font-size:12px;font-weight:600;color:var(--text)">${d.company}</span>
-          <span style="font-size:10px;color:var(--muted);margin-left:8px">${d.title}</span>
-        </div>
+        <div style="flex:1;min-width:0;overflow:hidden"><span style="font-size:12px;font-weight:600;color:var(--text)">${d.company}</span><span style="font-size:10px;color:var(--muted);margin-left:8px">${d.title}</span></div>
         <div style="font-size:11px;color:var(--muted)">${d.country||''}</div>
         <div style="font-size:13px;font-weight:600;color:var(--text)">${fmt(d.value)}</div>
         <span style="font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:${d.closed_outcome==='won'?'#EAF3DE':'#FCEBEB'};color:${d.closed_outcome==='won'?'#27500A':'#A32D2D'}">${d.closed_outcome==='won'?'Won':'Lost'}</span>
@@ -1082,28 +871,22 @@ function renderClosed() {
         <button onclick="openEditClosed(${d.id})" style="background:none;border:0.5px solid var(--border);border-radius:4px;padding:3px 8px;cursor:pointer;font-size:11px;color:var(--muted)">Edit</button>
       </div>`).join('')
 
-  const filterLabel = lossReasonFilter
-    ? `<span style="font-size:12px;color:var(--muted)">Filtered by: <strong style="color:var(--text)">${lossReasonFilter}</strong></span>
-       <button onclick="clearReasonFilter()" style="font-size:11px;color:var(--blue);background:none;border:none;cursor:pointer;font-family:inherit;padding:0 4px">× Clear</button>`
-    : ''
+  const filterLabel=lossReasonFilter
+    ?`<span style="font-size:12px;color:var(--muted)">Filtered by: <strong style="color:var(--text)">${lossReasonFilter}</strong></span>
+      <button onclick="clearReasonFilter()" style="font-size:11px;color:var(--blue);background:none;border:none;cursor:pointer;font-family:inherit;padding:0 4px">× Clear</button>`:''
 
-  document.getElementById('view-closed').innerHTML = `
+  document.getElementById('view-closed').innerHTML=`
     <div style="display:flex;gap:12px;margin-bottom:20px">
       <div class="metric-card" style="flex:1"><div class="metric-label">Closed won</div><div class="metric-value" style="color:var(--green)">${won.length}</div><div class="metric-sub">${fmt(wonVal)} GP</div></div>
       <div class="metric-card" style="flex:1"><div class="metric-label">Closed lost</div><div class="metric-value" style="color:var(--red)">${lost.length}</div><div class="metric-sub">${fc.length>0?Math.round(lost.length/fc.length*100)+'% loss rate':'—'}</div></div>
       <div class="metric-card" style="flex:1"><div class="metric-label">Win rate</div><div class="metric-value">${fc.length>0?Math.round(won.length/fc.length*100)+'%':'—'}</div><div class="metric-sub">of all closed deals</div></div>
+      <div class="metric-card" style="flex:1"><div class="metric-label">Lost GP 2026</div><div class="metric-value" style="color:var(--red)">${fmt(lostGP2026)}</div><div class="metric-sub">GP lost executing in 2026</div></div>
     </div>
     ${re.length>0?`<div style="background:white;border-radius:10px;border:0.5px solid var(--border);padding:16px 20px;margin-bottom:20px">
       <div style="font-size:11px;font-weight:600;color:#5a6a7a;text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px">Loss reason breakdown</div>
       <div style="display:flex;gap:24px;align-items:center;max-width:480px;margin:0 auto">
-        <div style="position:relative;width:140px;height:140px;flex-shrink:0">
-          <canvas id="donutCanvas" width="140" height="140"></canvas>
-          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none">
-            <div style="font-size:18px;font-weight:700;color:var(--text)" id="donutCenter">${lost.length}</div>
-            <div style="font-size:10px;color:var(--muted)">lost</div>
-          </div>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:6px;" id="donutLegend"></div>
+        <canvas id="donutCanvas" width="140" height="140" style="flex-shrink:0"></canvas>
+        <div style="display:flex;flex-direction:column;gap:6px" id="donutLegend"></div>
       </div>
     </div>`:''}
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
@@ -1112,127 +895,223 @@ function renderClosed() {
       </div>
       <div style="display:flex;align-items:center;gap:6px;margin-left:8px">${filterLabel}</div>
     </div>
-    <div class="closed-list">${rows}</div>
-  `
+    <div class="closed-list">${rows}</div>`
 
-  if (re.length>0) {
+  if(re.length>0){
     setTimeout(()=>{
-      const canvas = document.getElementById('donutCanvas')
-      if (!canvas) return
-      if (donutChart) donutChart.destroy()
-      donutChart = new Chart(canvas, {
+      const canvas=document.getElementById('donutCanvas'); if(!canvas) return
+      if(donutChart) donutChart.destroy()
+      donutChart=new Chart(canvas,{
         type:'doughnut',
-        data:{
-          labels:re.map(([r])=>r),
-          datasets:[{
-            data:re.map(([,c])=>c),
-            backgroundColor:re.map(([r])=>lossReasonFilter&&lossReasonFilter!==r?'#e0e8f0':REASON_COLORS[r]||'#b4b2a9'),
-            borderWidth:0,
-            hoverOffset:4
-          }]
-        },
-        options:{
-          responsive:false,
-          cutout:'65%',
-          plugins:{
-            legend:{display:false},
-            tooltip:{enabled:false}
-          },
-          onClick:(e,els)=>{
-            if (!els.length) { clearReasonFilter(); return }
-            const reason = re[els[0].index][0]
-            toggleReasonFilter(reason)
-          }
-        }
+        data:{labels:re.map(([r])=>r),datasets:[{data:re.map(([,c])=>c),backgroundColor:re.map(([r])=>lossReasonFilter&&lossReasonFilter!==r?'#e0e8f0':REASON_COLORS[r]||'#b4b2a9'),borderWidth:0,hoverOffset:4}]},
+        options:{responsive:false,cutout:'0%',plugins:{legend:{display:false},tooltip:{enabled:false}},
+          onClick:(e,els)=>{if(!els.length){clearReasonFilter();return}toggleReasonFilter(re[els[0].index][0])}}
       })
-
-      // Build legend
-      const leg = document.getElementById('donutLegend')
-      if (!leg) return
+      const leg=document.getElementById('donutLegend'); if(!leg) return
       re.forEach(([r,c])=>{
-        const pct = Math.round(c/lost.length*100)
-        const col = REASON_COLORS[r]||'#b4b2a9'
-        const active = lossReasonFilter===r
-        const item = document.createElement('div')
-        item.style.cssText = `display:flex;align-items:center;gap:8px;cursor:pointer;padding:5px 8px;border-radius:6px;border:1.5px solid ${active?col:'transparent'};background:${active?col+'18':'transparent'};transition:all .15s`
-        item.innerHTML = `
-          <div style="width:9px;height:9px;border-radius:2px;background:${lossReasonFilter&&!active?'#e0e8f0':col};flex-shrink:0"></div>
-          <span style="font-size:12px;font-weight:${active?600:400};color:${active?col:'var(--text)'};flex:1">${r}</span>
-          <span style="font-size:11px;font-weight:600;color:${lossReasonFilter&&!active?'#b4b2a9':col}">${c}</span>
-          <span style="font-size:11px;color:var(--muted)">${pct}%</span>`
-        item.onclick = () => toggleReasonFilter(r)
+        const p=Math.round(c/lost.length*100), col=REASON_COLORS[r]||'#b4b2a9'
+        const active=lossReasonFilter===r, dimmed=lossReasonFilter&&!active
+        const item=document.createElement('div')
+        item.style.cssText=`display:flex;align-items:center;gap:8px;cursor:pointer;padding:5px 8px;border-radius:6px;border:1.5px solid ${active?col:'transparent'};background:${active?col+'18':'transparent'};opacity:${dimmed?0.4:1};transition:all .15s`
+        item.innerHTML=`<div style="width:9px;height:9px;border-radius:2px;background:${col};flex-shrink:0"></div><span style="font-size:12px;font-weight:${active?600:400};color:${active?col:'var(--text)'};flex:1">${r}</span><span style="font-size:11px;font-weight:600;color:${col}">${c}</span><span style="font-size:13px;font-weight:700;color:${col}">${p}%</span>`
+        item.onclick=()=>toggleReasonFilter(r)
         leg.appendChild(item)
       })
     },50)
   }
 }
 
-function toggleReasonFilter(reason) {
-  lossReasonFilter = lossReasonFilter===reason ? null : reason
-  renderClosed()
-}
-
-function clearReasonFilter() {
-  lossReasonFilter = null
-  renderClosed()
-}
-
+function toggleReasonFilter(r) { lossReasonFilter=lossReasonFilter===r?null:r; renderClosed() }
+function clearReasonFilter() { lossReasonFilter=null; renderClosed() }
 function setClosedFilter(f) { closedFilter=f; renderClosed() }
 
-// ── LOSS MODAL ────────────────────────────────────────────────────
+// ── LOSS MODAL ───────────────────────────────────────────────────
 function openLossModal(id) {
-  lossTarget = id
-  const d = deals.find(d=>d.id===id)
-  document.getElementById('lossModalSub').textContent = d ? d.company+' — '+d.title : ''
-  document.getElementById('lossModal').style.display = 'block'
+  lossTarget=id; const d=deals.find(d=>d.id===id)
+  document.getElementById('lossModalSub').textContent=d?d.company+' — '+d.title:''
+  document.getElementById('lossModal').style.display='block'
 }
 function closeLossModal() { document.getElementById('lossModal').style.display='none'; lossTarget=null }
 function confirmLoss() {
-  if (!lossTarget) return
-  const d = deals.find(d=>d.id===lossTarget)
-  if (!d) return
-  d.stage = 'Closed Lost'
-  d.closed_outcome = 'lost'
-  d.loss_reason = document.getElementById('lossReason').value
-  d.loss_notes = document.getElementById('lossNotes').value
-  closedDeals.push({...d})
-  deals = deals.filter(x=>x.id!==lossTarget)
-  closeLossModal()
-  runAI()
+  if(!lossTarget) return
+  const d=deals.find(d=>d.id===lossTarget); if(!d) return
+  d.stage='Closed Lost'; d.closed_outcome='lost'
+  d.loss_reason=document.getElementById('lossReason').value
+  d.loss_notes=document.getElementById('lossNotes').value
+  closedDeals.push({...d}); deals=deals.filter(x=>x.id!==lossTarget)
+  closeLossModal(); runAI()
 }
 
-// ── DEAL FORM ─────────────────────────────────────────────────────
+// ── TEAM ─────────────────────────────────────────────────────────
+function getRepTarget(name) {
+  if(repTargets[name]==null&&annualTarget>0){
+    const n=getReps().filter(r=>r!=='Unassigned').length
+    return n>0?Math.round(annualTarget/n):0
+  }
+  return repTargets[name]||0
+}
+
+function saveRepTarget(name,val) { repTargets[name]=parseComma(val)||0; renderTeam() }
+
+function resetRepTargets() {
+  const reps=getReps().filter(r=>r!=='Unassigned')
+  const even=annualTarget>0?Math.round(annualTarget/reps.length):0
+  reps.forEach(r=>{repTargets[r]=even})
+  renderTeam()
+}
+
+function renderTeam() {
+  const el=document.getElementById('view-team')
+  const fd=getFilteredDeals(), fc=getFilteredClosed()
+  const allDeals=[...fd,...fc]
+  const reps=[...new Set(allDeals.filter(d=>d.brought_by).map(d=>d.brought_by))]
+  const teamTarget=annualTarget||0
+  const medals=['🥇','🥈','🥉']
+  const rankLabels=['#1 — Top performer','#2','#3','#4','#5','#6']
+  const rankColors=['gold','silver','bronze','','','']
+
+  const repData=reps.map(rep=>{
+    const repDeals=fd.filter(d=>d.brought_by===rep)
+    const repClosed=fc.filter(d=>d.brought_by===rep)
+    const repWon=repClosed.filter(d=>d.closed_outcome==='won')
+
+    // Pipeline GP 2026 = won (month-distributed) + active (raw, no weighting)
+    const wonGP2026=repWon.reduce((s,d)=>s+gp2026Slice(d.value,d.duration||12,d.date),0)
+    const activeGP2026=repDeals.reduce((s,d)=>s+gp2026Slice(d.value,d.duration||12,d.date),0)
+    const pipeline2026=Math.round(wonGP2026+activeGP2026)
+
+    // Weighted forecast 2026 = won (100%) + active × ai_probability
+    const weightedForecast=Math.round(
+      repWon.reduce((s,d)=>s+gp2026Slice(d.value,d.duration||12,d.date),0)+
+      repDeals.reduce((s,d)=>s+gp2026Slice(d.value,d.duration||12,d.date,d.ai_probability||0),0)
+    )
+
+    const pipelineTotal=repDeals.reduce((s,d)=>s+d.value,0)
+    const winRate=repClosed.length>0?Math.round(repWon.length/repClosed.length*100):null
+    const attainmentRate=pipeline2026>0?Math.round(weightedForecast/pipeline2026*100):null
+    const repTarget=getRepTarget(rep)
+    const targetPct=repTarget>0?Math.round(weightedForecast/repTarget*100):null
+
+    return {rep,repDeals,repClosed,repWon,pipeline2026,weightedForecast,pipelineTotal,wonGP2026:Math.round(wonGP2026),winRate,attainmentRate,repTarget,targetPct}
+  })
+
+  const sorted=[...repData].sort((a,b)=>b.weightedForecast-a.weightedForecast)
+  const totalGP=sorted.reduce((s,r)=>s+r.weightedForecast,0)
+  const maxGP=Math.max(...sorted.map(r=>r.weightedForecast),1)
+  const allocatedTotal=sorted.reduce((s,r)=>s+r.repTarget,0)
+  const unallocated=teamTarget-allocatedTotal
+  const pctOfTarget=teamTarget>0?Math.min(1,totalGP/teamTarget):0
+
+  const cards=sorted.map((r,i)=>{
+    const repPct=maxGP>0?r.weightedForecast/maxGP:0
+    const vsTarget=r.repTarget>0?r.weightedForecast/r.repTarget:null
+    const barColor=vsTarget===null?'#d0d8e4':vsTarget>=0.8?'var(--green)':vsTarget>=0.5?'var(--amber)':'var(--red)'
+    const repName=r.rep.replace(/'/g,"\\'")
+    return `<div class="rep-card">
+      <div class="rep-rank ${rankColors[i]}">${medals[i]||'#'+(i+1)} ${rankLabels[i]||'#'+(i+1)}</div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <div style="width:36px;height:36px;border-radius:50%;background:#D6E4F0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--text);flex-shrink:0">${r.rep.charAt(0).toUpperCase()}</div>
+        <div><div style="font-size:14px;font-weight:700;color:var(--text)">${r.rep}</div><div style="font-size:11px;color:var(--muted)">${r.repDeals.length} active · ${r.repClosed.length} closed</div></div>
+      </div>
+      <div style="font-size:22px;font-weight:700;color:var(--text)">${fmt(r.pipeline2026)}</div>
+      <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px">Pipeline GP 2026</div>
+      <div style="font-size:11px;color:var(--green);font-weight:600;margin-bottom:10px">✓ ${fmt(r.wonGP2026)} confirmed won</div>
+      <div style="background:#f0f4f8;border-radius:4px;height:5px;margin-bottom:10px"><div style="height:5px;border-radius:4px;background:${barColor};width:${Math.round(repPct*100)}%;transition:width .5s"></div></div>
+      <div class="rep-stats">
+        <div><div style="font-size:13px;font-weight:600;color:var(--text)">${fmt(r.weightedForecast)}</div><div style="font-size:10px;color:var(--muted)">Weighted Forecast</div></div>
+        <div><div style="font-size:13px;font-weight:600;color:var(--text)">${r.targetPct!==null?r.targetPct+'%':'—'}</div><div style="font-size:10px;color:var(--muted)">% of target</div></div>
+        <div><div style="font-size:13px;font-weight:600;color:var(--text)">${r.winRate!==null?r.winRate+'%':'—'}</div><div style="font-size:10px;color:var(--muted)">Win rate</div></div>
+        <div><div style="font-size:13px;font-weight:600;color:var(--text)">${r.attainmentRate!==null?r.attainmentRate+'%':'—'}</div><div style="font-size:10px;color:var(--muted)">Attainment rate</div></div>
+      </div>
+      <div style="border-top:0.5px solid var(--border);padding-top:10px">
+        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px">Individual target</div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <span style="color:var(--muted);font-size:13px">$</span>
+          <input type="text" value="${r.repTarget>0?r.repTarget.toLocaleString('en-US'):''}"
+            placeholder="${teamTarget>0?Math.round(teamTarget/reps.length).toLocaleString('en-US'):'set team target first'}"
+            style="flex:1;padding:5px 8px;border:0.5px solid var(--border);border-radius:6px;font-size:12px;font-family:inherit;color:var(--text);outline:none"
+            onblur="saveRepTarget('${repName}',this.value)" onkeydown="if(event.key==='Enter')this.blur()" />
+        </div>
+      </div>
+    </div>`
+  }).join('')
+
+  const lbRows=sorted.map((r,i)=>{
+    const pctOfMax=maxGP>0?r.weightedForecast/maxGP:0
+    const vsTarget=r.repTarget>0?Math.round(r.weightedForecast/r.repTarget*100):null
+    const teamShare=totalGP>0?Math.round(r.weightedForecast/totalGP*100):0
+    const barColor=vsTarget===null?'var(--green)':vsTarget>=80?'var(--green)':vsTarget>=50?'var(--amber)':'var(--red)'
+    return `<div class="lb-row">
+      <div style="font-size:16px;font-weight:700;min-width:28px">${medals[i]||i+1+'.'}</div>
+      <div style="flex:2"><div style="font-size:13px;font-weight:600;color:var(--text)">${r.rep}</div><div style="font-size:11px;color:var(--muted)">${r.repDeals.length} active · ${r.repWon.length} closed won</div></div>
+      <div style="flex:2;background:#f0f4f8;border-radius:4px;height:5px"><div style="height:5px;border-radius:4px;background:${barColor};width:${Math.round(pctOfMax*100)}%"></div></div>
+      <div style="min-width:90px;text-align:right"><div style="font-size:14px;font-weight:700;color:var(--text)">${fmt(r.weightedForecast)}</div>${r.repTarget>0?`<div style="font-size:10px;color:var(--muted)">of ${fmt(r.repTarget)}</div>`:''}</div>
+      <div style="font-size:11px;color:var(--muted);min-width:80px;text-align:right">${vsTarget!==null?vsTarget+'% attain.':teamShare+'% of team'}</div>
+    </div>`
+  }).join('')
+
+  el.innerHTML=`
+    <div class="team-target-bar">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:${teamTarget?10:0}px">
+        <div>
+          <div style="font-size:10px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:.06em">Team GP target 2026</div>
+          <div style="font-size:20px;font-weight:700;color:white;margin-top:4px">${teamTarget>0?fmt(teamTarget):'Not set'}</div>
+          ${teamTarget>0?`<div style="font-size:12px;color:${Math.abs(unallocated)<100?'var(--green)':'rgba(255,255,255,0.5)'};margin-top:4px">${Math.abs(unallocated)<100?'✓ Fully allocated':'Unallocated: '+fmt(Math.abs(unallocated))+(unallocated<0?' (over)':'')}</div>`:''}
+          ${!teamTarget?`<div style="font-size:12px;color:rgba(255,255,255,0.4);margin-top:4px">Set the team target in the Forecast tab.</div>`:''}
+        </div>
+        <div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:8px">
+          <div>
+            <div style="font-size:10px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:.06em">Team GP forecast</div>
+            <div style="font-size:20px;font-weight:700;color:${pctOfTarget>=1?'var(--green)':'#FAEEDA'};margin-top:4px">${fmt(totalGP)} ${teamTarget>0?`<span style="font-size:13px;font-weight:400;color:rgba(255,255,255,0.5)">${Math.round(pctOfTarget*100)}%</span>`:''}</div>
+          </div>
+          <button onclick="resetRepTargets()" style="font-size:11px;padding:5px 12px;border-radius:6px;border:0.5px solid rgba(255,255,255,0.3);background:transparent;color:rgba(255,255,255,0.7);cursor:pointer;font-family:inherit" ${teamTarget?'':'disabled'}>↺ Reset to even split</button>
+        </div>
+      </div>
+      ${teamTarget>0?`<div style="background:rgba(255,255,255,0.12);border-radius:4px;height:6px;width:100%"><div style="height:6px;border-radius:4px;background:var(--green);width:${Math.round(pctOfTarget*100)}%;transition:width .5s"></div></div>
+      <div style="display:flex;justify-content:space-between;margin-top:6px">
+        <div style="font-size:11px;color:rgba(255,255,255,0.4)">$0</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.4)">${fmt(teamTarget/2)}</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.4)">${fmt(teamTarget)}</div>
+      </div>`:''}
+    </div>
+    <div class="team-grid" style="grid-template-columns:repeat(${Math.min(reps.length,4)},1fr)">${cards}</div>
+    <div class="team-leaderboard">
+      <div style="font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">Leaderboard — ranked by Weighted Forecast 2026</div>
+      ${lbRows}
+    </div>`
+}
+
+// ── DEAL FORM ────────────────────────────────────────────────────
 function openAdd() {
-  editingDealId = null
-  document.getElementById('panelTitle').textContent = 'Add new deal'
-  document.getElementById('panelSaveBtn').textContent = 'Save deal'
-  document.getElementById('panelBody').innerHTML = dealFormHTML(null)
-  document.getElementById('dealPanel').style.display = 'block'
+  editingDealId=null
+  document.getElementById('panelTitle').textContent='Add new deal'
+  document.getElementById('panelSaveBtn').textContent='Save deal'
+  document.getElementById('panelBody').innerHTML=dealFormHTML(null)
+  document.getElementById('dealPanel').style.display='block'
 }
 function openEdit(id) {
-  editingDealId = id
-  const d = deals.find(d=>d.id===id)
-  document.getElementById('panelTitle').textContent = 'Edit deal'
-  document.getElementById('panelSaveBtn').textContent = 'Save changes'
-  document.getElementById('panelBody').innerHTML = dealFormHTML(d)
-  document.getElementById('dealPanel').style.display = 'block'
+  editingDealId=id; const d=deals.find(d=>d.id===id)
+  document.getElementById('panelTitle').textContent='Edit deal'
+  document.getElementById('panelSaveBtn').textContent='Save changes'
+  document.getElementById('panelBody').innerHTML=dealFormHTML(d)
+  document.getElementById('dealPanel').style.display='block'
 }
 function openEditClosed(id) {
-  editingDealId = id
-  const d = closedDeals.find(d=>d.id===id)
-  document.getElementById('panelTitle').textContent = 'Edit deal'
-  document.getElementById('panelSaveBtn').textContent = 'Save changes'
-  document.getElementById('panelBody').innerHTML = dealFormHTML(d, true)
-  document.getElementById('dealPanel').style.display = 'block'
+  editingDealId=id; const d=closedDeals.find(d=>d.id===id)
+  document.getElementById('panelTitle').textContent='Edit deal'
+  document.getElementById('panelSaveBtn').textContent='Save changes'
+  document.getElementById('panelBody').innerHTML=dealFormHTML(d,true)
+  document.getElementById('dealPanel').style.display='block'
 }
 function closePanel() { document.getElementById('dealPanel').style.display='none'; editingDealId=null }
 
-function dealFormHTML(d, isClosed=false) {
-  const sel = (opts, val) => opts.map(o=>`<option${o===val?' selected':''}>${o}</option>`).join('')
-  const lossSection = (d?.stage==='Closed Lost'||isClosed&&d?.closed_outcome==='lost') ? `
+function dealFormHTML(d,isClosed=false) {
+  const sel=(opts,val)=>opts.map(o=>`<option${o===val?' selected':''}>${o}</option>`).join('')
+  const isLost=(d?.stage==='Closed Lost')||(isClosed&&d?.closed_outcome==='lost')
+  const lossSection=isLost?`
     <div class="fsection" style="color:#A32D2D;border-top:0.5px solid #FCEBEB;padding-top:16px">Loss reason</div>
     <div class="fgroup"><label class="flabel">Reason</label><select class="finput" id="f_lossreason">${sel(LOSS_REASONS,d?.loss_reason||'Competitor')}</select></div>
-    <div class="fgroup"><label class="flabel">Notes</label><textarea class="finput" id="f_lossnotes" placeholder="e.g. Lost to competitor on rate">${d?.loss_notes||''}</textarea></div>` : ''
+    <div class="fgroup"><label class="flabel">Notes</label><textarea class="finput" id="f_lossnotes" placeholder="e.g. Lost to competitor on rate">${d?.loss_notes||''}</textarea></div>`:''
   return `
     <div class="fsection">Contact</div>
     <div class="fgroup"><label class="flabel">Full name *</label><input class="finput" id="f_name" value="${d?.contact||''}" placeholder="Maria Lopez" /></div>
@@ -1250,352 +1129,100 @@ function dealFormHTML(d, isClosed=false) {
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
       <div class="fgroup"><label class="flabel">Stage</label><select class="finput" id="f_stage">${sel(ALL_STAGES,d?.stage||'Lead')}</select></div>
-      <div class="fgroup"><label class="flabel">Duration (months)</label><input class="finput" id="f_duration" type="number" min="1" max="120" value="${d?.duration||12}" /></div>
+      <div class="fgroup"><label class="flabel">Duration (months) *</label><input class="finput" id="f_duration" type="number" min="1" max="120" value="${d?.duration||''}" placeholder="e.g. 12" /></div>
     </div>
     <div class="fgroup"><label class="flabel">Expected start date${!isClosed?' *':''}</label><input class="finput" id="f_date" type="date" value="${d?.date||''}" /><div style="font-size:10px;color:var(--muted);margin-top:4px">When the service starts — required for forecast</div></div>
     <div class="fgroup"><label class="flabel">Brought by</label><input class="finput" id="f_brought" value="${d?.brought_by||demoUser}" /></div>
     ${lossSection}
-    <div id="panelError"></div>
-  `
+    <div id="panelError"></div>`
 }
 
 function savePanel() {
-  const g = id => document.getElementById(id)
-  const name = g('f_name')?.value.trim()
-  const company = g('f_company')?.value.trim()
-  const title = g('f_title')?.value.trim()
-  const valueStr = g('f_value')?.value
-  const value = parseComma(valueStr)
-  const date = g('f_date')?.value
-  const stage = g('f_stage')?.value
-  const isClosed = stage==='Closed Won'||stage==='Closed Lost'
+  const g=id=>document.getElementById(id)
+  const name=g('f_name')?.value.trim(), company=g('f_company')?.value.trim()
+  const title=g('f_title')?.value.trim(), value=parseComma(g('f_value')?.value)
+  const date=g('f_date')?.value, stage=g('f_stage')?.value
+  const duration=Number(g('f_duration')?.value)||0
+  const isClosed=stage==='Closed Won'||stage==='Closed Lost'
 
-  if (!name||!company||!title||!value) { g('panelError').innerHTML='<div class="error-msg">Please fill in: name, company, title, and GP value.</div>'; return }
-  if (!isClosed && !date) { g('panelError').innerHTML='<div class="error-msg">Expected start date is required for the forecast.</div>'; return }
+  if(!name||!company||!title||!value){g('panelError').innerHTML='<div class="error-msg">Please fill in: name, company, title, and GP value.</div>';return}
+  if(!duration){g('panelError').innerHTML='<div class="error-msg">Contract duration is required for the forecast.</div>';return}
+  if(!isClosed&&!date){g('panelError').innerHTML='<div class="error-msg">Expected start date is required for the forecast.</div>';return}
 
-  const payload = {
-    contact:name, company, email:g('f_email')?.value||'',
-    country:g('f_country')?.value||'', industry:g('f_industry')?.value||'Logistics',
-    title, value, currency:g('f_currency')?.value||'USD',
-    stage, duration:Number(g('f_duration')?.value)||12,
-    date:date||null, brought_by:g('f_brought')?.value||demoUser,
-    calls:0, emails:0, meetings:0, proposal:false,
-    loss_reason:stage==='Closed Lost'?(g('f_lossreason')?.value||null):null,
-    loss_notes:stage==='Closed Lost'?(g('f_lossnotes')?.value||''):null,
-    closed_outcome:stage==='Closed Won'?'won':stage==='Closed Lost'?'lost':null
-  }
+  const payload={contact:name,company,email:g('f_email')?.value||'',country:g('f_country')?.value||'',industry:g('f_industry')?.value||'Logistics',title,value,currency:g('f_currency')?.value||'USD',stage,duration,date:date||null,brought_by:g('f_brought')?.value||demoUser,calls:0,emails:0,meetings:0,proposal:false,loss_reason:stage==='Closed Lost'?(g('f_lossreason')?.value||null):null,loss_notes:stage==='Closed Lost'?(g('f_lossnotes')?.value||''):null,closed_outcome:stage==='Closed Won'?'won':stage==='Closed Lost'?'lost':null}
 
-  if (editingDealId) {
-    // Check if in active or closed
-    const ai = deals.findIndex(d=>d.id===editingDealId)
-    const ci = closedDeals.findIndex(d=>d.id===editingDealId)
-    if (ai>=0) {
-      if (isClosed) {
-        deals.splice(ai,1)
-        closedDeals.push({...payload, id:editingDealId})
-      } else {
-        Object.assign(deals[ai], payload)
-      }
-    } else if (ci>=0) {
-      Object.assign(closedDeals[ci], payload)
-    }
+  if(editingDealId){
+    const ai=deals.findIndex(d=>d.id===editingDealId)
+    const ci=closedDeals.findIndex(d=>d.id===editingDealId)
+    if(ai>=0){
+      if(isClosed){deals.splice(ai,1);closedDeals.push({...payload,id:editingDealId})}
+      else Object.assign(deals[ai],payload)
+    } else if(ci>=0) Object.assign(closedDeals[ci],payload)
   } else {
-    const newDeal = {...payload, id:nextId++}
-    if (isClosed) closedDeals.push(newDeal)
-    else deals.push(newDeal)
+    const newDeal={...payload,id:nextId++}
+    if(isClosed) closedDeals.push(newDeal); else deals.push(newDeal)
   }
-
-  closePanel()
-  runAI()
+  closePanel(); runAI()
 }
 
-
-// ── TEAM ──────────────────────────────────────────────────────────
-const TEAM_REPS = [
-  {
-    name: 'Diego Salazar', lane: 'Mexico & Central America',
-    deals: [
-      {company:'TechParts LATAM',title:'Auto Components Export',value:120000,stage:'Proposal',date:'2026-05-01',duration:24},
-      {company:'Quimex Industrial',title:'Hazmat Export Lane',value:145000,stage:'Qualified',date:'2026-08-01',duration:18},
-      {company:'AutoMex Parts',title:'Spare Parts Distribution',value:110000,stage:'Negotiation',date:'2026-04-15',duration:18},
-      {company:'TropicFresh CR',title:'Pineapple Export Lane',value:52000,stage:'Qualified',date:'2026-05-15',duration:6},
-      {company:'CosmeticaCR',title:'Express Export Lane',value:27000,stage:'Negotiation',date:'2026-04-15',duration:6},
-    ],
-    won: [{value:105000,date:'2026-03-15',duration:18},{value:88000,date:'2026-03-01',duration:12}]
-  },
-  {
-    name: 'Valentina Mora', lane: 'Colombia & Andean Region',
-    deals: [
-      {company:'Andean Fresh Foods',title:'Reefer Export Lane',value:84000,stage:'Negotiation',date:'2026-04-01',duration:12},
-      {company:'PharmaAndes',title:'Pharma Consolidation',value:91000,stage:'Qualified',date:'2026-05-01',duration:12},
-      {company:'ColTex Apparel',title:'Garments Export Lane',value:33000,stage:'Lead',date:'2026-07-15',duration:6},
-      {company:'ColFlower Export',title:'Perishables Export Lane',value:47000,stage:'Proposal',date:'2026-06-01',duration:6},
-    ],
-    won: [{value:72000,date:'2026-02-01',duration:12}]
-  },
-  {
-    name: 'Rafael Campos', lane: 'Brazil & Southern Cone',
-    deals: [
-      {company:'BioFarm Brasil',title:'FCL Export Lane',value:56000,stage:'Qualified',date:'2026-06-01',duration:12},
-      {company:'BrazilNuts Co',title:'Bulk Commodity Export',value:48000,stage:'Lead',date:'2026-08-15',duration:6},
-      {company:'Vino del Sur',title:'Wine Export Lane',value:67000,stage:'Proposal',date:'2026-06-01',duration:12},
-      {company:'ElectroArg',title:'Electronics Export',value:78000,stage:'Lead',date:'2026-09-01',duration:12},
-      {company:'ChileFrut SA',title:'Stone Fruit Export Lane',value:74000,stage:'Negotiation',date:'2026-04-01',duration:12},
-    ],
-    won: [{value:61000,date:'2026-02-15',duration:12}]
-  },
-  {
-    name: 'Camila Ortega', lane: 'Peru, Ecuador & Guatemala',
-    deals: [
-      {company:'Lima Exports SA',title:'LCL Consolidation',value:38000,stage:'Lead',date:'2026-07-01',duration:6},
-      {company:'AgriPeru Export',title:'Reefer Export Lane',value:62000,stage:'Proposal',date:'2026-06-15',duration:12},
-      {company:'Ecuaflor',title:'Fresh Flowers Export',value:39000,stage:'Proposal',date:'2026-07-01',duration:12},
-      {company:'GuateFresh SA',title:'Perishables Export Lane',value:44000,stage:'Negotiation',date:'2026-04-01',duration:6},
-      {company:'GuateCafe Export',title:'Green Coffee Export',value:58000,stage:'Qualified',date:'2026-06-01',duration:12},
-      {company:'BoliTex Fabrics',title:'Textile Export Consolidation',value:29000,stage:'Lead',date:'2026-09-15',duration:6},
-    ],
-    won: []
-  }
-]
-
-function distributeRepTargets() {
-  const n = TEAM_REPS.length
-  const even = annualTarget > 0 ? Math.round(annualTarget / n) : 0
-  TEAM_REPS.forEach(r => { repTargets[r.name] = even })
-}
-
-function getRepTarget(name) {
-  if (repTargets[name] == null && annualTarget > 0) distributeRepTargets()
-  return repTargets[name] || 0
-}
-
-function saveRepTarget(name, val) {
-  repTargets[name] = parseComma(val) || 0
-  renderTeam()
-}
-
-function resetRepTargets() {
-  distributeRepTargets()
-  renderTeam()
-}
-
-function repGP2026(rep) {
-  const stageW = {Lead:0.1,Qualified:0.3,Proposal:0.6,Negotiation:0.8}
-  let total = 0
-  rep.deals.forEach(d => {
-    const prob = stageW[d.stage]||0.1
-    const monthly = (d.value * prob) / d.duration
-    const start = new Date(d.date)
-    for (let i=0;i<d.duration;i++) {
-      const dt = new Date(start.getFullYear(), start.getMonth()+i, 1)
-      if (dt.getFullYear()===2026) total += monthly
-    }
-  })
-  rep.won.forEach(d => {
-    const monthly = d.value / d.duration
-    const start = new Date(d.date)
-    for (let i=0;i<d.duration;i++) {
-      const dt = new Date(start.getFullYear(), start.getMonth()+i, 1)
-      if (dt.getFullYear()===2026) total += monthly
-    }
-  })
-  return Math.round(total)
-}
-
-function renderTeam() {
-  const el = document.getElementById('view-team')
-  const teamTarget = annualTarget || 0
-  const rankColors = ['gold','silver','bronze','']
-  const rankLabels = ['🥇 #1 — Top performer','🥈 #2','🥉 #3','#4']
-  const medals = ['🥇','🥈','🥉','4️⃣']
-
-  const repsWithGP = TEAM_REPS.map(r => ({
-    ...r,
-    gp2026: repGP2026(r),
-    pipeline: r.deals.reduce((s,d)=>s+d.value,0),
-    dealCount: r.deals.length,
-    repTarget: getRepTarget(r.name)
-  }))
-  const sorted = [...repsWithGP].sort((a,b) => b.gp2026 - a.gp2026)
-  const totalGP = sorted.reduce((s,r) => s+r.gp2026, 0)
-  const maxGP = sorted[0]?.gp2026 || 1
-  const allocatedTotal = sorted.reduce((s,r) => s+r.repTarget, 0)
-  const unallocated = teamTarget - allocatedTotal
-  const pctOfTarget = teamTarget > 0 ? Math.min(1, totalGP / teamTarget) : 0
-
-  const cards = sorted.map((r, i) => {
-    const repPct = maxGP > 0 ? (r.gp2026 / maxGP) : 0
-    const vsTarget = r.repTarget > 0 ? (r.gp2026 / r.repTarget) : 0
-    const barColor = r.repTarget === 0 ? '#d0d8e4' : vsTarget >= 0.8 ? 'var(--green)' : vsTarget >= 0.5 ? 'var(--amber)' : 'var(--red)'
-    const targetPct = r.repTarget > 0 ? Math.round(vsTarget * 100) : null
-    const repName = r.name.replace(/'/g, "\'")
-    return `
-    <div class="rep-card">
-      <div class="rep-rank ${rankColors[i]}">${rankLabels[i]}</div>
-      <div class="rep-name">${r.name}</div>
-      <div class="rep-lane">${r.lane}</div>
-      <div class="rep-gp">${fmt(r.gp2026)}</div>
-      <div class="rep-gp-label">2026 GP forecast${r.repTarget>0?' · '+targetPct+'% of target':''}</div>
-      <div class="rep-bar-track"><div class="rep-bar-fill" style="width:${Math.round(repPct*100)}%;background:${barColor}"></div></div>
-      <div class="rep-stats">
-        <div class="rep-stat"><div class="rep-stat-val">${r.dealCount}</div><div class="rep-stat-lbl">Active deals</div></div>
-        <div class="rep-stat"><div class="rep-stat-val">${fmt(r.pipeline)}</div><div class="rep-stat-lbl">Pipeline GP</div></div>
-        <div class="rep-stat"><div class="rep-stat-val">${r.won.length}</div><div class="rep-stat-lbl">Closed won</div></div>
-        <div class="rep-stat"><div class="rep-stat-val">${totalGP>0?Math.round((r.gp2026/totalGP)*100):'0'}%</div><div class="rep-stat-lbl">Team share</div></div>
-      </div>
-      <div style="border-top:0.5px solid var(--border);padding-top:10px;margin-top:10px">
-        <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:5px">Individual target</div>
-        <div style="display:flex;align-items:center;gap:6px">
-          <span style="color:var(--muted);font-size:13px">$</span>
-          <input type="text" value="${r.repTarget>0?r.repTarget.toLocaleString('en-US'):''}"
-            placeholder="${teamTarget>0?(Math.round(teamTarget/TEAM_REPS.length)).toLocaleString('en-US'):'set team target first'}"
-            style="flex:1;padding:5px 8px;border:0.5px solid var(--border);border-radius:6px;font-size:12px;font-family:inherit;color:var(--text);outline:none;"
-            onblur="saveRepTarget('${repName}', this.value)"
-            onkeydown="if(event.key==='Enter')this.blur()"
-          />
-        </div>
-      </div>
-    </div>`
-  }).join('')
-
-  const lbRows = sorted.map((r, i) => {
-    const pctOfMax = maxGP > 0 ? (r.gp2026 / maxGP) : 0
-    const teamShare = totalGP > 0 ? Math.round((r.gp2026/totalGP)*100) : 0
-    const vsTarget = r.repTarget > 0 ? Math.round((r.gp2026/r.repTarget)*100) : null
-    const barColor = vsTarget===null?'var(--green)':vsTarget>=80?'var(--green)':vsTarget>=50?'var(--amber)':'var(--red)'
-    return `
-    <div class="lb-row">
-      <div class="lb-rank-num">${medals[i]}</div>
-      <div style="flex:2">
-        <div class="lb-name">${r.name}</div>
-        <div class="lb-lane">${r.lane}</div>
-      </div>
-      <div class="lb-bar-wrap"><div class="lb-bar-fill" style="width:${Math.round(pctOfMax*100)}%;background:${barColor}"></div></div>
-      <div style="min-width:80px;text-align:right">
-        <div class="lb-gp">${fmt(r.gp2026)}</div>
-        ${r.repTarget>0?`<div style="font-size:10px;color:var(--muted)">of ${fmt(r.repTarget)}</div>`:''}
-      </div>
-      <div class="lb-pct">${vsTarget!==null?vsTarget+'% attain.':teamShare+'% of team'}</div>
-    </div>`
-  }).join('')
-
-  const allocationStatus = teamTarget > 0
-    ? `<div style="font-size:12px;color:${Math.abs(unallocated)<100?'var(--green)':'rgba(255,255,255,0.6)'};margin-top:4px">${Math.abs(unallocated)<100?'✓ Fully allocated':'Unallocated: '+fmt(Math.abs(unallocated))+(unallocated<0?' (over-allocated)':'')}</div>` : ''
-  const noTargetNote = teamTarget === 0
-    ? `<div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:8px">Set the team target in the Forecast tab to enable allocation.</div>` : ''
-
-  el.innerHTML = `
-    <div class="team-target-bar">
-      <div class="team-target-header">
-        <div>
-          <div class="team-target-title">Team GP target 2026</div>
-          <div style="font-size:20px;font-weight:700;color:white;margin-top:4px">${teamTarget>0?fmt(teamTarget):'Not set'}</div>
-          ${allocationStatus}${noTargetNote}
-        </div>
-        <div style="text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:8px">
-          <div>
-            <div class="team-target-title">Team GP forecast</div>
-            <div style="font-size:20px;font-weight:700;color:${pctOfTarget>=1?'var(--green)':'#FAEEDA'};margin-top:4px">${fmt(totalGP)} <span style="font-size:13px;font-weight:400;color:rgba(255,255,255,0.5)">${teamTarget>0?Math.round(pctOfTarget*100)+'%':''}</span></div>
-          </div>
-          <button onclick="resetRepTargets()" style="font-size:11px;padding:5px 12px;border-radius:6px;border:0.5px solid rgba(255,255,255,0.3);background:transparent;color:rgba(255,255,255,0.7);cursor:pointer;font-family:inherit;" ${teamTarget?'':'disabled'}>↺ Reset to even split</button>
-        </div>
-      </div>
-      ${teamTarget>0?`<div class="team-progress-track" style="margin-top:10px"><div class="team-progress-fill" style="width:${Math.round(pctOfTarget*100)}%"></div></div>
-      <div class="team-progress-labels">
-        <div class="team-progress-label">$0</div>
-        <div class="team-progress-label">${fmt(teamTarget/2)}</div>
-        <div class="team-progress-label">${fmt(teamTarget)}</div>
-      </div>`:''}
-    </div>
-    <div class="team-grid">${cards}</div>
-    <div class="team-leaderboard">
-      <div class="lb-header">Leaderboard — ranked by 2026 GP forecast</div>
-      ${lbRows}
-    </div>
-  `
-}
-
-// ── REP FILTER ────────────────────────────────────────────────────
-function getReps() {
-  const all = [...deals, ...closedDeals]
-  return [...new Set(all.filter(d=>d.brought_by).map(d=>d.brought_by))].sort()
-}
-
+// ── REP FILTER ───────────────────────────────────────────────────
 function buildRepDropdown() {
-  const reps = getReps()
-  const menu = document.getElementById('repDropMenu')
-  if (!menu) return
-  // Remove existing rep items (keep "All reps")
-  menu.querySelectorAll('.rep-item').forEach(el => el.remove())
-  reps.forEach(rep => {
-    const checked = repFilter.has(rep)
-    const item = document.createElement('div')
-    item.className = 'rep-item'
-    item.style.cssText = 'padding:7px 14px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:8px'
-    item.innerHTML = `
-      <span class="rep-check" style="width:14px;height:14px;border:1.5px solid ${checked?'#1D9E75':'#d0d8e4'};border-radius:3px;background:${checked?'#1D9E75':'white'};display:flex;align-items:center;justify-content:center;flex-shrink:0">
-        ${checked?'<span style="color:white;font-size:9px;font-weight:700">✓</span>':''}
-      </span>
-      <span style="color:var(--text);font-weight:${checked?600:400}">${rep}</span>`
-    item.onclick = () => toggleRep(rep)
+  const reps=getReps()
+  const menu=document.getElementById('repDropMenu'); if(!menu) return
+  menu.innerHTML=''
+  const allItem=document.createElement('div'); allItem.className='drop-item'
+  const allChecked=repFilter.size===0
+  allItem.innerHTML=`<span class="drop-check" style="border:1.5px solid ${allChecked?'var(--green)':'#d0d8e4'};background:${allChecked?'var(--green)':'white'}">${allChecked?'<span style="color:white;font-size:9px;font-weight:700">✓</span>':''}</span><span style="font-weight:${allChecked?600:400};color:var(--text)">All reps</span>`
+  allItem.onclick=()=>{repFilter=new Set();buildRepDropdown();renderAll()}
+  menu.appendChild(allItem)
+
+  reps.forEach(rep=>{
+    const checked=repFilter.has(rep), isUnassigned=rep==='Unassigned'
+    const item=document.createElement('div'); item.className='drop-item'
+    item.innerHTML=`<span class="drop-check" style="border:1.5px solid ${checked?'var(--green)':'#d0d8e4'};background:${checked?'var(--green)':'white'}">${checked?'<span style="color:white;font-size:9px;font-weight:700">✓</span>':''}</span><span style="font-weight:${checked?600:400};color:${isUnassigned?'var(--red)':'var(--text)'}">${isUnassigned?'⚠ Unassigned':rep}</span>`
+    item.onclick=()=>{if(repFilter.has(rep))repFilter.delete(rep);else repFilter.add(rep);buildRepDropdown();renderAll()}
     menu.appendChild(item)
   })
-  updateRepBtn()
-}
-
-function updateRepBtn() {
-  const btn = document.getElementById('repDropBtn')
-  if (!btn) return
-  btn.textContent = repFilter.size === 0 ? 'All reps ▾' : `${repFilter.size} rep${repFilter.size>1?'s':''} ▾`
-  btn.style.color = repFilter.size > 0 ? 'white' : 'rgba(255,255,255,0.7)'
-  btn.style.borderColor = repFilter.size > 0 ? 'white' : 'rgba(255,255,255,0.3)'
-  const allCheck = document.getElementById('repAllCheck')
-  if (allCheck) {
-    allCheck.style.background = repFilter.size===0 ? '#1D9E75' : 'white'
-    allCheck.style.borderColor = repFilter.size===0 ? '#1D9E75' : '#d0d8e4'
-    allCheck.innerHTML = repFilter.size===0 ? '<span style="color:white;font-size:9px;font-weight:700">✓</span>' : ''
-  }
+  const btn=document.getElementById('repDropBtn')
+  if(btn){btn.textContent=repFilter.size===0?'All reps ▾':`${repFilter.size} rep${repFilter.size>1?'s':''} ▾`;btn.style.color=repFilter.size>0?'white':'rgba(255,255,255,0.7)';btn.style.borderColor=repFilter.size>0?'white':'rgba(255,255,255,0.3)'}
 }
 
 function toggleRepDrop() {
-  repDropOpen = !repDropOpen
-  const menu = document.getElementById('repDropMenu')
-  if (menu) {
-    if (repDropOpen) buildRepDropdown()
-    menu.style.display = repDropOpen ? 'block' : 'none'
-  }
+  repDropOpen=!repDropOpen
+  const menu=document.getElementById('repDropMenu')
+  if(menu){if(repDropOpen) buildRepDropdown(); menu.style.display=repDropOpen?'block':'none'}
 }
 
-function toggleRep(rep) {
-  if (repFilter.has(rep)) repFilter.delete(rep)
-  else repFilter.add(rep)
-  buildRepDropdown()
-  renderAll()
+// ── COUNTRY FILTER ───────────────────────────────────────────────
+function buildCountryDropdown() {
+  const countries=getCountries()
+  const menu=document.getElementById('countryDropMenu'); if(!menu) return
+  menu.innerHTML=''
+  const allChecked=countryFilter.size===0
+  const allItem=document.createElement('div'); allItem.className='drop-item'
+  allItem.innerHTML=`<span class="drop-check" style="border:1.5px solid ${allChecked?'var(--green)':'#d0d8e4'};background:${allChecked?'var(--green)':'white'}">${allChecked?'<span style="color:white;font-size:9px;font-weight:700">✓</span>':''}</span><span style="font-weight:${allChecked?600:400};color:var(--text)">All countries</span>`
+  allItem.onclick=()=>{countryFilter=new Set();buildCountryDropdown();renderAll()}
+  menu.appendChild(allItem)
+
+  countries.forEach(c=>{
+    const checked=countryFilter.has(c)
+    const item=document.createElement('div'); item.className='drop-item'
+    item.innerHTML=`<span class="drop-check" style="border:1.5px solid ${checked?'var(--green)':'#d0d8e4'};background:${checked?'var(--green)':'white'}">${checked?'<span style="color:white;font-size:9px;font-weight:700">✓</span>':''}</span><span style="font-weight:${checked?600:400};color:var(--text)">${c}</span>`
+    item.onclick=()=>{if(countryFilter.has(c))countryFilter.delete(c);else countryFilter.add(c);buildCountryDropdown();renderAll()}
+    menu.appendChild(item)
+  })
+  const btn=document.getElementById('countryDropBtn')
+  if(btn){btn.textContent=countryFilter.size===0?'All countries ▾':`${countryFilter.size} countr${countryFilter.size>1?'ies':'y'} ▾`;btn.style.color=countryFilter.size>0?'white':'rgba(255,255,255,0.7)';btn.style.borderColor=countryFilter.size>0?'white':'rgba(255,255,255,0.3)'}
 }
 
-function clearRepFilter() {
-  repFilter = new Set()
-  buildRepDropdown()
-  renderAll()
+function toggleCountryDrop() {
+  countryDropOpen=!countryDropOpen
+  const menu=document.getElementById('countryDropMenu')
+  if(menu){if(countryDropOpen) buildCountryDropdown(); menu.style.display=countryDropOpen?'block':'none'}
 }
 
-document.addEventListener('click', e => {
-  if (!e.target.closest('#repDropBtn') && !e.target.closest('#repDropMenu')) {
-    repDropOpen = false
-    const menu = document.getElementById('repDropMenu')
-    if (menu) menu.style.display = 'none'
-  }
-})
-
-function getFilteredDeals() {
-  return repFilter.size === 0 ? deals : deals.filter(d => repFilter.has(d.brought_by))
-}
-function getFilteredClosed() {
-  return repFilter.size === 0 ? closedDeals : closedDeals.filter(d => repFilter.has(d.brought_by))
-}
-
-// ── BOOT ──────────────────────────────────────────────────────────
-document.getElementById('nameInput').addEventListener('keydown', e => { if(e.key==='Enter') startDemo() })
+// ── BOOT ─────────────────────────────────────────────────────────
+document.getElementById('nameInput').addEventListener('keydown',e=>{if(e.key==='Enter') startDemo()})
 </script>
 </body>
 </html>
